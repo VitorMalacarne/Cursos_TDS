@@ -1,0 +1,12 @@
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline\bin\Debug\net8.0\CursosOnline.Model.deps.json
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline\bin\Debug\net8.0\CursosOnline.Model.dll
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline\bin\Debug\net8.0\CursosOnline.Model.pdb
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline\obj\Debug\net8.0\CursosOnline.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline\obj\Debug\net8.0\CursosOnline.Model.AssemblyInfoInputs.cache
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline\obj\Debug\net8.0\CursosOnline.Model.AssemblyInfo.cs
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline\obj\Debug\net8.0\CursosOnline.Model.csproj.CoreCompileInputs.cache
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline\obj\Debug\net8.0\CursosOnline.Model.sourcelink.json
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline\obj\Debug\net8.0\CursosOnline.Model.dll
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline\obj\Debug\net8.0\refint\CursosOnline.Model.dll
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline\obj\Debug\net8.0\CursosOnline.Model.pdb
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline\obj\Debug\net8.0\ref\CursosOnline.Model.dll

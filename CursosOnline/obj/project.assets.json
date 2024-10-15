@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\vitor\\.nuget\\packages\\": {}
+    "C:\\Users\\USER\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline\\CursosOnline.csproj",
-      "projectName": "CursosOnline",
-      "projectPath": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline\\CursosOnline.csproj",
-      "packagesPath": "C:\\Users\\vitor\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline\\obj\\",
+      "projectUniqueName": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj",
+      "projectName": "CursosOnline.Model",
+      "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj",
+      "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\vitor\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"

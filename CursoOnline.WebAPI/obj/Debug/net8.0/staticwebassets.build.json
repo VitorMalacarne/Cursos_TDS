@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "HyTUPRbfw5UO47CdUSBIk3uMD7/gaCDcsSxVCBXSgHY=",
+  "Source": "CursosOnline.WebAPI",
+  "BasePath": "_content/CursosOnline.WebAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
