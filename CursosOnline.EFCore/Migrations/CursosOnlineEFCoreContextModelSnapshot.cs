@@ -17,26 +17,56 @@ namespace CursosOnline.EFCore.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
 
-            modelBuilder.Entity("CursosOnline.Modelo.Aula", b =>
+            modelBuilder.Entity("CursosOnline.Modelo.Lesson", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("LessonID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Conteudo")
-                        .IsRequired()
+                    b.Property<string>("Content")
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("Duracao")
+                    b.Property<TimeSpan?>("Duration")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Titulo")
-                        .IsRequired()
+                    b.Property<int?>("ModuleID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("LessonID");
 
-                    b.ToTable("Aulas");
+                    b.HasIndex("ModuleID");
+
+                    b.ToTable("Lessons");
+                });
+
+            modelBuilder.Entity("CursosOnline.Modelo.Module", b =>
+                {
+                    b.Property<int>("ModuleID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ModuleID");
+
+                    b.ToTable("Modules");
+                });
+
+            modelBuilder.Entity("CursosOnline.Modelo.Lesson", b =>
+                {
+                    b.HasOne("CursosOnline.Modelo.Module", null)
+                        .WithMany("Lessons")
+                        .HasForeignKey("ModuleID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CursosOnline.Modelo.Module", b =>
+                {
+                    b.Navigation("Lessons");
                 });
 #pragma warning restore 612, 618
         }

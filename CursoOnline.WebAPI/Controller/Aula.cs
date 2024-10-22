@@ -16,23 +16,23 @@ public class AulaController : ControllerBase{
     }
     [HttpGet]
     public async Task<IActionResult> GetAll() {
-        var aulas = await context.Aulas.ToListAsync();
+        var aulas = await context.Lessons.ToListAsync();
         return Ok(aulas);
     }
     [HttpGet("getByID")]
     public async Task<IActionResult> GetByID(int aulaID) {
-        Aula? aula = await context.Aulas.FindAsync(aulaID);
+        Lesson? aula = await context.Lessons.FindAsync(aulaID);
         return Ok(aula);
     }
     [HttpPost]
-    public async Task<IActionResult> Create(Aula aula) {
+    public async Task<IActionResult> Create(Lesson aula) {
         context.Add(aula);
         await context.SaveChangesAsync();
         return Created("", aula);
     }
     [HttpDelete]
     public async Task<IActionResult> DeleteByID(int aulaID) { 
-        Aula? aula = await context.Aulas.FindAsync(aulaID);
+        Lesson? aula = await context.Lessons.FindAsync(aulaID);
         if(aula != null) {
             context.Remove(aula);
             await context.SaveChangesAsync();
@@ -42,7 +42,7 @@ public class AulaController : ControllerBase{
         return NoContent();
     }
     [HttpPut]
-    public async Task<IActionResult> Update(Aula aula) {
+    public async Task<IActionResult> Update(Lesson aula) {
         context.Entry(aula).State = EntityState.Modified;
         await context.SaveChangesAsync();
         return Ok(aula);

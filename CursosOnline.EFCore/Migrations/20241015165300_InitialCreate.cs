@@ -15,15 +15,15 @@ namespace CursosOnline.EFCore.Migrations
                 name: "Aulas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    AulaID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Titulo = table.Column<string>(type: "TEXT", nullable: false),
-                    Conteudo = table.Column<string>(type: "TEXT", nullable: false),
-                    Duracao = table.Column<TimeSpan>(type: "TEXT", nullable: false)
+                    Titulo = table.Column<string>(type: "TEXT", nullable: true),
+                    Conteudo = table.Column<string>(type: "TEXT", nullable: true),
+                    Duracao = table.Column<TimeSpan>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Aulas", x => x.Id);
+                    table.PrimaryKey("PK_Aulas", x => x.AulaID);
                 });
         }
 

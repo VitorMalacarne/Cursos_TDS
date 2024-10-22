@@ -1,36 +1,40 @@
-namespace CursosOnline.Modelo;
-
-public class Modulo
+namespace CursosOnline.Modelo
 {
-  private int _id;
-  private string _nome;
-  private List<Aula> _aulas;
+    public class Module
+    {
+        public int ModuleID { get; set; }
+        public string? Name { get; set; }
+        public List<Lesson>? Lessons { get; set; }
 
+        public Module()
+        {
+            Lessons = new List<Lesson>();
+        }
 
-  public Modulo() { }
+        public Module(int id, string name)
+        {
+            ModuleID = id;
+            Name = name;
+            Lessons = new List<Lesson>();
+        }
 
-  public Modulo(int id, string nome)
-  {
-    _id = id;
-    _nome = nome;
-    _aulas = new List<Aula>();
-  }
+        public override string ToString()
+        {
+            return $"[ModuleID: {ModuleID}, Name: {Name}, Lessons: {Lessons?.Count}]";
+        }
 
-  public int Id
-  {
-    get => _id;
-    set => _id = value;
-  }
+        public override bool Equals(object? obj)
+        {
+            if (obj is Module other)
+            {
+                return other.ModuleID == ModuleID;
+            }
+            return false;
+        }
 
-  public string Nome
-  {
-    get => _nome;
-    set => _nome = value;
-  }
-
-  public List<Aula> Aulas
-  {
-    get => _aulas;
-    set => _aulas = value;
-  }
+        public override int GetHashCode()
+        {
+            return ModuleID.GetHashCode();
+        }
+    }
 }

@@ -3,7 +3,7 @@ public class Curso
 {
   private int _id;
   private string _nome;
-  private List<Modulo> _modulos;
+  private List<Module> _modulos;
   private List<Inscricao> _inscricoes;
   private decimal _preco;
   private string _tipo;
@@ -16,7 +16,7 @@ public class Curso
     _nome = nome;
     _preco = preco;
     _tipo = tipo;
-    _modulos = new List<Modulo>();
+    _modulos = new List<Module>();
     _inscricoes = new List<Inscricao>();
   }
 
@@ -32,7 +32,7 @@ public class Curso
     set => _nome = value;
   }
 
-  public List<Modulo> Modulos
+  public List<Module> Modulos
   {
     get => _modulos;
     set => _modulos = value;

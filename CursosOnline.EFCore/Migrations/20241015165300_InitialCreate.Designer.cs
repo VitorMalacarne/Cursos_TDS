@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CursosOnline.EFCore.Migrations
 {
     [DbContext(typeof(CursosOnlineEFCoreContext))]
-    [Migration("20241015040620_InitialCreate")]
+    [Migration("20241015165300_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -22,22 +22,20 @@ namespace CursosOnline.EFCore.Migrations
 
             modelBuilder.Entity("CursosOnline.Modelo.Aula", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AulaID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Conteudo")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("Duracao")
+                    b.Property<TimeSpan?>("Duracao")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Titulo")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("AulaID");
 
                     b.ToTable("Aulas");
                 });
