@@ -3,6 +3,17 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:5071") // URL do frontend Blazor
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<CursosOnlineEFCoreContext>(options => options.UseSqlite(
@@ -11,6 +22,7 @@ builder.Services.AddDbContext<CursosOnlineEFCoreContext>(options => options.UseS
 builder.Services.AddControllers();
 
 var app = builder.Build();
+app.UseCors();
 app.UseRouting();
 
 // Configure the HTTP request pipeline.
@@ -25,4 +37,5 @@ app.UseEndpoints(endpoints => {
 });
 
 app.UseHttpsRedirection();
+
 app.Run();

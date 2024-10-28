@@ -1523,9 +1523,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\Modulo.API\\Modulo.API.csproj",
-      "projectName": "Modulo.API",
-      "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\Modulo.API\\Modulo.API.csproj",
+      "projectUniqueName": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\Modulo.API\\Module.API.csproj",
+      "projectName": "Module.API",
+      "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\Modulo.API\\Module.API.csproj",
       "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\Modulo.API\\obj\\",
       "projectStyle": "PackageReference",

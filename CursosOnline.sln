@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursosOnline.WebAPI", "Curs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursosOnline.EFCore", "CursosOnline.EFCore\CursosOnline.EFCore.csproj", "{ACC86430-5ED3-4977-BBED-5AFB8A0B89D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modulo.API", "Modulo.API\Modulo.API.csproj", "{C601930D-8F57-44DE-8D70-5533D5C7BD47}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Module.API", "Modulo.API\Module.API.csproj", "{C601930D-8F57-44DE-8D70-5533D5C7BD47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PWA", "PWA\PWA.csproj", "{586A11C3-A0B7-49C1-81F8-911C2C65D68F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{C601930D-8F57-44DE-8D70-5533D5C7BD47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C601930D-8F57-44DE-8D70-5533D5C7BD47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C601930D-8F57-44DE-8D70-5533D5C7BD47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{586A11C3-A0B7-49C1-81F8-911C2C65D68F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{586A11C3-A0B7-49C1-81F8-911C2C65D68F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{586A11C3-A0B7-49C1-81F8-911C2C65D68F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{586A11C3-A0B7-49C1-81F8-911C2C65D68F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
