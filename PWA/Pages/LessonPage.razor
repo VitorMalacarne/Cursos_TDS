@@ -1,0 +1,88 @@
+@page "/cadastro-aula"
+@using CursosOnline.Model
+@inject HttpClient Http
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h3 class="text-center mb-4">Cadastro de Aula</h3>
+
+            @if (!string.IsNullOrEmpty(mensagem))
+            {
+                <div class="alert @(sucesso ? "alert-success" : "alert-danger")" role="alert">
+                    @mensagem
+                </div>
+            }
+
+            <EditForm Model="@lesson" OnValidSubmit="EnviarAula">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger" />
+
+                <div class="mb-3">
+                    <label for="title" class="form-label">Título:</label>
+                    <InputText id="title" @bind-Value="lesson.Title" class="form-control" required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="content" class="form-label">Conteúdo:</label>
+                    <InputTextArea id="content" @bind-Value="lesson.Content" class="form-control" rows="3" required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="duration" class="form-label">Duração (HH:mm:ss):</label>
+                    <InputText id="duration" @bind-Value="DurationString" class="form-control" placeholder="Formato: HH:mm:ss" required />
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Enviar</button>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    private Lesson lesson = new Lesson();
+    private string mensagem = string.Empty;
+    private bool sucesso = true; 
+
+    // Propriedade para converter TimeSpan? para string
+    private string DurationString
+    {
+        get => lesson.Duration?.ToString(@"hh\:mm\:ss") ?? string.Empty; // Formata como string
+        set
+        {
+            if (TimeSpan.TryParse(value, out var duration))
+            {
+                lesson.Duration = duration; // Converte a string de volta para TimeSpan
+            }
+            else
+            {
+                lesson.Duration = null; // Se não puder converter, define como null
+            }
+        }
+    }
+
+    private async Task EnviarAula()
+    {
+        try
+        {
+            var response = await Http.PostAsJsonAsync("api/Lesson", lesson);
+
+            if (response.IsSuccessStatusCode)
+            {
+                mensagem = "Aula cadastrada com sucesso!";
+                sucesso = true; 
+                lesson = new Lesson(); 
+            }
+            else
+            {
+                mensagem = "Erro ao cadastrar a aula.";
+                sucesso = false; 
+            }
+        }
+        catch (Exception ex)
+        {
+            mensagem = $"Erro na requisição: {ex.Message}";
+            sucesso = false;
+        }
+    }
+}
