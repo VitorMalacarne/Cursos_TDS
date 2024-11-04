@@ -1,88 +1,143 @@
-@page "/cadastro-aula"
+@page "/page-aulas"
 @using CursosOnline.Model
 @inject HttpClient Http
+@inject NavigationManager Navigation
 
 <div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h3 class="text-center mb-4">Cadastro de Aula</h3>
-
-            @if (!string.IsNullOrEmpty(mensagem))
-            {
-                <div class="alert @(sucesso ? "alert-success" : "alert-danger")" role="alert">
-                    @mensagem
-                </div>
-            }
-
-            <EditForm Model="@lesson" OnValidSubmit="EnviarAula">
-                <DataAnnotationsValidator />
-                <ValidationSummary class="text-danger" />
-
-                <div class="mb-3">
-                    <label for="title" class="form-label">Título:</label>
-                    <InputText id="title" @bind-Value="lesson.Title" class="form-control" required />
-                </div>
-
-                <div class="mb-3">
-                    <label for="content" class="form-label">Conteúdo:</label>
-                    <InputTextArea id="content" @bind-Value="lesson.Content" class="form-control" rows="3" required />
-                </div>
-
-                <div class="mb-3">
-                    <label for="duration" class="form-label">Duração (HH:mm:ss):</label>
-                    <InputText id="duration" @bind-Value="DurationString" class="form-control" placeholder="Formato: HH:mm:ss" required />
-                </div>
-
-                <button type="submit" class="btn btn-primary w-100">Enviar</button>
-            </EditForm>
-        </div>
+   <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Lista de Aulas</h3>
+        <button class="btn btn-success" @onclick="AdicionarNovaAula">Adicionar Nova Aula</button>
     </div>
+
+    @if (lessons == null)
+    {
+        <p>Carregando lições...</p>
+    }
+    else if (lessons.Count == 0)
+    {
+        <p>Nenhuma lição cadastrada.</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Conteúdo</th>
+                    <th>Duração</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var lesson in lessons)
+                {
+                    <tr>
+                        <td>@lesson.LessonID</td>
+                        <td>@lesson.Title</td>
+                        <td>@lesson.Content</td>
+                        <td>@(lesson.Duration.HasValue ? lesson.Duration.Value.ToString(@"hh\:mm\:ss") : "N/A")</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm me-2" @onclick="() => EditLesson(lesson.LessonID)">Editar</button>
+                            <button class="btn btn-danger btn-sm" @onclick="() => ConfirmRemove(lesson)">Remover</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 </div>
 
-@code {
-    private Lesson lesson = new Lesson();
-    private string mensagem = string.Empty;
-    private bool sucesso = true; 
+@* Modal de Confirmação de Remoção *@
+@if (showConfirmRemove)
+{
+    <div class="modal-backdrop fade show"></div>
+    <div class="modal fade show d-block" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar Remoção</h5>
+                    <button type="button" class="btn-close" @onclick="CancelRemove"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza de que deseja remover a lição "@lessonToRemove?.Title"?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CancelRemove">Cancelar</button>
+                    <button type="button" class="btn btn-danger" @onclick="RemoveLesson">Remover</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
-    // Propriedade para converter TimeSpan? para string
-    private string DurationString
+@code {
+    private List<Lesson>? lessons;
+    private Lesson? lessonToRemove; // Para guardar a lição selecionada para remoção
+    private bool showConfirmRemove = false;
+
+    protected override async Task OnInitializedAsync()
     {
-        get => lesson.Duration?.ToString(@"hh\:mm\:ss") ?? string.Empty; // Formata como string
-        set
+        await LoadLessons();
+    }
+
+    private async Task LoadLessons()
+    {
+        try
         {
-            if (TimeSpan.TryParse(value, out var duration))
+            lessons = await Http.GetFromJsonAsync<List<Lesson>>("api/Lesson");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao carregar lições: {ex.Message}");
+            lessons = new List<Lesson>();
+        }
+    }
+
+    private void EditLesson(int lessonId)
+    {
+        Navigation.NavigateTo($"/cadastro-aula/{lessonId}");
+    }
+
+    private void ConfirmRemove(Lesson lesson)
+    {
+        lessonToRemove = lesson;
+        showConfirmRemove = true;
+    }
+
+    private void CancelRemove()
+    {
+        lessonToRemove = null;
+        showConfirmRemove = false;
+    }
+
+    private async Task RemoveLesson()
+    {
+        if (lessonToRemove != null)
+        {
+            try
             {
-                lesson.Duration = duration; // Converte a string de volta para TimeSpan
+                var response = await Http.DeleteAsync($"api/Lesson/{lessonToRemove.LessonID}");
+                if (response.IsSuccessStatusCode)
+                {
+                    lessons.Remove(lessonToRemove);
+                    showConfirmRemove = false;
+                    lessonToRemove = null;
+                }
+                else
+                {
+                    Console.WriteLine("Erro ao remover a lição.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                lesson.Duration = null; // Se não puder converter, define como null
+                Console.WriteLine($"Erro na requisição de remoção: {ex.Message}");
             }
         }
     }
 
-    private async Task EnviarAula()
+    private void AdicionarNovaAula()
     {
-        try
-        {
-            var response = await Http.PostAsJsonAsync("api/Lesson", lesson);
-
-            if (response.IsSuccessStatusCode)
-            {
-                mensagem = "Aula cadastrada com sucesso!";
-                sucesso = true; 
-                lesson = new Lesson(); 
-            }
-            else
-            {
-                mensagem = "Erro ao cadastrar a aula.";
-                sucesso = false; 
-            }
-        }
-        catch (Exception ex)
-        {
-            mensagem = $"Erro na requisição: {ex.Message}";
-            sucesso = false;
-        }
+        Navigation.NavigateTo("/cadastro-aula"); // Redireciona para a página de cadastro de nova aula
     }
 }

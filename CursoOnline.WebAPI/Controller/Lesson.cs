@@ -19,7 +19,7 @@ public class LessonController : ControllerBase{
         var lessons = await context.Lessons.ToListAsync();
         return Ok(lessons);
     }
-    [HttpGet("getByID")]
+    [HttpGet("{lessonID}")]
     public async Task<IActionResult> GetByID(int lessonID) {
         Lesson? lesson = await context.Lessons.FindAsync(lessonID);
         return Ok(lesson);
@@ -30,7 +30,7 @@ public class LessonController : ControllerBase{
         await context.SaveChangesAsync();
         return Created("", lesson);
     }
-    [HttpDelete]
+    [HttpDelete("{lessonID}")]
     public async Task<IActionResult> DeleteByID(int lessonID) { 
         Lesson? lesson = await context.Lessons.FindAsync(lessonID);
         if(lesson != null) {
@@ -41,7 +41,7 @@ public class LessonController : ControllerBase{
 
         return NoContent();
     }
-    [HttpPut]
+    [HttpPut("{lessonID}")]
     public async Task<IActionResult> Update(Lesson lesson) {
         context.Entry(lesson).State = EntityState.Modified;
         await context.SaveChangesAsync();
