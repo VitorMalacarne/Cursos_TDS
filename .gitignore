@@ -1,0 +1,25 @@
+# Ignorar arquivos de log
+*.log
+
+# Ignorar diretórios de build
+/build/
+/dist/
+
+# Ignorar arquivos de configuração do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Ignorar dependências
+/node_modules/
+# Ignorar arquivos binários e de debug
+CursoOnline.WebAPI/bin/
+CursoOnline.WebAPI/obj/
+CursosOnline.EFCore/bin/
+CursosOnline.EFCore/obj/
+CursosOnline/bin/
+CursosOnline/obj/
+
+# Ignorar banco de dados SQLite
+CursosOnline.EFCore/cursosonline.db
+CursosOnline.EFCore/cursosonline.db-shm
+CursosOnline.EFCore/cursosonline.db-wal
