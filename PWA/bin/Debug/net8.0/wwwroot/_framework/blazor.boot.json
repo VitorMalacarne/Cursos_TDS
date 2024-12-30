@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "PWA",
   "resources": {
-    "hash": "sha256-k45+Ztw41TJsmYOvKF1WuUEiut+kG2D3HNy+fdRG+wg=",
+    "hash": "sha256-4GLXeOkXFgb6SwFaFZlaK90gN/jWz3u32jd5eBkZtbQ=",
     "jsModuleNative": {
       "dotnet.native.8.0.8.54cgx8hg4m.js": "sha256-juC5sA7gHTLXFEhAKgdM2/RavswpwCtDfjYGsAz2FXg="
     },
@@ -208,12 +208,12 @@
       "mscorlib.wasm": "sha256-Gz8PyW2/fwihe5ul81OwmRUrU71r+KtbyRw6xlOGD+Q=",
       "netstandard.wasm": "sha256-jMTqIQzoDS810lyhZpMO5eEC36EzntXqSVn+2qwkOMQ=",
       "System.Private.CoreLib.wasm": "sha256-NFj5WE5VLP2LptZIRJCUIc1AMk06FmxpsSILfPISwAw=",
-      "CursosOnline.Model.wasm": "sha256-lAaHNMe3oj1cVw6yoUUzypLkBv0D45OhCDt+SEeJKRM=",
-      "PWA.wasm": "sha256-PFhGjzThrJE482V92JYQ3U45ntSuIbNOnetLPEjd8lg="
+      "CursosOnline.Model.wasm": "sha256-lfEdl9Kui0YmNFhzlGbvjNyMG8RArmdSRugOuob/GOo=",
+      "PWA.wasm": "sha256-rXc/gXxWX+8yr7Wf/mZRHFSFKcA8HfqHgWe0mj6KVo4="
     },
     "pdb": {
-      "CursosOnline.Model.pdb": "sha256-owBmZPMieaPgff8ea9uu2DV0lDurVk3OgT5B0QwKfG8=",
-      "PWA.pdb": "sha256-7krEt02QeuK0BvE9WY8fPgad54Z0KYf8bL7EYLtbznY="
+      "CursosOnline.Model.pdb": "sha256-1EPbNjaTX8pxmRf8YdRf51x4Ipo/4NCa5SqoMnJ4EKI=",
+      "PWA.pdb": "sha256-83nKs9Lj3/MF03gHEj8ElG+fBauLfRjlp1omQEybbvo="
     }
   },
   "cacheBootResources": true,

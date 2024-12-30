@@ -17,22 +17,45 @@ namespace CursosOnline.EFCore.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
 
+            modelBuilder.Entity("CursoUsuario", b =>
+                {
+                    b.Property<int>("CursoId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("CursoId", "UsuarioId");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("CursoUsuario");
+                });
+
             modelBuilder.Entity("CursosOnline.Model.Course", b =>
                 {
                     b.Property<int>("CourseID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("InstructorID")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<double?>("Price")
-                        .HasColumnType("REAL");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Type")
                         .HasColumnType("TEXT");
 
                     b.HasKey("CourseID");
+
+                    b.HasIndex("InstructorID");
 
                     b.ToTable("Courses");
                 });
@@ -52,16 +75,16 @@ namespace CursosOnline.EFCore.Migrations
                     b.Property<int?>("Progress")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("StudentID")
+                    b.Property<int?>("StudentUserID")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("EnrollmentID");
 
                     b.HasIndex("CourseID");
 
-                    b.HasIndex("StudentID");
+                    b.HasIndex("StudentUserID");
 
-                    b.ToTable("Enrollments");
+                    b.ToTable("Enrollment");
                 });
 
             modelBuilder.Entity("CursosOnline.Model.Lesson", b =>
@@ -86,7 +109,7 @@ namespace CursosOnline.EFCore.Migrations
 
                     b.HasIndex("ModuleID");
 
-                    b.ToTable("Lessons");
+                    b.ToTable("Lesson");
                 });
 
             modelBuilder.Entity("CursosOnline.Model.Module", b =>
@@ -105,12 +128,12 @@ namespace CursosOnline.EFCore.Migrations
 
                     b.HasIndex("CourseID");
 
-                    b.ToTable("Modules");
+                    b.ToTable("Module");
                 });
 
-            modelBuilder.Entity("CursosOnline.Model.Student", b =>
+            modelBuilder.Entity("CursosOnline.Model.User", b =>
                 {
-                    b.Property<int>("StudentID")
+                    b.Property<int>("UserID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -123,12 +146,43 @@ namespace CursosOnline.EFCore.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Password")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Phone")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("StudentID");
+                    b.Property<string>("Role")
+                        .HasColumnType("TEXT");
 
-                    b.ToTable("Students");
+                    b.HasKey("UserID");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("CursoUsuario", b =>
+                {
+                    b.HasOne("CursosOnline.Model.Course", null)
+                        .WithMany()
+                        .HasForeignKey("CursoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CursosOnline.Model.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CursosOnline.Model.Course", b =>
+                {
+                    b.HasOne("CursosOnline.Model.User", "Instructor")
+                        .WithMany("CursosComoInstrutor")
+                        .HasForeignKey("InstructorID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Instructor");
                 });
 
             modelBuilder.Entity("CursosOnline.Model.Enrollment", b =>
@@ -137,9 +191,9 @@ namespace CursosOnline.EFCore.Migrations
                         .WithMany("Enrollments")
                         .HasForeignKey("CourseID");
 
-                    b.HasOne("CursosOnline.Model.Student", "Student")
-                        .WithMany("Enrollments")
-                        .HasForeignKey("StudentID");
+                    b.HasOne("CursosOnline.Model.User", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentUserID");
 
                     b.Navigation("Course");
 
@@ -150,8 +204,7 @@ namespace CursosOnline.EFCore.Migrations
                 {
                     b.HasOne("CursosOnline.Model.Module", null)
                         .WithMany("Lessons")
-                        .HasForeignKey("ModuleID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ModuleID");
                 });
 
             modelBuilder.Entity("CursosOnline.Model.Module", b =>
@@ -173,9 +226,9 @@ namespace CursosOnline.EFCore.Migrations
                     b.Navigation("Lessons");
                 });
 
-            modelBuilder.Entity("CursosOnline.Model.Student", b =>
+            modelBuilder.Entity("CursosOnline.Model.User", b =>
                 {
-                    b.Navigation("Enrollments");
+                    b.Navigation("CursosComoInstrutor");
                 });
 #pragma warning restore 612, 618
         }

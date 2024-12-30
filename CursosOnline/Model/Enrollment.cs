@@ -3,14 +3,14 @@ namespace CursosOnline.Model;
 public class Enrollment
 {
     public int EnrollmentID { get; set; }
-    public Student? Student { get; set; }
+    public User? Student { get; set; }
     public Course? Course { get; set; }
     public DateTime? EnrollmentDate { get; set; }
     public int? Progress { get; set; }
 
     public Enrollment() { }
 
-    public Enrollment(int id, Student student, Course course, DateTime enrollmentDate, int progress)
+    public Enrollment(int id, User student, Course course, DateTime enrollmentDate, int progress)
     {
         EnrollmentID = id;
         Student = student;
