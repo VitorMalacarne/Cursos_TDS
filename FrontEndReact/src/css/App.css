@@ -83,3 +83,250 @@
 
 
  */
+
+/*--------------------------------------------------------------------------------------------------------------*/
+.cadastro h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.cadastro form div {
+  margin-bottom: 15px;
+}
+
+.cadastro label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.cadastro input[type="text"],
+.cadastro input[type="email"],
+.cadastro input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.cadastro input[type="text"]:focus,
+.cadastro input[type="email"]:focus,
+.cadastro input[type="password"]:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.cadastro button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.cadastro button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.cadastro button[type="submit"]:active {
+  background-color: #004085;
+}
+
+.cadastro form div:last-child {
+  margin-top: 20px;
+}
+
+.form-container {
+  display: flex;
+  align-items: stretch;
+  /* Faz com que ambos tenham a mesma altura */
+  justify-content: center;
+  gap: 20px;
+  /* Espaço entre a imagem e o formulário */
+  padding: 20px;
+}
+
+.form-image {
+  flex: 1;
+  /* Garante que a imagem ocupe o mesmo espaço vertical do formulário */
+  height: 82vh;
+  /* Ajusta automaticamente a largura com base na proporção da altura */
+  object-fit: cover;
+  /* Mantém a proporção da imagem */
+  border-radius: 10px;
+  /* Para combinar com o estilo do formulário */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Adiciona sombra similar ao formulário */
+  max-width: 50%;
+  /* Limita a largura da imagem a metade do container */
+}
+
+.cadastro {
+  flex: 1;
+  /* Faz o formulário ocupar o mesmo espaço que a imagem */
+  max-width: 400px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.login h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.login form div {
+  margin-bottom: 15px;
+}
+
+.login label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.login input[type="text"],
+.login input[type="email"],
+.login input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.login input[type="text"]:focus,
+.login input[type="email"]:focus,
+.login input[type="password"]:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.login button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.login button[type="submit"]:active {
+  background-color: #004085;
+}
+
+.login form div:last-child {
+  margin-top: 20px;
+}
+
+.login {
+  flex: 1;
+  /* Faz o formulário ocupar o mesmo espaço que a imagem */
+  max-width: 400px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.login p {
+  font-size: 16.5px;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    flex-direction: column;
+    /* Alinha os elementos verticalmente em telas menores */
+  }
+
+  .form-image {
+    width: 100%;
+    /* Ajusta a largura da imagem para dispositivos móveis */
+    height: auto;
+    /* Permite que a altura se ajuste automaticamente em telas menores */
+  }
+
+  .cadastro {
+    max-width: 90%;
+    /* Reduz a largura do formulário em dispositivos móveis */
+  }
+
+  .login {
+    max-width: 90%;
+    /* Reduz a largura do formulário em dispositivos móveis */
+  }
+}
+
+/*------------------------------------------------------------------------------------------------------------------------*/
+/* DROPDOWN MENU*/
+.drop-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drop-trigger {position: relative;}
+
+.dropdown-menu {
+  position: absolute;
+  top: 70px;
+  left: -72px;
+  /* Ajusta para aparecer abaixo do botão */
+  padding: 10px 20px;
+  width: 200px;
+  background-color: #fff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -10px; /* Ajuste para o triângulo */
+  left: 88px;
+  height: 20px;
+  width: 20px;
+  box-shadow: -3px -3px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transform: rotate(45deg);
+}
+
+.dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: 0.5s ease;
+}
+
+.dropdown-menu.inactive {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: 0.5s ease;
+}
+
+.drop-item a{
+  font-size: 15px;
+}

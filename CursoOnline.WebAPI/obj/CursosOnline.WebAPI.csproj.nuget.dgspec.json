@@ -26,8 +26,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.EFCore\\CursosOnline.EFCore.csproj": {
-                "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.EFCore\\CursosOnline.EFCore.csproj"
+              "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj": {
+                "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj"
+              },
+              "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj": {
+                "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj"
               }
             }
           }
@@ -47,13 +50,21 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.8, )"
             },
-            "Microsoft.EntityFrameworkCore": {
+            "MongoDB.Bson": {
               "target": "Package",
-              "version": "[8.0.10, )"
+              "version": "[3.1.0, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[3.1.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -83,14 +94,14 @@
         }
       }
     },
-    "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.EFCore\\CursosOnline.EFCore.csproj": {
+    "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.EFCore\\CursosOnline.EFCore.csproj",
-        "projectName": "CursosOnline.EFCore",
-        "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.EFCore\\CursosOnline.EFCore.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj",
+        "projectName": "CursosOnline.MongoDB",
+        "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.EFCore\\obj\\",
+        "outputPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.MongoDB\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -104,11 +115,7 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {
-              "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj": {
-                "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {
@@ -126,25 +133,13 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.EntityFrameworkCore": {
+            "MongoDB.Bson": {
               "target": "Package",
-              "version": "[8.0.10, )"
+              "version": "[3.1.0, )"
             },
-            "Microsoft.EntityFrameworkCore.Design": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
+            "MongoDB.Driver": {
               "target": "Package",
-              "version": "[8.0.10, )"
-            },
-            "Microsoft.EntityFrameworkCore.Sqlite": {
-              "target": "Package",
-              "version": "[8.0.10, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[8.0.10, )"
+              "version": "[3.1.0, )"
             }
           },
           "imports": [
@@ -205,6 +200,16 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "MongoDB.Bson": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

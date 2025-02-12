@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Module.API", "Modulo.API\Mo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PWA", "PWA\PWA.csproj", "{586A11C3-A0B7-49C1-81F8-911C2C65D68F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursosOnline.MongoDB", "CursosOnline.MongoDB\CursosOnline.MongoDB.csproj", "{757C2158-386F-41A6-9F61-E3188107D3F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{586A11C3-A0B7-49C1-81F8-911C2C65D68F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{586A11C3-A0B7-49C1-81F8-911C2C65D68F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{586A11C3-A0B7-49C1-81F8-911C2C65D68F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{757C2158-386F-41A6-9F61-E3188107D3F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{757C2158-386F-41A6-9F61-E3188107D3F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{757C2158-386F-41A6-9F61-E3188107D3F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{757C2158-386F-41A6-9F61-E3188107D3F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

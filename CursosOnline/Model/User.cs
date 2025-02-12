@@ -1,58 +1,68 @@
-namespace CursosOnline.Model;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System.Collections.Generic;
 
-public class User
+namespace CursosOnline.Model
 {
-    public int UserID { get; set; }
-    public string? Name { get; set; }
-    public string? Phone { get; set; }
-    public string? Email { get; set; }
-    public string? Cpf { get; set; }
-    public string? Password { get; set; }
-    public string? Role { get; set; }
-    public ICollection<Course> CursosComprados { get; set; } = new List<Course>();
-    public ICollection<Course> CursosComoInstrutor { get; set; } = new List<Course>();
-
-    // Construtor padrão
-    public User() { }
-
-    // Construtor com parâmetros essenciais
-    public User(int userID, string name, string email, string role)
+    public class User
     {
-        UserID = userID;
-        Name = name;
-        Email = email;
-        Role = role;
-    }
+        // Definindo o campo de ID como ObjectId, padrão do MongoDB
+        [BsonId]  // Este atributo indica que o campo 'Id' é o identificador do documento
+        public ObjectId Id { get; set; } // Usando ObjectId em vez de int como identificador
 
-    // Construtor completo
-    public User(int userID, string name, string phone, string email, string cpf, string password, string role)
-    {
-        UserID = userID;
-        Name = name;
-        Phone = phone;
-        Email = email;
-        Cpf = cpf;
-        Password = password;
-        Role = role;
-    }
+        public string? Name { get; set; }
+        public string? Phone { get; set; }
+        public string? Email { get; set; }
+        public string? Cpf { get; set; }
+        public string? Password { get; set; }
+        public string? Role { get; set; }
 
-    // ToString para exibição
-    public override string ToString()
-    {
-        return $"UserID: {UserID}, Name: {Name}, Email: {Email}, Role: {Role}";
-    }
+        // Coleções de cursos (ID de cursos como string, ou pode ser um tipo específico dependendo do seu modelo)
+        public ICollection<string> CursosComprados { get; set; } = new List<string>();
+        public ICollection<string> CursosComoInstrutor { get; set; } = new List<string>();
 
-    public override bool Equals(object? obj)
-    {
-        if (obj is User other)
+        // Construtor padrão
+        public User() { }
+
+        // Construtor com parâmetros essenciais
+        public User(ObjectId id, string name, string email, string role)
         {
-            return other.UserID == UserID;
+            Id = id;
+            Name = name;
+            Email = email;
+            Role = role;
         }
-        return false;
-    }
 
-    public override int GetHashCode()
-    {
-        return UserID.GetHashCode();
+        // Construtor completo
+        public User(ObjectId id, string name, string phone, string email, string cpf, string password, string role)
+        {
+            Id = id;
+            Name = name;
+            Phone = phone;
+            Email = email;
+            Cpf = cpf;
+            Password = password;
+            Role = role;
+        }
+
+        // ToString para exibição
+        public override string ToString()
+        {
+            return $"UserID: {Id}, Name: {Name}, Email: {Email}, Role: {Role}";
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is User other)
+            {
+                return other.Id == Id;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 }

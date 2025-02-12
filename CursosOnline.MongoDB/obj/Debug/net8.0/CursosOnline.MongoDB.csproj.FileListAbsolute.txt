@@ -1,0 +1,13 @@
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline.MongoDB\bin\Debug\net8.0\CursosOnline.MongoDB.deps.json
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline.MongoDB\bin\Debug\net8.0\CursosOnline.MongoDB.dll
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline.MongoDB\bin\Debug\net8.0\CursosOnline.MongoDB.pdb
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\CursosOnline.MongoDB.csproj.AssemblyReference.cache
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\CursosOnline.MongoDB.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\CursosOnline.MongoDB.AssemblyInfoInputs.cache
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\CursosOnline.MongoDB.AssemblyInfo.cs
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\CursosOnline.MongoDB.csproj.CoreCompileInputs.cache
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\CursosOnline.MongoDB.sourcelink.json
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\CursosOnline.MongoDB.dll
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\refint\CursosOnline.MongoDB.dll
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\CursosOnline.MongoDB.pdb
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\ref\CursosOnline.MongoDB.dll

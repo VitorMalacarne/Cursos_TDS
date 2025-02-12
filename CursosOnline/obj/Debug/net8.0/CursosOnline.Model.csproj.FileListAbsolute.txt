@@ -10,3 +10,4 @@ C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline\obj\Debug\net8.0\CursosOn
 C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline\obj\Debug\net8.0\refint\CursosOnline.Model.dll
 C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline\obj\Debug\net8.0\CursosOnline.Model.pdb
 C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline\obj\Debug\net8.0\ref\CursosOnline.Model.dll
+C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline\obj\Debug\net8.0\CursosOnline.Model.csproj.AssemblyReference.cache
