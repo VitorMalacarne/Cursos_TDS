@@ -1,8 +1,11 @@
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace CursosOnline.Model;
 
 public class Enrollment
 {
-    public int EnrollmentID { get; set; }
+    public ObjectId Id { get; set; }
     public User? Student { get; set; }
     public Course? Course { get; set; }
     public DateTime? EnrollmentDate { get; set; }
@@ -10,9 +13,9 @@ public class Enrollment
 
     public Enrollment() { }
 
-    public Enrollment(int id, User student, Course course, DateTime enrollmentDate, int progress)
+    public Enrollment(ObjectId id, User student, Course course, DateTime enrollmentDate, int progress)
     {
-        EnrollmentID = id;
+        Id = id;
         Student = student;
         Course = course;
         EnrollmentDate = enrollmentDate;
@@ -21,14 +24,14 @@ public class Enrollment
 
     public override string ToString()
     {
-        return $"[{EnrollmentID}, {Student}, {Course}, {EnrollmentDate}, {Progress}]";
+        return $"[{Id}, {Student}, {Course}, {EnrollmentDate}, {Progress}]";
     }
 
     public override bool Equals(object? obj)
     {
         if (obj is Enrollment other)
         {
-            return other.EnrollmentID == EnrollmentID;
+            return other.Id == Id;
         }
 
         return false;
@@ -36,6 +39,6 @@ public class Enrollment
 
     public override int GetHashCode()
     {
-        return EnrollmentID.GetHashCode();
+        return Id.GetHashCode();
     }
 }

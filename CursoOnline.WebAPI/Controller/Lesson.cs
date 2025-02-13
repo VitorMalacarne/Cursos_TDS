@@ -1,53 +1,64 @@
-// using CursosOnline.EFCore.DataContext;
-// using CursosOnline.Model;
-// using Microsoft.AspNetCore.Mvc;
-// using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson;
+using Microsoft.AspNetCore.Mvc;
+using CursosOnline.Model;
+using MongoDbConnection;
+using System.Collections.Generic;
 
-// namespace CursoOnline.WebAPI.Controller;
+[Route("api/[controller]")]
+[ApiController]
+public class LessonController : ControllerBase
+{
+    private readonly MongoDbService _mongoDbService;
+    private readonly string _collectionName = "Lessons";
 
-// [Route("api/[controller]")]
-// [ApiController]
-// public class LessonController : ControllerBase{
-//     private readonly CursosOnlineEFCoreContext context;
+    public LessonController(MongoDbService mongoDbService)
+    {
+        _mongoDbService = mongoDbService;
+    }
 
-//     public LessonController(CursosOnlineEFCoreContext context)
-//     {
-//         this.context = context;
-//     }
-//     [HttpGet]
-//     public async Task<IActionResult> GetAll() {
-//         var lessons = await context.Lessons.ToListAsync();
-//         return Ok(lessons);
-//     }
-//     [HttpGet("{lessonID}")]
-//     public async Task<IActionResult> GetByID(int lessonID) {
-//         Lesson? lesson = await context.Lessons.FindAsync(lessonID);
-//         return Ok(lesson);
-//     }
-//     [HttpPost]
-//     public async Task<IActionResult> Create(Lesson lesson) {
-//         context.Add(lesson);
-//         await context.SaveChangesAsync();
-//         return Created("", lesson);
-//     }
-//     [HttpDelete("{lessonID}")]
-//     public async Task<IActionResult> DeleteByID(int lessonID) { 
-//         Lesson? lesson = await context.Lessons.FindAsync(lessonID);
-//         if(lesson != null) {
-//             context.Remove(lesson);
-//             await context.SaveChangesAsync();
-//             return Ok();
-//         }
+    // GET: api/Lesson
+    [HttpGet]
+    public ActionResult<List<Lesson>> GetAll()
+    {
+        var lessons = _mongoDbService.GetCollectionData<Lesson>(_collectionName);
+        return Ok(lessons);
+    }
 
-//         return NoContent();
-//     }
-//     [HttpPut("{lessonID}")]
-//     public async Task<IActionResult> Update(Lesson lesson) {
-//         context.Entry(lesson).State = EntityState.Modified;
-//         await context.SaveChangesAsync();
-//         return Ok(lesson);
-//     }
+    // GET: api/Lesson/{id}
+    [HttpGet("{id}")]
+    public ActionResult<Lesson> GetById(string id)
+    {
+        var lesson = _mongoDbService.GetDocumentByID<Lesson>(_collectionName, new ObjectId(id));
 
-// }
+        if (lesson == null)
+            return NotFound();
 
+        return Ok(lesson);
+    }
 
+    // POST: api/Lesson
+    [HttpPost]
+    public ActionResult<Lesson> Create([FromBody] Lesson lesson)
+    {
+        _mongoDbService.InsertDocument<Lesson>(_collectionName, lesson);
+        return CreatedAtAction(nameof(GetById), new { id = lesson.Id.ToString() }, lesson);
+    }
+
+    // PUT: api/Lesson/{id}
+    [HttpPut("{id}")]
+    public IActionResult Update(string id, [FromBody] Lesson updatedLesson)
+    {
+        var objectId = new ObjectId(id);
+        _mongoDbService.UpdateDocument<Lesson>(_collectionName, objectId, updatedLesson);
+        return NoContent();
+    }
+
+    // DELETE: api/Lesson/{id}
+    [HttpDelete("{id}")]
+    public IActionResult DeleteById(string id)
+    {
+        var objectId = new ObjectId(id);
+        _mongoDbService.DeleteDocument<Lesson>(_collectionName, objectId);
+        return NoContent();
+    }
+}
