@@ -2053,19 +2053,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\USER\\.nuget\\packages\\": {}
+    "C:\\Users\\vitor\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\Modulo.API\\Module.API.csproj",
+      "projectUniqueName": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\Modulo.API\\Module.API.csproj",
       "projectName": "Module.API",
-      "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\Modulo.API\\Module.API.csproj",
-      "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\Modulo.API\\obj\\",
+      "projectPath": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\Modulo.API\\Module.API.csproj",
+      "packagesPath": "C:\\Users\\vitor\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\Modulo.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\vitor\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -2077,11 +2077,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.EFCore\\CursosOnline.EFCore.csproj": {
-              "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.EFCore\\CursosOnline.EFCore.csproj"
+            "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline.EFCore\\CursosOnline.EFCore.csproj": {
+              "projectPath": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline.EFCore\\CursosOnline.EFCore.csproj"
             },
-            "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj": {
-              "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj"
+            "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj": {
+              "projectPath": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj"
             }
           }
         }

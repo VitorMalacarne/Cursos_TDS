@@ -11,3 +11,16 @@ C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\
 C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\refint\CursosOnline.MongoDB.dll
 C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\CursosOnline.MongoDB.pdb
 C:\Users\USER\Documents\GitHub\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\ref\CursosOnline.MongoDB.dll
+C:\Users\vitor\Desktop\Cursos_TDS\CursosOnline.MongoDB\bin\Debug\net8.0\CursosOnline.MongoDB.deps.json
+C:\Users\vitor\Desktop\Cursos_TDS\CursosOnline.MongoDB\bin\Debug\net8.0\CursosOnline.MongoDB.dll
+C:\Users\vitor\Desktop\Cursos_TDS\CursosOnline.MongoDB\bin\Debug\net8.0\CursosOnline.MongoDB.pdb
+C:\Users\vitor\Desktop\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\CursosOnline.MongoDB.csproj.AssemblyReference.cache
+C:\Users\vitor\Desktop\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\CursosOnline.MongoDB.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vitor\Desktop\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\CursosOnline.MongoDB.AssemblyInfoInputs.cache
+C:\Users\vitor\Desktop\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\CursosOnline.MongoDB.AssemblyInfo.cs
+C:\Users\vitor\Desktop\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\CursosOnline.MongoDB.csproj.CoreCompileInputs.cache
+C:\Users\vitor\Desktop\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\CursosOnline.MongoDB.sourcelink.json
+C:\Users\vitor\Desktop\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\CursosOnline.MongoDB.dll
+C:\Users\vitor\Desktop\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\refint\CursosOnline.MongoDB.dll
+C:\Users\vitor\Desktop\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\CursosOnline.MongoDB.pdb
+C:\Users\vitor\Desktop\Cursos_TDS\CursosOnline.MongoDB\obj\Debug\net8.0\ref\CursosOnline.MongoDB.dll
