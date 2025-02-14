@@ -1,14 +1,14 @@
 namespace CursosOnline.Model;
 public class Question
 {
-  public int Id { get; private set; }
+  public int QuestionID { get; private set; }
   public string Text { get; private set; }
   public List<string> Options { get; private set; }
   public int CorrectAnswerIndex { get; private set; } // Index of the correct answer (0,1,2,3...)
 
   public Question(int id, string text, List<string> options, int correctAnswerIndex)
   {
-    Id = id;
+    QuestionID = id;
     Text = text;
     Options = options;
     CorrectAnswerIndex = correctAnswerIndex;

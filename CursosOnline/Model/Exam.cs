@@ -1,13 +1,13 @@
 namespace CursosOnline.Model;
 public class Exam
 {
-  public int Id { get; private set; }
+  public int ExamID { get; private set; }
   public string Name { get; private set; }
   public List<Question> Questions { get; private set; }
 
   public Exam(int id, string name)
   {
-    Id = id;
+    ExamID = id;
     Name = name;
     Questions = new List<Question>();
   }
