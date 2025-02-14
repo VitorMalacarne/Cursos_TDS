@@ -50,7 +50,7 @@ namespace CursosOnline.Controllers
     {
       // Insere uma nova lição
       _mongoDbService.InsertDocument<Lesson>(_collectionName, lesson);
-      return CreatedAtAction(nameof(GetById), new { id = lesson.LessonID.ToString() }, lesson);
+      return CreatedAtAction(nameof(GetById), new { id = lesson.Id.ToString() }, lesson);
     }
 
     // PUT: api/Lesson/5
