@@ -1,8 +1,11 @@
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace CursosOnline.Model;
 
 public class Course
 {
-    public int CourseID { get; set; }
+    public ObjectId Id { get; set; }
     public string? Name { get; set; }
     public string? Description { get; set; }
     public decimal Price { get; set; }
@@ -20,17 +23,17 @@ public class Course
     public Course() { }
 
     // Construtor com parâmetros essenciais
-    public Course(int courseID, string name, decimal price)
+    public Course(ObjectId id, string name, decimal price)
     {
-        CourseID = courseID;
+        Id = id;
         Name = name;
         Price = price;
     }
 
     // Construtor completo
-    public Course(int courseID, string name, string description, decimal price, string type, int? instructorID)
+    public Course(ObjectId id, string name, string description, decimal price, string type, int? instructorID)
     {
-        CourseID = courseID;
+        Id = id;
         Name = name;
         Description = description;
         Price = price;
@@ -41,20 +44,20 @@ public class Course
     // ToString para exibição
     public override string ToString()
     {
-        return $"CourseID: {CourseID}, Name: {Name}, Price: {Price}, Type: {Type}";
+        return $"CourseID: {Id}, Name: {Name}, Price: {Price}, Type: {Type}";
     }
 
      public override bool Equals(object? obj)
     {
         if (obj is Course other)
         {
-            return other.CourseID == CourseID;
+            return other.Id == Id;
         }
         return false;
     }
 
     public override int GetHashCode()
     {
-        return CourseID.GetHashCode();
+        return Id.GetHashCode();
     }
 }

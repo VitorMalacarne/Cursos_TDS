@@ -1,7 +1,10 @@
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace CursosOnline.Model;
 public class Module
 {
-    public int ModuleID { get; set; }
+    public ObjectId Id { get; set; }
     public string? Name { get; set; }
     public List<Lesson>? Lessons { get; set; }
     public Exam? Exam { get; set; } // Adicionando o atributo Exam
@@ -11,29 +14,29 @@ public class Module
         Lessons = new List<Lesson>();
     }
 
-    public Module(int id, string name)
+    public Module(ObjectId id, string name)
     {
-        ModuleID = id;
+        Id = id;
         Name = name;
         Lessons = new List<Lesson>();
     }
 
     public override string ToString()
     {
-        return $"[ModuleID: {ModuleID}, Name: {Name}, Lessons: {Lessons?.Count}, Exam: {Exam?.Name}]";
+        return $"[ModuleID: {Id}, Name: {Name}, Lessons: {Lessons?.Count}, Exam: {Exam?.Name}]";
     }
 
     public override bool Equals(object? obj)
     {
         if (obj is Module other)
         {
-            return other.ModuleID == ModuleID;
+            return other.Id == Id;
         }
         return false;
     }
 
     public override int GetHashCode()
     {
-        return ModuleID.GetHashCode();
+        return Id.GetHashCode();
     }
 }
