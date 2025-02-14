@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursoOnline.WebAPI\\CursosOnline.WebAPI.csproj": {}
+    "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursoOnline.WebAPI\\CursosOnline.WebAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursoOnline.WebAPI\\CursosOnline.WebAPI.csproj": {
+    "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursoOnline.WebAPI\\CursosOnline.WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursoOnline.WebAPI\\CursosOnline.WebAPI.csproj",
+        "projectUniqueName": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursoOnline.WebAPI\\CursosOnline.WebAPI.csproj",
         "projectName": "CursosOnline.WebAPI",
-        "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursoOnline.WebAPI\\CursosOnline.WebAPI.csproj",
-        "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursoOnline.WebAPI\\obj\\",
+        "projectPath": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursoOnline.WebAPI\\CursosOnline.WebAPI.csproj",
+        "packagesPath": "C:\\Users\\vitor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursoOnline.WebAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\vitor\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -26,11 +26,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj": {
-                "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj"
+              "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj": {
+                "projectPath": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj"
               },
-              "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj": {
-                "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj"
+              "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj": {
+                "projectPath": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj"
               }
             }
           }
@@ -94,17 +94,17 @@
         }
       }
     },
-    "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj": {
+    "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj",
+        "projectUniqueName": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj",
         "projectName": "CursosOnline.MongoDB",
-        "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj",
-        "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.MongoDB\\obj\\",
+        "projectPath": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj",
+        "packagesPath": "C:\\Users\\vitor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline.MongoDB\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\vitor\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -162,17 +162,17 @@
         }
       }
     },
-    "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj": {
+    "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj",
+        "projectUniqueName": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj",
         "projectName": "CursosOnline.Model",
-        "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj",
-        "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline\\obj\\",
+        "projectPath": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj",
+        "packagesPath": "C:\\Users\\vitor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\vitor\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
