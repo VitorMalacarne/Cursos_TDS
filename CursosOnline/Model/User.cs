@@ -6,26 +6,29 @@ namespace CursosOnline.Model
 {
     public class User
     {
-        // Definindo o campo de ID como ObjectId, padrão do MongoDB
-        [BsonId]  // Este atributo indica que o campo 'Id' é o identificador do documento
-        public ObjectId Id { get; set; } // Usando ObjectId em vez de int como identificador
+        //Agora Id é uma string com [BsonRepresentation(BsonType.ObjectId)], garantindo compatibilidade com MongoDB.
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; } = ObjectId.GenerateNewId().ToString(); // Gera um ID automaticamente
 
         public string? Name { get; set; }
         public string? Phone { get; set; }
         public string? Email { get; set; }
         public string? Cpf { get; set; }
-        public string? Password { get; set; }
+        public string? PasswordHash { get; set; } // Armazena o hash da senha
         public string? Role { get; set; }
 
         // Coleções de cursos (ID de cursos como string, ou pode ser um tipo específico dependendo do seu modelo)
         public ICollection<string> CursosComprados { get; set; } = new List<string>();
         public ICollection<string> CursosComoInstrutor { get; set; } = new List<string>();
 
-        // Construtor padrão
-        public User() { }
+        // Construtor padrão para garantir que o ID sempre será gerado
+        public User() {
+            Id = ObjectId.GenerateNewId().ToString();
+        }
 
         // Construtor com parâmetros essenciais
-        public User(ObjectId id, string name, string email, string role)
+        public User(string id, string name, string email, string role)
         {
             Id = id;
             Name = name;
@@ -34,14 +37,14 @@ namespace CursosOnline.Model
         }
 
         // Construtor completo
-        public User(ObjectId id, string name, string phone, string email, string cpf, string password, string role)
+        public User(string id, string name, string phone, string email, string cpf, string passwordHash, string password, string role)
         {
             Id = id;
             Name = name;
             Phone = phone;
             Email = email;
             Cpf = cpf;
-            Password = password;
+            PasswordHash = passwordHash; //adicionado passwordhash no contrutor
             Role = role;
         }
 

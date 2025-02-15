@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj": {}
+    "C:\\GitHub\\Repositorios\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj": {
+    "C:\\GitHub\\Repositorios\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj",
+        "projectUniqueName": "C:\\GitHub\\Repositorios\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj",
         "projectName": "CursosOnline.MongoDB",
-        "projectPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj",
-        "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Documents\\GitHub\\Cursos_TDS\\CursosOnline.MongoDB\\obj\\",
+        "projectPath": "C:\\GitHub\\Repositorios\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj",
+        "packagesPath": "C:\\Users\\samue\\.nuget\\packages\\",
+        "outputPath": "C:\\GitHub\\Repositorios\\Cursos_TDS\\CursosOnline.MongoDB\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\samue\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -68,7 +70,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.402/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
