@@ -5,26 +5,32 @@ namespace CursosOnline.Model;
 
 public class Enrollment
 {
-    public ObjectId Id { get; set; }
-    public User? Student { get; set; }
-    public Course? Course { get; set; }
+    //Agora Id é uma string com [BsonRepresentation(BsonType.ObjectId)], garantindo compatibilidade com MongoDB.
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; }
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string StudentId { get; set; }  // ID do aluno
+
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string CourseId { get; set; }  // ID do curso
     public DateTime? EnrollmentDate { get; set; }
-    public int? Progress { get; set; }
+     public int Progress { get; set; } = 0; // Inicia com progresso 0%
 
     public Enrollment() { }
 
-    public Enrollment(ObjectId id, User student, Course course, DateTime enrollmentDate, int progress)
+    public Enrollment(string id, string studentId, string courseId, DateTime enrollmentDate, int progress)
     {
         Id = id;
-        Student = student;
-        Course = course;
+        StudentId = studentId;
+        CourseId = courseId;
         EnrollmentDate = enrollmentDate;
         Progress = progress;
     }
 
     public override string ToString()
     {
-        return $"[{Id}, {Student}, {Course}, {EnrollmentDate}, {Progress}]";
+        return $"[{Id}, {StudentId}, {CourseId}, {EnrollmentDate}, {Progress}]";
     }
 
     public override bool Equals(object? obj)

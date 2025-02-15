@@ -1,7 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
+using CursosOnline.Services;
 using CursosOnline.Model;
-using MongoDbConnection;
+using System.Security.Claims;
 using System.Collections.Generic;
 
 namespace CursosOnline.Controllers
@@ -10,53 +11,106 @@ namespace CursosOnline.Controllers
     [ApiController]
     public class CourseController : ControllerBase
     {
-        private readonly MongoDbService _mongoDbService;
-        private readonly string _collectionName = "Courses";
+        private readonly CourseService _courseService;
 
-        public CourseController(MongoDbService mongoDbService)
+        public CourseController(CourseService courseService)
         {
-            _mongoDbService = mongoDbService;
+            _courseService = courseService;
         }
 
+        // 📌 1. Buscar todos os cursos disponíveis (aberto para todos)
         [HttpGet]
-        public ActionResult<List<Course>> Get()
+        public ActionResult<List<Course>> GetAllCourses()
         {
-            var courses = _mongoDbService.GetCollectionData<Course>(_collectionName);
+            var courses = _courseService.GetAllCourses();
             return Ok(courses);
         }
 
+        // 📌 2. Buscar curso por ID (aberto para todos)
         [HttpGet("{id}")]
         public ActionResult<Course> GetById(string id)
         {
-            var course = _mongoDbService.GetDocumentByID<Course>(_collectionName, new ObjectId(id));
+            var course = _courseService.GetCourseById(id);
             if (course == null)
             {
-                return NotFound();
+                return NotFound("Curso não encontrado.");
             }
             return Ok(course);
         }
 
+        // 📌 3. Criar um curso (somente professores podem criar)
         [HttpPost]
-        public ActionResult<Course> Post([FromBody] Course course)
+        [Authorize] // Apenas usuários autenticados podem criar cursos
+        public ActionResult CreateCourse([FromBody] Course course)
         {
-            _mongoDbService.InsertDocument<Course>(_collectionName, course);
-            return CreatedAtAction(nameof(GetById), new { id = course.Id.ToString() }, course);
+            string teacherId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (teacherId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            bool success = _courseService.CreateCourse(teacherId, course);
+            if (!success)
+            {
+                return BadRequest("Apenas professores podem criar cursos.");
+            }
+
+            return Ok("Curso criado com sucesso!");
         }
 
+        // 📌 4. Atualizar um curso (somente o professor criador pode modificar)
         [HttpPut("{id}")]
-        public ActionResult Put(string id, [FromBody] Course updatedCourse)
+        [Authorize]
+        public ActionResult UpdateCourse(string id, [FromBody] Course updatedCourse)
         {
-            var objectId = new ObjectId(id);
-            _mongoDbService.UpdateDocument<Course>(_collectionName, objectId, updatedCourse);
-            return NoContent();
+            string teacherId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (teacherId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            bool success = _courseService.UpdateCourse(teacherId, id, updatedCourse);
+            if (!success)
+            {
+                return BadRequest("Você não tem permissão para atualizar este curso.");
+            }
+
+            return Ok("Curso atualizado com sucesso!");
         }
 
+        // 📌 5. Excluir um curso (somente o professor criador pode excluir)
         [HttpDelete("{id}")]
-        public ActionResult Delete(string id)
+        [Authorize]
+        public ActionResult DeleteCourse(string id)
         {
-            var objectId = new ObjectId(id);
-            _mongoDbService.DeleteDocument<Course>(_collectionName, objectId);
-            return NoContent();
+            string teacherId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (teacherId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            bool success = _courseService.DeleteCourse(teacherId, id);
+            if (!success)
+            {
+                return BadRequest("Você não tem permissão para excluir este curso.");
+            }
+
+            return Ok("Curso excluído com sucesso.");
+        }
+
+        // 📌 6. Buscar cursos criados pelo professor autenticado
+        [HttpGet("my-courses")]
+        [Authorize]
+        public ActionResult<List<Course>> GetMyCourses()
+        {
+            string teacherId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (teacherId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            var courses = _courseService.GetCoursesByTeacherId(teacherId);
+            return Ok(courses);
         }
     }
 }

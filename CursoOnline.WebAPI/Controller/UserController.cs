@@ -1,9 +1,8 @@
-using MongoDB.Bson;
-using MongoDB.Driver;
-using CursosOnline.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MongoDbConnection;
-using System.Collections.Generic;
+using CursosOnline.Services;
+using CursosOnline.Model;
+using System.Security.Claims;
 
 namespace CursosOnline.Controllers
 {
@@ -11,70 +10,97 @@ namespace CursosOnline.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly MongoDbService _mongoDbService;
-        private readonly string _collectionName = "Users";  // Nome da coleção no MongoDB
+        private readonly UserService _userService;
 
-        // Construtor
-        public UserController(MongoDbService mongoDbService)
-    {
-        _mongoDbService = mongoDbService; // Injeção do serviço de MongoDB
-    }
-
-        // GET: api/User
-        [HttpGet]
-        public ActionResult<List<User>> Get()
+        public UserController(UserService userService)
         {
-            // Recupera todos os usuários da coleção
-            var users = _mongoDbService.GetCollectionData<User>(_collectionName);
-            return Ok(users);
+            _userService = userService;
         }
 
-        // GET: api/User/5
-        [HttpGet("{id}")]
-        public ActionResult<User> GetById(string id)
+        // 📌 1. Buscar informações do próprio usuário autenticado
+        [HttpGet("me")]
+        [Authorize] // Qualquer usuário autenticado pode acessar
+        public ActionResult<User> GetMyProfile()
         {
-            // Filtra pelo Id do usuário (usando ObjectId)
-            var user = _mongoDbService.GetDocumentByID<User>(_collectionName, new ObjectId(id));
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
 
+            var user = _userService.GetUserById(userId);
             if (user == null)
             {
-                return NotFound();
+                return NotFound("Usuário não encontrado.");
             }
 
             return Ok(user);
         }
 
-        // POST: api/User
-        [HttpPost]
-        public ActionResult<User> Post([FromBody] User user)
+        // 📌 2. Cadastrar novo usuário (Aluno ou Professor)
+        [HttpPost("register")]
+        public ActionResult Register([FromBody] User user)
         {
-            // Insere um novo usuário
-            _mongoDbService.InsertDocument<User>(_collectionName, user);
-            return CreatedAtAction(nameof(GetById), new { id = user.Id.ToString() }, user);
+            if (user.Role != "Student" && user.Role != "Teacher")
+            {
+                return BadRequest("O papel do usuário deve ser 'Student' ou 'Teacher'.");
+            }
+
+            bool success = _userService.RegisterUser(user);
+            if (!success)
+            {
+                return BadRequest("E-mail já cadastrado.");
+            }
+            return Ok("Usuário cadastrado com sucesso!");
         }
 
-        // PUT: api/User/5
-        [HttpPut("{id}")]
-        public ActionResult Put(string id, [FromBody] User updatedUser)
+        // 📌 3. Atualizar informações do próprio usuário
+        [HttpPut("update")]
+        [Authorize] // Apenas usuários autenticados podem alterar seus dados
+        public ActionResult UpdateUser([FromBody] User updatedUser)
         {
-            // Converte o ID para ObjectId
-            var objectId = new ObjectId(id);
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
 
-            // Atualiza o usuário com os dados completos
-            _mongoDbService.UpdateDocument<User>(_collectionName, objectId, updatedUser);
-            return NoContent();
+            bool success = _userService.UpdateUser(userId, updatedUser);
+            if (!success)
+            {
+                return NotFound("Usuário não encontrado.");
+            }
+            return Ok("Usuário atualizado com sucesso.");
         }
 
-        // DELETE: api/User/5
-        [HttpDelete("{id}")]
-        public ActionResult Delete(string id)
+        // 📌 4. Alterar senha do usuário autenticado
+        [HttpPut("update-password")]
+        [Authorize] // Apenas usuários autenticados podem alterar sua senha
+        public ActionResult UpdatePassword([FromBody] UpdatePasswordRequest request)
         {
-            // Converte o ID para ObjectId
-            var objectId = new ObjectId(id);
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
 
-            // Deleta o usuário
-            _mongoDbService.DeleteDocument<User>(_collectionName, objectId);
-            return NoContent();
+            var user = _userService.GetUserById(userId);
+            if (user == null || !_userService.VerifyPassword(request.OldPassword, user.PasswordHash))
+            {
+                return BadRequest("Senha antiga incorreta.");
+            }
+
+            user.PasswordHash = _userService.HashPassword(request.NewPassword);
+            _userService.UpdateUser(userId, user);
+
+            return Ok("Senha alterada com sucesso.");
         }
+    }
+
+    // 📌 Classe auxiliar para alterar senha
+    public class UpdatePasswordRequest
+    {
+        public string OldPassword { get; set; }
+        public string NewPassword { get; set; }
     }
 }

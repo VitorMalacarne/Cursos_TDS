@@ -1,80 +1,101 @@
-using MongoDB.Bson;
-using MongoDB.Driver;
-using CursosOnline.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MongoDbConnection;
+using CursosOnline.Services;
+using CursosOnline.Model;
+using System.Security.Claims;
 using System.Collections.Generic;
 
 namespace CursosOnline.Controllers
 {
-  [Route("api/[controller]")]
-  [ApiController]
-  public class QuestionController : ControllerBase
-  {
-    private readonly MongoDbService _mongoDbService;
-    private readonly string _collectionName = "Questions";  // Nome da coleção no MongoDB
-
-    // Construtor
-    public QuestionController(MongoDbService mongoDbService)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class QuestionController : ControllerBase
     {
-      _mongoDbService = mongoDbService; // Injeção do serviço de MongoDB
+        private readonly QuestionService _questionService;
+
+        public QuestionController(QuestionService questionService)
+        {
+            _questionService = questionService;
+        }
+
+        // 📌 1. Buscar todas as perguntas de um exame (aberto para todos)
+        [HttpGet("exam/{examId}")]
+        public ActionResult<List<Question>> GetQuestionsByExam(string examId)
+        {
+            var questions = _questionService.GetQuestionsByExamId(examId);
+            return Ok(questions);
+        }
+
+        // 📌 2. Buscar uma pergunta por ID (aberto para todos)
+        [HttpGet("{id}")]
+        public ActionResult<Question> GetById(string id)
+        {
+            var question = _questionService.GetQuestionById(id);
+            if (question == null)
+            {
+                return NotFound("Pergunta não encontrada.");
+            }
+            return Ok(question);
+        }
+
+        // 3. Criar uma pergunta (somente professores podem criar)
+        [HttpPost("{examId}")]
+        [Authorize]
+        public ActionResult CreateQuestion(string examId, [FromBody] Question question)
+        {
+            string teacherId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (teacherId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            bool success = _questionService.CreateQuestion(teacherId, examId, question);
+            if (!success)
+            {
+                return BadRequest("Erro ao criar pergunta. Verifique se você é o professor do curso.");
+            }
+
+            return Ok("Pergunta criada com sucesso!");
+        }
+
+        // 📌 4. Atualizar uma pergunta (somente o professor do curso pode modificar)
+        [HttpPut("{id}")]
+        [Authorize]
+        public ActionResult UpdateQuestion(string id, [FromBody] Question updatedQuestion)
+        {
+            string teacherId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (teacherId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            bool success = _questionService.UpdateQuestion(teacherId, id, updatedQuestion);
+            if (!success)
+            {
+                return BadRequest("Você não tem permissão para atualizar esta pergunta.");
+            }
+
+            return Ok("Pergunta atualizada com sucesso!");
+        }
+
+        // 📌 5. Excluir uma pergunta (somente o professor do curso pode excluir)
+        [HttpDelete("{id}")]
+        [Authorize]
+        public ActionResult DeleteQuestion(string id)
+        {
+            string teacherId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (teacherId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            bool success = _questionService.DeleteQuestion(teacherId, id);
+            if (!success)
+            {
+                return BadRequest("Você não tem permissão para excluir esta pergunta.");
+            }
+
+            return Ok("Pergunta excluída com sucesso.");
+        }
     }
-
-    // GET: api/Question
-    [HttpGet]
-    public ActionResult<List<Question>> Get()
-    {
-      // Recupera todas as questões da coleção
-      var questions = _mongoDbService.GetCollectionData<Question>(_collectionName);
-      return Ok(questions);
-    }
-
-    // GET: api/Question/5
-    [HttpGet("{id}")]
-    public ActionResult<Question> GetById(string id)
-    {
-      // Filtra pelo Id da questão (usando ObjectId)
-      var question = _mongoDbService.GetDocumentByID<Question>(_collectionName, new ObjectId(id));
-
-      if (question == null)
-      {
-        return NotFound();
-      }
-
-      return Ok(question);
-    }
-
-    // POST: api/Question
-    [HttpPost]
-    public ActionResult<Question> Post([FromBody] Question question)
-    {
-      // Insere uma nova questão
-      _mongoDbService.InsertDocument<Question>(_collectionName, question);
-      return CreatedAtAction(nameof(GetById), new { id = question.QuestionID.ToString() }, question);
-    }
-
-    // PUT: api/Question/5
-    [HttpPut("{id}")]
-    public ActionResult Put(string id, [FromBody] Question updatedQuestion)
-    {
-      // Converte o ID para ObjectId
-      var objectId = new ObjectId(id);
-
-      // Atualiza a questão com os dados completos
-      _mongoDbService.UpdateDocument<Question>(_collectionName, objectId, updatedQuestion);
-      return NoContent();
-    }
-
-    // DELETE: api/Question/5
-    [HttpDelete("{id}")]
-    public ActionResult Delete(string id)
-    {
-      // Converte o ID para ObjectId
-      var objectId = new ObjectId(id);
-
-      // Deleta a questão
-      _mongoDbService.DeleteDocument<Question>(_collectionName, objectId);
-      return NoContent();
-    }
-  }
 }

@@ -5,40 +5,42 @@ namespace CursosOnline.Model;
 
 public class Course
 {
-    public ObjectId Id { get; set; }
+    //Agora Id é uma string com [BsonRepresentation(BsonType.ObjectId)], garantindo compatibilidade com MongoDB.
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; }  = ObjectId.GenerateNewId().ToString(); // Gera um ID automaticamente
     public string? Name { get; set; }
     public string? Description { get; set; }
     public decimal Price { get; set; }
     public string? Type { get; set; }
 
     // Relacionamentos
-    public int? InstructorID { get; set; }
+    public string InstructorId { get; set; } //Mudei de ObjectId para string para se adequar ao modelo
     public User? Instructor { get; set; } // Instrutor do curso
     public ICollection<User> Students { get; set; } = new List<User>(); // Alunos matriculados
 
     public List<Module>? Modules { get; set; } // Lista de módulos do curso
     public List<Enrollment>? Enrollments { get; set; } // Lista de matrículas
 
-    // Construtor padrão
-    public Course() { }
-
     // Construtor com parâmetros essenciais
-    public Course(ObjectId id, string name, decimal price)
+    public Course(string id, string name, decimal price)
     {
         Id = id;
         Name = name;
         Price = price;
     }
 
+    public Course() { }
+
     // Construtor completo
-    public Course(ObjectId id, string name, string description, decimal price, string type, int? instructorID)
+    public Course(string id, string name, string description, decimal price, string type, string instructorId)
     {
         Id = id;
         Name = name;
         Description = description;
         Price = price;
         Type = type;
-        InstructorID = instructorID;
+        InstructorId = instructorId;
     }
 
     // ToString para exibição

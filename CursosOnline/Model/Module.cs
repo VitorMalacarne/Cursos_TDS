@@ -2,28 +2,45 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace CursosOnline.Model;
+
 public class Module
 {
-    public ObjectId Id { get; set; }
+    //Agora Id é uma string com [BsonRepresentation(BsonType.ObjectId)], garantindo compatibilidade com MongoDB.
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; } = ObjectId.GenerateNewId().ToString(); // Gera um ID automaticamente
     public string? Name { get; set; }
+<<<<<<< HEAD
     public List<Lesson>? Lessons { get; set; }
+=======
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string CourseId { get; set; } // ID do curso ao qual o módulo pertence
+    [BsonRepresentation(BsonType.ObjectId)]
+    public List<string> LessonsIds { get; set; } = new(); // Lista de IDs das lições
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string? ExamId { get; set; } // ID do exame associado ao módulo
+>>>>>>> SamuelMoroBranch
     public Exam? Exam { get; set; } // Adicionando o atributo Exam
 
     public Module()
     {
-        Lessons = new List<Lesson>();
+        LessonsIds = new List<string>();
     }
 
-    public Module(ObjectId id, string name)
+    public Module(string id, string name, string courseId)
     {
         Id = id;
         Name = name;
-        Lessons = new List<Lesson>();
+        CourseId = courseId;
     }
 
     public override string ToString()
     {
+<<<<<<< HEAD
         return $"[ModuleID: {Id}, Name: {Name}, Lessons: {Lessons?.Count}, Exam: {Exam?.Name}]";
+=======
+        return $"[ModuleID: {Id}, Name: {Name}, CourseID: {CourseId}, LessonsCount: {LessonsIds.Count}, ExamID: {ExamId}]";
+>>>>>>> SamuelMoroBranch
     }
 
     public override bool Equals(object? obj)
