@@ -19,6 +19,9 @@ public class Course
     public User? Instructor { get; set; } // Instrutor do curso
     public ICollection<User> Students { get; set; } = new List<User>(); // Alunos matriculados
 
+    // Adicionamos um campo para a URL da imagem do curso
+    public string ImageUrl { get; set; } = "https://i.pinimg.com/736x/d1/43/79/d143798f0a2ccd1eba3101c4ff705567.jpg";
+
     public List<Module>? Modules { get; set; } // Lista de módulos do curso
     public List<Enrollment>? Enrollments { get; set; } // Lista de matrículas
 

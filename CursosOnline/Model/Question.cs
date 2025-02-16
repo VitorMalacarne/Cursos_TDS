@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-namespace CursosOnline.Model;
-public class Question
-{
-  public int QuestionID { get; private set; }
-  public string Text { get; private set; }
-  public List<string> Options { get; private set; }
-  public int CorrectAnswerIndex { get; private set; } // Index of the correct answer (0,1,2,3...)
-
-  public Question(int id, string text, List<string> options, int correctAnswerIndex)
-  {
-    QuestionID = id;
-=======
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -30,7 +17,6 @@ public class Question
   public Question(string id, string text, List<string> options, int correctAnswerIndex)
   {
     Id = id;
->>>>>>> SamuelMoroBranch
     Text = text;
     Options = options;
     CorrectAnswerIndex = correctAnswerIndex;
