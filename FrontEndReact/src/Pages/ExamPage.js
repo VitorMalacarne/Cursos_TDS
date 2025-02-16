@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import axios from "axios";
+import ExamService from "../Services/ExamService";
+import QuestionService from "../Services/QuestionService";
 
 function ExamPage() {
   const [examTitle, setExamTitle] = useState("");
@@ -15,9 +16,18 @@ function ExamPage() {
     const fetchExamData = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get("/api/exam/data"); // Ajuste a URL conforme necessário
-        setExamTitle(response.data.title);
-        setQuestions(response.data.questions);
+        const examId = "67b0f7cae33d02b52253ede2"; // Substitua pelo ID do exame real
+        const response = await ExamService.getExamById(examId);
+        setExamTitle(response.data.name);
+        console.log(response.data);
+
+        // Buscar as questões de acordo com o ID do exame
+        const questionsResponse = await QuestionService.getQuestionsByExamId(
+          examId
+        );
+        console.log(questionsResponse.data);
+        setQuestions(questionsResponse.data);
+
         setIsLoading(false);
       } catch (error) {
         console.error("Erro ao buscar dados do exame:", error);
@@ -68,60 +78,47 @@ function ExamPage() {
         <h1 className="exam-title">{examTitle}</h1>
         <div className="quiz-content">
           <form onSubmit={handleSubmit}>
-            {questions.map((question) => (
+            {questions.map((question, index) => (
               <div key={question.id} className="question-card">
                 <div className="question-header">
-                  <span className="question-number">
-                    Pergunta {question.id}
-                  </span>
-                  <span className="question-points">
-                    Nota: {question.points.toFixed(2)}
-                  </span>
+                  <span className="question-number">Pergunta {index + 1}</span>
                 </div>
 
                 <div className="question-text">{question.text}</div>
 
-                {question.image && (
-                  <div className="question-image">
-                    <img
-                      src={question.image || "/placeholder.svg"}
-                      alt="Diagrama da questão"
-                    />
-                  </div>
-                )}
-
                 <div className="question-options">
                   {question.type === "multiple"
-                    ? question.options.map((option) => (
-                        <div key={option.id} className="option">
+                    ? question.options.map((option, optionIndex) => (
+                        <div key={optionIndex} className="option">
                           <input
                             type="checkbox"
-                            id={`${question.id}-${option.id}`}
+                            id={`${question.id}-${optionIndex}`}
                             checked={
-                              answers[question.id]?.includes(option.id) || false
+                              answers[question.id]?.includes(optionIndex) ||
+                              false
                             }
                             onChange={() =>
-                              handleMultipleChoice(question.id, option.id)
+                              handleMultipleChoice(question.id, optionIndex)
                             }
                           />
-                          <label htmlFor={`${question.id}-${option.id}`}>
-                            {option.text}
+                          <label htmlFor={`${question.id}-${optionIndex}`}>
+                            {option}
                           </label>
                         </div>
                       ))
-                    : question.options.map((option) => (
-                        <div key={option.id} className="option">
+                    : question.options.map((option, optionIndex) => (
+                        <div key={optionIndex} className="option">
                           <input
                             type="radio"
                             name={`question-${question.id}`}
-                            id={`${question.id}-${option.id}`}
-                            checked={answers[question.id]?.[0] === option.id}
+                            id={`${question.id}-${optionIndex}`}
+                            checked={answers[question.id]?.[0] === optionIndex}
                             onChange={() =>
-                              handleSingleChoice(question.id, option.id)
+                              handleSingleChoice(question.id, optionIndex)
                             }
                           />
-                          <label htmlFor={`${question.id}-${option.id}`}>
-                            {option.text}
+                          <label htmlFor={`${question.id}-${optionIndex}`}>
+                            {option}
                           </label>
                         </div>
                       ))}
