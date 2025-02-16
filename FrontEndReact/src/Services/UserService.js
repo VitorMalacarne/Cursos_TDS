@@ -6,8 +6,32 @@ const getById = (id) => {
 }
 
 // Função para obter todos os animais
-const getAll = () => {
-    return axios.get(`${API_URL}/api/User`);
+const getUser = () => {
+    const token = localStorage.getItem("authToken"); // Obtém o token JWT do localStorage
+    
+    if (!token) {
+        return Promise.reject("Token não encontrado");
+    }
+
+    return axios.get(`${API_URL}/api/User/me`, {
+        headers: {
+            Authorization: `Bearer ${token}` // Passa o token JWT no cabeçalho Authorization
+        }
+    });
+};
+
+const update = (user) => {
+    const token = localStorage.getItem("authToken"); // Obtém o token JWT
+    
+    if (!token) {
+        return Promise.reject("Token não encontrado");
+    }
+
+    return axios.put(`${API_URL}/api/User/update`, user, {
+        headers: {
+            Authorization: `Bearer ${token}` // Adiciona o token no cabeçalho
+        }
+    });
 };
 
 // Função para salvar um novo animal
@@ -20,9 +44,4 @@ const delete_ = (id) => {
     return axios.delete(`${API_URL}/api/User/${id}`);
 };
 
-// Função para atualizar um animal pelo ID
-const update = (id, animal) => {
-    return axios.put(`${API_URL}/api/User/${id}`, animal);
-};
-
-export default { getAll, save, delete_, update, getById };
+export default { getUser, save, delete_, update, getById };

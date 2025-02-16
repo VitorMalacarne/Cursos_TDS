@@ -112,5 +112,19 @@ namespace CursosOnline.Controllers
             var courses = _courseService.GetCoursesByTeacherId(teacherId);
             return Ok(courses);
         }
+
+        [HttpGet("my-courses2")]
+        [Authorize]
+        public ActionResult<List<Course>> GetMyCoursesStudent()
+        {
+            string studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (studentId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            var courses = _courseService.GetCoursesByStudentId(studentId);
+            return Ok(courses);
+        }
     }
 }

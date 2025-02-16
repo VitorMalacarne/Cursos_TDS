@@ -4,9 +4,12 @@ import logo_light from "../assets/logo_light.png";
 import logo_dark from "../assets/logo_dark.png";
 import img from "../assets/logo.png";
 import DropdownMenu from "./DropdownMenu";
+import UserService from "../Services/UserService";
+import { useEffect, useState } from "react";
 
 function Navbar2({ theme, setTheme }) {
     const navigate = useNavigate();
+    const [userName, setUserName] = useState("");
 
     const toggle_mode = () => {
         theme === "light" ? setTheme("dark") : setTheme("light");
@@ -21,9 +24,22 @@ function Navbar2({ theme, setTheme }) {
         window.location.reload(); // Atualiza a página para refletir o logout
     };
 
+    useEffect(() => {
+        if (jwtToken) {
+            UserService.getUser()  // Certifique-se de que o método getUser() está implementado corretamente no seu UserService
+                .then((response) => {
+                    const user = response.data; // O objeto de resposta geralmente está em `data`
+                    setUserName(user.name); // Atualiza o estado com o nome do usuário
+                })
+                .catch((error) => {
+                    console.error("Erro ao buscar dados do usuário", error);
+                });
+        }
+    }, [jwtToken]);
+
     return (
         <div className="navbar">
-            <img src={theme === "light" ? logo_light : logo_dark} alt="" className="logo" />
+            <img src={theme === "light" ? logo_light : logo_dark} alt="" className="logo" onClick={() => navigate("/")} />
 
             <p>Explorar</p>
 
@@ -61,7 +77,7 @@ function Navbar2({ theme, setTheme }) {
                     //     style={{ cursor: "pointer" }} // Mostra que a imagem é clicável
                     // />
 
-                    <DropdownMenu />
+                    <DropdownMenu userName={userName}/>
                 )}
             </div>
         </div>

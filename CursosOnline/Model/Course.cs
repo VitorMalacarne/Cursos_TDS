@@ -18,7 +18,6 @@ public class Course
     public string InstructorId { get; set; } //Mudei de ObjectId para string para se adequar ao modelo
     public User? Instructor { get; set; } // Instrutor do curso
     public ICollection<User> Students { get; set; } = new List<User>(); // Alunos matriculados
-
     public List<Module>? Modules { get; set; } // Lista de módulos do curso
     public List<Enrollment>? Enrollments { get; set; } // Lista de matrículas
 
@@ -61,5 +60,10 @@ public class Course
     public override int GetHashCode()
     {
         return Id.GetHashCode();
+    }
+
+    public List<Course> ToList()
+    {
+        throw new NotImplementedException();
     }
 }

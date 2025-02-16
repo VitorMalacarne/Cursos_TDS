@@ -82,4 +82,15 @@ public class CourseService
             .Where(c => c.InstructorId == teacherId)
             .ToList();
     }
+
+    public List<Course> GetCoursesByStudentId(string studentId)
+{
+    // Usando o operador $elemMatch para buscar cursos que tenham o studentId na lista de estudantes
+    var filter = Builders<Course>.Filter.ElemMatch(c => c.Students, s => s.Id == studentId);
+    
+    // Passando o filtro para o método GetCollectionData
+    var courses = _mongoDbService.GetCollectionData<Course>(_collectionName, filter);
+    
+    return courses;
+}
 }

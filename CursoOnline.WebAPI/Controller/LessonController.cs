@@ -18,6 +18,13 @@ namespace CursosOnline.Controllers
             _lessonService = lessonService;
         }
 
+        [HttpGet]
+        public ActionResult<List<Course>> GetAllLessons()
+        {
+            var courses = _lessonService.GetAllLessons();
+            return Ok(courses);
+        }
+
         // 1. Buscar todas as lições de um módulo (aberto para todos)
         [HttpGet("module/{moduleId}")]
         public ActionResult<List<Lesson>> GetLessonsByModule(string moduleId)

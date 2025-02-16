@@ -21,10 +21,12 @@ namespace MongoDbConnection
         }
 
         // Exemplo de método para pegar todos os documentos de uma coleção
-        public List<T> GetCollectionData<T>(string collectionName)
+        public List<T> GetCollectionData<T>(string collectionName, FilterDefinition<T> filter = null)
         {
             var collection = _database.GetCollection<T>(collectionName);
-            return collection.Find(new BsonDocument()).ToList();
+            // Se o filtro for nulo, retorna todos os documentos. Caso contrário, aplica o filtro.
+            var finalFilter = filter ?? Builders<T>.Filter.Empty;
+            return collection.Find(finalFilter).ToList();
         }
 
         public T GetDocumentByID<T>(string collectionName, ObjectId id)
@@ -36,7 +38,7 @@ namespace MongoDbConnection
         }
 
         // permitirá buscar um único documento no MongoDB com base em um campo específico
-        public T? GetDocumentByField<T>(string collectionName, string fieldName, string fieldValue) 
+        public T? GetDocumentByField<T>(string collectionName, string fieldName, string fieldValue)
         {
             var collection = _database.GetCollection<T>(collectionName);
             var filter = Builders<T>.Filter.Eq(fieldName, fieldValue);
@@ -69,7 +71,7 @@ namespace MongoDbConnection
 
         // Exemplo de método para excluir um documento
         // modificado para retornar um valor indicando se a exclusão foi bem-sucedida ou não.
-        public bool DeleteDocument<T>(string collectionName, ObjectId id) 
+        public bool DeleteDocument<T>(string collectionName, ObjectId id)
         {
             var collection = _database.GetCollection<T>(collectionName);
             var filter = Builders<T>.Filter.Eq("Id", id); // verificar se pode dar erro (trocar 'Id' por '_id'?)

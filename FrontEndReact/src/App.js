@@ -10,6 +10,9 @@ import HomePage from './Pages/HomePage';
 import SignUpPage from './Pages/SignUpPage';
 import LoginPage from './Pages/LoginPage';
 import NotFoundPage from './Pages/NotFoundPage';
+import MyLearningPage from './Pages/MyLearningPage';
+import CoursePage from './Pages/CoursePage';
+import TeacherMainPage from './Pages/TeacherMainPage';
 
 function App() {
   const current_theme = localStorage.getItem("current_theme");
@@ -32,6 +35,9 @@ function App() {
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="*" element={<NotFoundPage />} />
+            <Route path="/mylearning" element={<MyLearningPage />} />
+            <Route path="/coursepage" element={<CoursePage />} />
+            <Route path="/teachermain" element={<TeacherMainPage />} />
           </Routes>
         </div>
       </div>

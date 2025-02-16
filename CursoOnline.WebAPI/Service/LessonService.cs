@@ -18,6 +18,11 @@ public class LessonService
         _mongoDbService = mongoDbService;
     }
 
+    public List<Lesson> GetAllLessons()
+    {
+        return _mongoDbService.GetCollectionData<Lesson>(_lessonsCollection);
+    }
+
     // 📌 1. Criar uma lição (apenas professores podem criar)
     public bool CreateLesson(string teacherId, string moduleId, Lesson lesson)
     {
