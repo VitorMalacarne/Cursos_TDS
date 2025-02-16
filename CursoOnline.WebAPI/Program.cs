@@ -80,6 +80,9 @@ builder.Services.AddSingleton<ModuleService>();       // Gerenciamento de módul
 builder.Services.AddSingleton<LessonService>();       // Gerenciamento de liçoes
 builder.Services.AddSingleton<ExamService>();         // Gerenciamento de exames
 builder.Services.AddSingleton<QuestionService>();     // Gerenciamento de questões
+builder.Services.AddSingleton<CartService>();         // Gerenciamento do carrinho de compras
+builder.Services.AddSingleton<PurchaseHistoryService>();// Gerenciamento do histórico de compras
+builder.Services.AddSingleton<WishlistService>();     // Gerenciamento da lista de desejo
 
 
 
