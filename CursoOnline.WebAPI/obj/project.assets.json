@@ -1397,11 +1397,16 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\vitor\\.nuget\\packages\\": {}
+=======
+    "C:\\Users\\samue\\.nuget\\packages\\": {}
+>>>>>>> SamuelMoroBranch
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursoOnline.WebAPI\\CursosOnline.WebAPI.csproj",
       "projectName": "CursosOnline.WebAPI",
       "projectPath": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursoOnline.WebAPI\\CursosOnline.WebAPI.csproj",
@@ -1410,22 +1415,42 @@
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\vitor\\AppData\\Roaming\\NuGet\\NuGet.Config"
+=======
+      "projectUniqueName": "C:\\GitHub\\Repositorios\\Cursos_TDS\\CursoOnline.WebAPI\\CursosOnline.WebAPI.csproj",
+      "projectName": "CursosOnline.WebAPI",
+      "projectPath": "C:\\GitHub\\Repositorios\\Cursos_TDS\\CursoOnline.WebAPI\\CursosOnline.WebAPI.csproj",
+      "packagesPath": "C:\\Users\\samue\\.nuget\\packages\\",
+      "outputPath": "C:\\GitHub\\Repositorios\\Cursos_TDS\\CursoOnline.WebAPI\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\samue\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+>>>>>>> SamuelMoroBranch
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
+<<<<<<< HEAD
             "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj": {
               "projectPath": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj"
             },
             "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj": {
               "projectPath": "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj"
+=======
+            "C:\\GitHub\\Repositorios\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj": {
+              "projectPath": "C:\\GitHub\\Repositorios\\Cursos_TDS\\CursosOnline.MongoDB\\CursosOnline.MongoDB.csproj"
+            },
+            "C:\\GitHub\\Repositorios\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj": {
+              "projectPath": "C:\\GitHub\\Repositorios\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj"
+>>>>>>> SamuelMoroBranch
             }
           }
         }
@@ -1485,7 +1510,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.402/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

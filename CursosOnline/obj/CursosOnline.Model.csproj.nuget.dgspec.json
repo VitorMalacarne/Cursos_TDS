@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\vitor\\Desktop\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj": {}
   },
   "projects": {
@@ -15,11 +16,29 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\vitor\\AppData\\Roaming\\NuGet\\NuGet.Config"
+=======
+    "C:\\GitHub\\Repositorios\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj": {}
+  },
+  "projects": {
+    "C:\\GitHub\\Repositorios\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\GitHub\\Repositorios\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj",
+        "projectName": "CursosOnline.Model",
+        "projectPath": "C:\\GitHub\\Repositorios\\Cursos_TDS\\CursosOnline\\CursosOnline.Model.csproj",
+        "packagesPath": "C:\\Users\\samue\\.nuget\\packages\\",
+        "outputPath": "C:\\GitHub\\Repositorios\\Cursos_TDS\\CursosOnline\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\samue\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+>>>>>>> SamuelMoroBranch
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -68,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.402/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

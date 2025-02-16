@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
-using MongoDB.Driver;
+using CursosOnline.Services;
 using CursosOnline.Model;
-using MongoDbConnection;
+using System.Security.Claims;
 using System.Collections.Generic;
 
 namespace CursosOnline.Controllers
@@ -11,58 +11,91 @@ namespace CursosOnline.Controllers
     [ApiController]
     public class ModuleController : ControllerBase
     {
-        private readonly MongoDbService _mongoDbService;
-        private readonly string _collectionName = "Modules"; // Nome da coleção no MongoDB
+        private readonly ModuleService _moduleService;
 
-        public ModuleController(MongoDbService mongoDbService)
+        public ModuleController(ModuleService moduleService)
         {
-            _mongoDbService = mongoDbService;
+            _moduleService = moduleService;
         }
 
-        // GET: api/Module
-        [HttpGet]
-        public IActionResult Get()
+        // 1. Buscar todos os módulos de um curso (aberto para todos)
+        [HttpGet("course/{courseId}")]
+        public ActionResult<List<Module>> GetModulesByCourse(string courseId)
         {
-            var modules = _mongoDbService.GetCollectionData<Module>(_collectionName);
+            var modules = _moduleService.GetModulesByCourseId(courseId);
             return Ok(modules);
         }
 
-        // GET: api/Module/{id}
+        // 2. Buscar módulo por ID (aberto para todos)
         [HttpGet("{id}")]
-        public IActionResult GetById(string id)
+        public ActionResult<Module> GetById(string id)
         {
-            var module = _mongoDbService.GetDocumentByID<Module>(_collectionName, new ObjectId(id));
+            var module = _moduleService.GetModuleById(id);
             if (module == null)
             {
-                return NotFound();
+                return NotFound("Módulo não encontrado.");
             }
             return Ok(module);
         }
 
-        // POST: api/Module
-        [HttpPost]
-        public IActionResult Create([FromBody] Module module)
+        // 3. Criar um módulo (somente professores podem criar)
+        [HttpPost("{courseId}")]
+        [Authorize] // Apenas usuários autenticados podem criar módulos
+        public ActionResult CreateModule(string courseId, [FromBody] Module module)
         {
-            _mongoDbService.InsertDocument(_collectionName, module);
-            return CreatedAtAction(nameof(GetById), new { id = module.Id.ToString() }, module);
+            string teacherId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (teacherId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            bool success = _moduleService.CreateModule(teacherId, courseId, module);
+            if (!success)
+            {
+                return BadRequest("Erro ao criar módulo. Verifique se você é o professor do curso e se as lições e exame são válidos.");
+            }
+
+            return Ok("Módulo criado com sucesso!");
         }
 
-        // PUT: api/Module/{id}
+        // 4. Atualizar um módulo (somente o professor do curso pode modificar)
         [HttpPut("{id}")]
-        public IActionResult Update(string id, [FromBody] Module updatedModule)
+        [Authorize]
+        public ActionResult UpdateModule(string id, [FromBody] Module updatedModule)
         {
-            var objectId = new ObjectId(id);
-            _mongoDbService.UpdateDocument(_collectionName, objectId, updatedModule);
-            return NoContent();
+            string teacherId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (teacherId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            bool success = _moduleService.UpdateModule(teacherId, id, updatedModule);
+            if (!success)
+            {
+                return BadRequest("Você não tem permissão para atualizar este módulo.");
+            }
+
+            return Ok("Módulo atualizado com sucesso!");
         }
 
-        // DELETE: api/Module/{id}
+        // 5. Excluir um módulo (somente o professor do curso pode excluir)
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        [Authorize]
+        public ActionResult DeleteModule(string id)
         {
-            var objectId = new ObjectId(id);
-            _mongoDbService.DeleteDocument<Module>(_collectionName, objectId);
-            return NoContent();
+            string teacherId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (teacherId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            bool success = _moduleService.DeleteModule(teacherId, id);
+            if (!success)
+            {
+                return BadRequest("Você não tem permissão para excluir este módulo.");
+            }
+
+            return Ok("Módulo excluído com sucesso.");
         }
     }
 }

@@ -1,41 +1,25 @@
-using CursosOnline.Model;
+using CursosOnline.Services;
 using Microsoft.AspNetCore.Mvc;
-using MongoDbConnection;
 
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-    private readonly MongoDbService _mongoDbService;
-    private readonly JwtService _jwtService;
+    private readonly UserService _userService;
 
-    public AuthController(MongoDbService mongoDbService, JwtService jwtService)
+    public AuthController(UserService userService)
     {
-        _mongoDbService = mongoDbService;
-        _jwtService = jwtService;
+        _userService = userService;
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Login([FromBody] LoginRequest request)
+    [HttpPost("login")]
+    public IActionResult Login([FromBody] LoginRequest request)//usa hash para autenticar usuário
     {
-        // Busca o usuário no banco de dados usando o método genérico FindAsync
-        var users = await _mongoDbService.FindAsync<User>("Users", u => u.Email == request.Email);
-
-        // Verifica se o usuário foi encontrado
-        var user = users.FirstOrDefault();
-        if (user == null)
+        string? token = _userService.AuthenticateUser(request.Email, request.Password);
+        if (token == null)
         {
             return Unauthorized("Credenciais inválidas.");
         }
-
-        // Verifica se a senha fornecida corresponde à senha armazenada (sem hash)
-        if (user.Password != request.Password)
-        {
-            return Unauthorized("Credenciais inválidas.");
-        }
-
-        // Gera o token JWT
-        var token = _jwtService.GenerateToken(user.Id.ToString(), user.Email);
         return Ok(new { Token = token });
     }
 }

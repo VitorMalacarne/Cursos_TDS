@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
-using MongoDbConnection;
+using CursosOnline.Services;
 using CursosOnline.Model;
-using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace CursosOnline.Controllers;
 
@@ -10,52 +10,130 @@ namespace CursosOnline.Controllers;
 [ApiController]
 public class EnrollmentController : ControllerBase
 {
-    private readonly MongoDbService _mongoDbService;
-    private readonly string _collectionName = "Enrollments";
+    private readonly EnrollmentService _enrollmentService;
 
-    public EnrollmentController(MongoDbService mongoDbService)
+    public EnrollmentController(EnrollmentService enrollmentService)
     {
-        _mongoDbService = mongoDbService;
+        _enrollmentService = enrollmentService;
     }
 
-    [HttpGet]
-    public ActionResult<List<Enrollment>> Get()
+    // 1. Matricular um aluno em um curso
+    [HttpPost("enroll")]
+    [Authorize] // Apenas usuários autenticados podem se matricular
+    public ActionResult EnrollStudent([FromBody] EnrollRequest request)
     {
-        var enrollments = _mongoDbService.GetCollectionData<Enrollment>(_collectionName);
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null)
+        {
+            return Unauthorized("Token inválido.");
+        }
+
+        bool success = _enrollmentService.EnrollStudent(userId, request.CourseId);
+        if (!success)
+        {
+            return BadRequest("Matrícula inválida. Verifique se o curso existe e se você já está matriculado.");
+        }
+
+        return Ok("Matrícula realizada com sucesso!");
+    }
+
+    // 2. Buscar todas as matrículas do próprio usuário autenticado
+    [HttpGet("my-courses")]
+    [Authorize] // Apenas usuários autenticados podem acessar
+    public ActionResult<List<Enrollment>> GetMyEnrollments()
+    {
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null)
+        {
+            return Unauthorized("Token inválido.");
+        }
+
+        var enrollments = _enrollmentService.GetEnrollmentsByUserId(userId);
         return Ok(enrollments);
     }
 
-    [HttpGet("{id}")]
-    public ActionResult<Enrollment> GetById(string id)
+    // 3. Buscar alunos matriculados em um curso (apenas professores)
+    [HttpGet("course/{courseId}/students")]
+    [Authorize] // Apenas usuários autenticados podem acessar
+    public ActionResult<List<Enrollment>> GetEnrollmentsByCourse(string courseId)
     {
-        var enrollment = _mongoDbService.GetDocumentByID<Enrollment>(_collectionName, new ObjectId(id));
-        if (enrollment == null)
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null)
         {
-            return NotFound();
+            return Unauthorized("Token inválido.");
         }
-        return Ok(enrollment);
+
+        // Apenas professores podem ver alunos matriculados nos cursos que criaram
+        var course = _enrollmentService.GetEnrollmentsByCourseId(courseId);
+        if (course == null || course.Count == 0)
+        {
+            return NotFound("Nenhum aluno encontrado para este curso.");
+        }
+
+        return Ok(course);
     }
 
-    [HttpPost]
-    public ActionResult<Enrollment> Post([FromBody] Enrollment enrollment)
+    // 4. Atualizar progresso do aluno
+    [HttpPut("update-progress/{enrollmentId}")]
+    [Authorize] // Apenas usuários autenticados podem atualizar progresso
+    public ActionResult UpdateProgress(string enrollmentId, [FromBody] UpdateProgressRequest request)
     {
-        _mongoDbService.InsertDocument<Enrollment>(_collectionName, enrollment);
-        return CreatedAtAction(nameof(GetById), new { id = enrollment.Id.ToString() }, enrollment);
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null)
+        {
+            return Unauthorized("Token inválido.");
+        }
+
+        var enrollment = _enrollmentService.GetEnrollmentById(enrollmentId);
+        if (enrollment == null || enrollment.StudentId != userId)
+        {
+            return Forbid("Você só pode atualizar seu próprio progresso.");
+        }
+
+        bool success = _enrollmentService.UpdateProgress(enrollmentId, request.Progress);
+        if (!success)
+        {
+            return BadRequest("Erro ao atualizar progresso. Verifique se o valor está entre 0 e 100.");
+        }
+
+        return Ok("Progresso atualizado com sucesso!");
     }
 
-    [HttpPut("{id}")]
-    public ActionResult Put(string id, [FromBody] Enrollment updatedEnrollment)
+    // 5. Cancelar matrícula
+    [HttpDelete("cancel/{enrollmentId}")]
+    [Authorize] // Apenas usuários autenticados podem cancelar matrícula
+    public ActionResult CancelEnrollment(string enrollmentId)
     {
-        var objectId = new ObjectId(id);
-        _mongoDbService.UpdateDocument<Enrollment>(_collectionName, objectId, updatedEnrollment);
-        return NoContent();
-    }
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null)
+        {
+            return Unauthorized("Token inválido.");
+        }
 
-    [HttpDelete("{id}")]
-    public ActionResult Delete(string id)
-    {
-        var objectId = new ObjectId(id);
-        _mongoDbService.DeleteDocument<Enrollment>(_collectionName, objectId);
-        return NoContent();
+        var enrollment = _enrollmentService.GetEnrollmentById(enrollmentId);
+        if (enrollment == null || enrollment.StudentId != userId)
+        {
+            return Forbid("Você só pode cancelar suas próprias matrículas.");
+        }
+
+        bool success = _enrollmentService.CancelEnrollment(enrollmentId);
+        if (!success)
+        {
+            return BadRequest("Erro ao cancelar matrícula.");
+        }
+
+        return Ok("Matrícula cancelada com sucesso.");
     }
+}
+
+// Classe auxiliar para matrícula
+public class EnrollRequest
+{
+    public string CourseId { get; set; }
+}
+
+// Classe auxiliar para atualização de progresso
+public class UpdateProgressRequest
+{
+    public int Progress { get; set; }
 }

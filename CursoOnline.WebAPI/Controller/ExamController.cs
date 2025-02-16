@@ -1,80 +1,141 @@
-using MongoDB.Bson;
-using MongoDB.Driver;
-using CursosOnline.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MongoDbConnection;
+using CursosOnline.Services;
+using CursosOnline.Model;
+using System.Security.Claims;
 using System.Collections.Generic;
 
 namespace CursosOnline.Controllers
 {
-  [Route("api/[controller]")]
-  [ApiController]
-  public class ExamController : ControllerBase
-  {
-    private readonly MongoDbService _mongoDbService;
-    private readonly string _collectionName = "Exams";  // Nome da coleção no MongoDB
-
-    // Construtor
-    public ExamController(MongoDbService mongoDbService)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ExamController : ControllerBase
     {
-      _mongoDbService = mongoDbService; // Injeção do serviço de MongoDB
+        private readonly ExamService _examService;
+
+        public ExamController(ExamService examService)
+        {
+            _examService = examService;
+        }
+
+        // 1. Buscar exames de um módulo (aberto para todos)
+        [HttpGet("module/{moduleId}")]
+        public ActionResult<List<Exam>> GetExamsByModule(string moduleId)
+        {
+            var exams = _examService.GetExamsByModuleId(moduleId);
+            return Ok(exams);
+        }
+
+        // 2. Buscar um exame por ID (aberto para todos)
+        [HttpGet("{id}")]
+        public ActionResult<Exam> GetById(string id)
+        {
+            var exam = _examService.GetExamById(id);
+            if (exam == null)
+            {
+                return NotFound("Exame não encontrado.");
+            }
+            return Ok(exam);
+        }
+
+        // 3. Criar um exame (somente professores podem criar)
+        [HttpPost("{moduleId}")]
+        [Authorize]
+        public ActionResult CreateExam(string moduleId, [FromBody] Exam exam)
+        {
+            string teacherId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (teacherId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            bool success = _examService.CreateExam(teacherId, moduleId, exam);
+            if (!success)
+            {
+                return BadRequest("Erro ao criar exame. Verifique se você é o professor do curso.");
+            }
+
+            return Ok("Exame criado com sucesso!");
+        }
+
+        // 4. Adicionar uma pergunta ao exame (somente professores)
+        [HttpPost("{examId}/add-question")]
+        [Authorize]
+        public ActionResult AddQuestion(string examId, [FromBody] Question question)
+        {
+            string teacherId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (teacherId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            bool success = _examService.AddQuestionToExam(teacherId, examId, question);
+            if (!success)
+            {
+                return BadRequest("Erro ao adicionar pergunta ao exame.");
+            }
+
+            return Ok("Pergunta adicionada com sucesso!");
+        }
+
+        // 5. Atualizar um exame (somente o professor do curso pode modificar)
+        [HttpPut("{id}")]
+        [Authorize]
+        public ActionResult UpdateExam(string id, [FromBody] Exam updatedExam)
+        {
+            string teacherId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (teacherId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            bool success = _examService.UpdateExam(teacherId, id, updatedExam);
+            if (!success)
+            {
+                return BadRequest("Você não tem permissão para atualizar este exame.");
+            }
+
+            return Ok("Exame atualizado com sucesso!");
+        }
+
+        // 6. Excluir um exame (somente o professor do curso pode excluir)
+        [HttpDelete("{id}")]
+        [Authorize]
+        public ActionResult DeleteExam(string id)
+        {
+            string teacherId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (teacherId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            bool success = _examService.DeleteExam(teacherId, id);
+            if (!success)
+            {
+                return BadRequest("Você não tem permissão para excluir este exame.");
+            }
+
+            return Ok("Exame excluído com sucesso.");
+        }
+
+        // 7. Submeter respostas a um exame (somente alunos)
+        [HttpPost("submit/{examId}")]
+        [Authorize]
+        public ActionResult SubmitExam(string examId, [FromBody] List<int> userAnswers)
+        {
+            string studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (studentId == null)
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            int score = _examService.GradeExam(studentId, examId, userAnswers);
+            if (score == -1)
+            {
+                return BadRequest("Erro ao submeter exame. Verifique se o exame existe e contém perguntas.");
+            }
+
+            return Ok(new { Score = score });
+        }
     }
-
-    // GET: api/Exam
-    [HttpGet]
-    public ActionResult<List<Exam>> Get()
-    {
-      // Recupera todos os exames da coleção
-      var exams = _mongoDbService.GetCollectionData<Exam>(_collectionName);
-      return Ok(exams);
-    }
-
-    // GET: api/Exam/5
-    [HttpGet("{id}")]
-    public ActionResult<Exam> GetById(string id)
-    {
-      // Filtra pelo Id do exame (usando ObjectId)
-      var exam = _mongoDbService.GetDocumentByID<Exam>(_collectionName, new ObjectId(id));
-
-      if (exam == null)
-      {
-        return NotFound();
-      }
-
-      return Ok(exam);
-    }
-
-    // POST: api/Exam
-    [HttpPost]
-    public ActionResult<Exam> Post([FromBody] Exam exam)
-    {
-      // Insere um novo exame
-      _mongoDbService.InsertDocument<Exam>(_collectionName, exam);
-      return CreatedAtAction(nameof(GetById), new { id = exam.ExamID.ToString() }, exam);
-    }
-
-    // PUT: api/Exam/5
-    [HttpPut("{id}")]
-    public ActionResult Put(string id, [FromBody] Exam updatedExam)
-    {
-      // Converte o ID para ObjectId
-      var objectId = new ObjectId(id);
-
-      // Atualiza o exame com os dados completos
-      _mongoDbService.UpdateDocument<Exam>(_collectionName, objectId, updatedExam);
-      return NoContent();
-    }
-
-    // DELETE: api/Exam/5
-    [HttpDelete("{id}")]
-    public ActionResult Delete(string id)
-    {
-      // Converte o ID para ObjectId
-      var objectId = new ObjectId(id);
-
-      // Deleta o exame
-      _mongoDbService.DeleteDocument<Exam>(_collectionName, objectId);
-      return NoContent();
-    }
-  }
 }

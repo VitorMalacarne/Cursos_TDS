@@ -2,6 +2,8 @@ using MongoDbConnection; // Adicione o namespace do seu serviço MongoDbService
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using CursosOnline.Services;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +20,36 @@ builder.Services.AddCors(options =>
 
 // Adiciona o Swagger para documentação de API
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Cursos Online API", Version = "v1" });
+
+    // 🔹 Configuração do botão "Authorize" no Swagger
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Insira o token JWT no formato: Bearer {seu_token_aqui}"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
 
 // Configuração do JWT
 builder.Services.AddAuthentication(options =>
@@ -40,8 +71,19 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Injeta o serviço para geração de tokens JWT
-builder.Services.AddSingleton<JwtService>();
+
+builder.Services.AddSingleton<JwtService>();          // Injeta o serviço para geração de tokens JWT
+builder.Services.AddSingleton<UserService>();         // Gerenciamento de usuários
+builder.Services.AddSingleton<EnrollmentService>();   // Gerenciamento de matrículas
+builder.Services.AddSingleton<CourseService>();       // Gerenciamento de cursos
+builder.Services.AddSingleton<ModuleService>();       // Gerenciamento de módulos
+builder.Services.AddSingleton<LessonService>();       // Gerenciamento de liçoes
+builder.Services.AddSingleton<ExamService>();         // Gerenciamento de exames
+builder.Services.AddSingleton<QuestionService>();     // Gerenciamento de questões
+
+
+
+
 
 // Conecta ao MongoDB Atlas via MongoDbService (substitui a configuração de DbContext)
 var mongoConnectionString = builder.Configuration.GetValue<string>("MongoConnection"); // Pega a string de conexão do MongoDB
@@ -57,6 +99,8 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
+// Configura o roteamento da API
+app.UseRouting();
 // Ativa CORS
 app.UseCors();
 
@@ -71,8 +115,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Configura o roteamento da API
-app.UseRouting();
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();

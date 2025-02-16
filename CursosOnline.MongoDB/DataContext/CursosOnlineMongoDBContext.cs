@@ -35,6 +35,14 @@ namespace MongoDbConnection
             return collection.Find(filter).First();
         }
 
+        // permitirá buscar um único documento no MongoDB com base em um campo específico
+        public T? GetDocumentByField<T>(string collectionName, string fieldName, string fieldValue) 
+        {
+            var collection = _database.GetCollection<T>(collectionName);
+            var filter = Builders<T>.Filter.Eq(fieldName, fieldValue);
+            return collection.Find(filter).FirstOrDefault();
+        }
+
         // Exemplo de método para inserir um documento
         public void InsertDocument<T>(string collectionName, T document)
         {
@@ -60,11 +68,13 @@ namespace MongoDbConnection
         }
 
         // Exemplo de método para excluir um documento
-        public void DeleteDocument<T>(string collectionName, ObjectId id)
+        // modificado para retornar um valor indicando se a exclusão foi bem-sucedida ou não.
+        public bool DeleteDocument<T>(string collectionName, ObjectId id) 
         {
             var collection = _database.GetCollection<T>(collectionName);
-            var filter = Builders<T>.Filter.Eq("Id", id);
-            collection.DeleteOne(filter);
+            var filter = Builders<T>.Filter.Eq("Id", id); // verificar se pode dar erro (trocar 'Id' por '_id'?)
+            var result = collection.DeleteOne(filter);
+            return result.DeletedCount > 0; // Retorna verdadeiro se ao menos um documento foi deletado
         }
 
         public async Task<List<T>> FindAsync<T>(string collectionName, Expression<Func<T, bool>> filter)
