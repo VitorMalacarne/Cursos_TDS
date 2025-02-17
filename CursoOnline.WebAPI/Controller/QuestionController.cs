@@ -18,22 +18,22 @@ namespace CursosOnline.Controllers
             _questionService = questionService;
         }
 
-        // 📌 1. Buscar todas as perguntas de um exame (aberto para todos)
+        // GET: api/Question/exam/{examId}
         [HttpGet("exam/{examId}")]
-        public ActionResult<List<Question>> GetQuestionsByExam(string examId)
+        public ActionResult<List<Question>> GetQuestionsByExamId(string examId)
         {
             var questions = _questionService.GetQuestionsByExamId(examId);
             return Ok(questions);
         }
 
-        // 📌 2. Buscar uma pergunta por ID (aberto para todos)
+        // GET: api/Question/{id}
         [HttpGet("{id}")]
-        public ActionResult<Question> GetById(string id)
+        public ActionResult<Question> GetQuestionById(string id)
         {
             var question = _questionService.GetQuestionById(id);
             if (question == null)
             {
-                return NotFound("Pergunta não encontrada.");
+                return NotFound();
             }
             return Ok(question);
         }
