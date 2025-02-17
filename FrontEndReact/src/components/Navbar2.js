@@ -41,7 +41,7 @@ function Navbar2({ theme, setTheme }) {
         <div className="navbar">
             <img src={theme === "light" ? logo_light : logo_dark} alt="" className="logo" onClick={() => navigate("/")} />
 
-            <p>Explorar</p>
+            <p onClick={() => navigate("/")}>Explorar</p>
 
             <div className="search-box">
                 <input type="text" placeholder="Search" />
@@ -51,7 +51,7 @@ function Navbar2({ theme, setTheme }) {
             {/* Renderiza com base na presença do token */}
             {jwtToken ? (
                 <ul>
-                    <li>Meu aprendizado</li>
+                    <li onClick={() => navigate("/mylearning")}>Meu aprendizado</li>
                     <li><div className="ico icon-heart"></div></li>
                     <li><div className="ico icon-shopping-cart"></div></li>
                     <li><div className="ico icon-bell"></div></li>
