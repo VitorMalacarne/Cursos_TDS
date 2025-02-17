@@ -3,20 +3,23 @@ FROM node:20 AS build
 WORKDIR /app
 
 # Copiar os arquivos do projeto
-COPY package.json package-lock.json ./
+COPY FrontEndReact/package.json FrontEndReact/package-lock.json ./
 RUN npm install
 
-COPY . .
+# Copie o restante dos arquivos do frontend (do diretório FrontEndReact)
+COPY FrontEndReact/ ./
 
-# Construir a aplicação
+# Execute o build do React
 RUN npm run build
 
-# Usar um servidor web para servir os arquivos estáticos
-FROM nginx:latest
+# Use o servidor HTTP para servir os arquivos construídos
+FROM nginx:alpine
+
+# Copie o build do React para o Nginx
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Expor a porta do frontend
+# Exponha a porta 80
 EXPOSE 80
 
-# Comando padrão do Nginx
+# Inicie o Nginx
 CMD ["nginx", "-g", "daemon off;"]
