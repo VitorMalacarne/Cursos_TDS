@@ -1,10 +1,6 @@
 import axios from "axios";
 import { API_URL } from "../Const";
 
-const getById = (id) => {
-    return axios.get(`${API_URL}/api/User/${id}`)
-}
-
 // Função para obter todos os animais
 const getUser = () => {
     const token = localStorage.getItem("authToken"); // Obtém o token JWT do localStorage
@@ -19,6 +15,20 @@ const getUser = () => {
         }
     });
 };
+
+const getById = (id) => {
+    const token = localStorage.getItem("authToken"); // Obtém o token JWT do localStorage
+    
+    if (!token) {
+        return Promise.reject("Token não encontrado");
+    }
+
+    return axios.get(`${API_URL}/api/User/${id}`, { // Usa o ID corretamente na URL
+        headers: {
+            Authorization: `Bearer ${token}` // Passa o token JWT no cabeçalho Authorization
+        }
+    });
+}
 
 const update = (user) => {
     const token = localStorage.getItem("authToken"); // Obtém o token JWT

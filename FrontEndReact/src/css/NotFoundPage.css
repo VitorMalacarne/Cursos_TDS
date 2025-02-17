@@ -1,0 +1,201 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+.error-container {
+  min-height: 88.5vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #0a0a0a;
+  color: #fff;
+  font-family: "Press Start 2P", cursive;
+  /* padding: 20px; */
+  overflow: hidden;
+}
+
+.error-content{
+    display: flex;
+    flex: row;
+    gap: 50px;
+}
+/* Glitch Effect */
+.glitch-wrapper {
+  margin-bottom: 2rem;
+}
+
+.glitch {
+  font-size: 8rem;
+  font-weight: bold;
+  position: relative;
+  text-shadow: 0.05em 0 0 #00fffc, -0.03em -0.04em 0 #fc00ff, 0.025em 0.04em 0 #fffc00;
+  animation: glitch 725ms infinite;
+}
+
+.glitch span {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Ghost Animation */
+.pixel-art {
+  margin: 2rem 0;
+}
+
+.ghost {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.ghost-body {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 50% 50% 0 0;
+  position: relative;
+}
+
+.ghost-eyes {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.eye {
+  width: 20px;
+  height: 20px;
+  background: #0a0a0a;
+  border-radius: 50%;
+  animation: blink 3s infinite;
+}
+
+.ghost-tail {
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tail {
+  width: 33.33%;
+  height: 100%;
+  background: #fff;
+  border-radius: 0 0 50% 50%;
+}
+
+.retry-button {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  height: 60px;
+  background: #fc00ff;
+  color: #fff;
+  text-decoration: none;
+  border: 4px solid #fff;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.retry-button:hover {
+  background: #00fffc;
+  transform: scale(1.05);
+}
+
+.blink {
+  animation: blink-animation 1s steps(2, start) infinite;
+}
+
+/* Animations */
+@keyframes glitch {
+  0% {
+    text-shadow: 0.05em 0 0 #00fffc, -0.03em -0.04em 0 #fc00ff, 0.025em 0.04em 0 #fffc00;
+  }
+  15% {
+    text-shadow: 0.05em 0 0 #00fffc, -0.03em -0.04em 0 #fc00ff, 0.025em 0.04em 0 #fffc00;
+  }
+  16% {
+    text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.035em 0 #fc00ff, -0.05em -0.05em 0 #fffc00;
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.035em 0 #fc00ff, -0.05em -0.05em 0 #fffc00;
+  }
+  50% {
+    text-shadow: 0.05em 0.035em 0 #00fffc, 0.03em 0 0 #fc00ff, 0 -0.04em 0 #fffc00;
+  }
+  99% {
+    text-shadow: 0.05em 0.035em 0 #00fffc, 0.03em 0 0 #fc00ff, 0 -0.04em 0 #fffc00;
+  }
+  100% {
+    text-shadow: -0.05em 0 0 #00fffc, -0.025em -0.04em 0 #fc00ff, -0.04em -0.025em 0 #fffc00;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1, 0.1);
+  }
+}
+
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .glitch {
+    font-size: 4rem;
+  }
+
+  .error-title {
+    font-size: 1.5rem;
+  }
+
+  .error-text {
+    font-size: 0.8rem;
+  }
+
+  .error-subtext {
+    font-size: 0.6rem;
+  }
+
+  .ghost {
+    width: 80px;
+    height: 80px;
+  }
+
+  .ghost-eyes {
+    width: 60px;
+  }
+
+  .eye {
+    width: 15px;
+    height: 15px;
+  }
+}
+

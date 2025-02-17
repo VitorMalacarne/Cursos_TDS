@@ -37,6 +37,17 @@ namespace CursosOnline.Controllers
             return Ok(user);
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<Course> GetById(string id)
+        {
+            var user = _userService.GetUserById(id);
+            if (user == null)
+            {
+                return NotFound("Usuário não encontrado.");
+            }
+            return Ok(user);
+        }
+
         // 📌 2. Cadastrar novo usuário (Aluno ou Professor)
         [HttpPost("register")]
         public ActionResult Register([FromBody] User user)
