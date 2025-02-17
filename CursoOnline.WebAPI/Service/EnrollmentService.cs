@@ -109,4 +109,18 @@ public class EnrollmentService
     {
         return _mongoDbService.DeleteDocument<Enrollment>(_collectionName, new ObjectId(enrollmentId));
     }
+
+    // NOVO! 7. Avança um módulo
+    public bool AdvanceModule(string enrollmentId)
+        {
+            var enrollment = GetEnrollmentById(enrollmentId);
+            if (enrollment == null)
+            {
+                return false; // Matrícula não encontrada
+            }
+
+            enrollment.LastCompletedModule += 1; // Avançar para o próximo módulo
+            _mongoDbService.UpdateDocument(_collectionName, new ObjectId(enrollmentId), enrollment);
+            return true;
+        }
 }

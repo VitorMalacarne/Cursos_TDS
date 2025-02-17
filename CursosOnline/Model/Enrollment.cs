@@ -16,21 +16,23 @@ public class Enrollment
     public string CourseId { get; set; }  // ID do curso
     public DateTime? EnrollmentDate { get; set; }
      public int Progress { get; set; } = 0; // Inicia com progresso 0%
+    public int LastCompletedModule { get; set; } = 0; // Novo atributo: Último módulo concluído
 
     public Enrollment() { }
 
-    public Enrollment(string id, string studentId, string courseId, DateTime enrollmentDate, int progress)
+    public Enrollment(string id, string studentId, string courseId, DateTime enrollmentDate, int progress, int lastCompletedModule)
     {
         Id = id;
         StudentId = studentId;
         CourseId = courseId;
         EnrollmentDate = enrollmentDate;
         Progress = progress;
+        LastCompletedModule = lastCompletedModule;
     }
 
     public override string ToString()
     {
-        return $"[{Id}, {StudentId}, {CourseId}, {EnrollmentDate}, {Progress}]";
+        return $"[{Id}, {StudentId}, {CourseId}, {EnrollmentDate}, {Progress}, {LastCompletedModule}]";
     }
 
     public override bool Equals(object? obj)
