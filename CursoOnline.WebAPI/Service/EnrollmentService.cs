@@ -41,7 +41,7 @@ public class EnrollmentService
 
         // Verificar se o aluno existe
         var student = _mongoDbService.GetDocumentByID<User>(_usersCollection, new ObjectId(userId));
-        if (student == null || student.Role != "Student")
+        if (student == null)
         {
             return false; // Usuário não existe ou não é um aluno
         }

@@ -13,6 +13,8 @@ public class Exam
     public string ModuleId { get; set; } // ID do módulo ao qual o exame pertence
   public List<String> QuestionIds { get; set; }
 
+  public double? Grade { get; set; }
+
   public Exam() { }
 
 

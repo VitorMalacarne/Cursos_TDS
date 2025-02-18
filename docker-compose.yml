@@ -4,9 +4,7 @@ services:
       context: .
       dockerfile: CursoOnline.WebAPI/Dockerfile
     ports:
-      - "5000:5000"
-    environment:
-      ConnectionStrings__MongoDB: "mongodb+srv://usuario:senha@seubanco.mongodb.net"
+      - "8080:8080"
 
   frontend:
     build:

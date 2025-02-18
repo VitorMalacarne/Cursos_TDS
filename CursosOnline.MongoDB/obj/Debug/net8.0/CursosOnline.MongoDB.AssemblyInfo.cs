@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CursosOnline.MongoDB")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b2778d0bd97d6bfd399d2a3adc4c742aa9e113a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5a6ed4fba7c8b134f37905c4dde031efc07b50a5")]
 [assembly: System.Reflection.AssemblyProductAttribute("CursosOnline.MongoDB")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CursosOnline.MongoDB")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
