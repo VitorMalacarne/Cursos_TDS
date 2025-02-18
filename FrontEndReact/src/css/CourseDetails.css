@@ -1,0 +1,338 @@
+:root {
+    --primary-color: #030640;
+    --secondary-color: #8338ec;
+    --accent-color: #030759;
+    --background-color: #f8f9fa;
+    --text-color: #333;
+    --cd-card-background: #ffffff;
+    --cd-header-background: #ffffff;
+  }
+  
+  body {
+    font-family: "Poppins", sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+  }
+  
+  .cd-course-details {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cd-course-details ul {
+    text-align: justify;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cd-course-details p {
+    padding: 0px;
+  }
+  
+  .cd-course-header {
+    background-color: var(--cd-header-background);
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cd-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .cd-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .cd-logo {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .cd-logo-container h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+  }
+  
+  .cd-main-nav {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .cd-nav-link {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+  }
+  
+  .cd-user-menu {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .cd-cart-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+  }
+  
+  .cd-user-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: var(--secondary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  
+  .cd-course-content {
+    flex-grow: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 2rem;
+  }
+  
+  .cd-course-hero {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 3rem 0;
+    margin: -2rem -2rem 2rem -2rem;
+  }
+  
+  .cd-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  
+  .cd-hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cd-course-tagline {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .cd-course-meta {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .cd-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .cd-course-details-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+  }
+  
+  .cd-what-you-will-learn {
+    background-color: var(--cd-card-background);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .cd-what-you-will-learn h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .cd-what-you-will-learn ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .cd-what-you-will-learn li {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+  
+  .cd-what-you-will-learn li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+  }
+  
+  .cd-course-content-section h2 {
+    margin-bottom: 1rem;
+  }
+  
+  .cd-content-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .cd-content-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  
+  .cd-content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
+  
+  .cd-content-header h3 {
+    margin: 0;
+  }
+  
+  .cd-content-meta {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .cd-course-sidebar {
+    position: sticky;
+    top: 2rem;
+  }
+  
+  .cd-course-card {
+    background-color: var(--cd-card-background);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cd-course-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .cd-card-content {
+    padding: 1.5rem;
+  }
+  
+  .cd-price {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .cd-btn-primary,
+  .cd-btn-secondary {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cd-btn-primary {
+    background-color: var(--accent-color);
+    color: white;
+    margin-bottom: 1rem;
+  }
+  
+  .cd-btn-primary:hover {
+    background-color: #030526;
+  }
+  
+  .cd-btn-secondary {
+    background-color: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+  }
+  
+  .cd-btn-secondary:hover {
+    background-color: var(--accent-color);
+    color: white;
+  }
+  
+  .cd-guarantee {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+    margin: 1rem 0;
+  }
+  
+  .cd-course-includes {
+    margin-top: 1.5rem;
+  }
+  
+  .cd-course-includes h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .cd-course-includes ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .cd-course-includes li {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    .cd-course-details-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .cd-course-sidebar {
+      position: static;
+    }
+  
+    .cd-header-content {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .cd-main-nav {
+      margin: 1rem 0;
+    }
+  
+    .cd-user-menu {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  
+    .cd-course-hero {
+      padding: 2rem 0;
+    }
+  
+    .cd-hero-content h1 {
+      font-size: 2rem;
+    }
+  
+    .cd-course-meta {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+  
