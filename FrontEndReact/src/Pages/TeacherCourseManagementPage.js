@@ -1,61 +1,143 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/TeacherCourseManagementPage.css";
+import CourseService from "../Services/CourseService";
+import UserService from "../Services/UserService";
+import ModuleService from "../Services/ModuleService";
 
 function TeacherCourseManagementPage() {
-  const [courses, setCourses] = useState([])
-  const [showCreateModal, setShowCreateModal] = useState(false)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [showEditModal, setShowEditModal] = useState(false)
-  const [selectedCourse, setSelectedCourse] = useState(null)
-  const [editingCourse, setEditingCourse] = useState(null)
-  const [showModules, setShowModules] = useState(false)
+  const [courses, setCourses] = useState([]);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [editingCourse, setEditingCourse] = useState(null);
+  const [showModules, setShowModules] = useState(false);
   const navigate = useNavigate();
   const [newCourse, setNewCourse] = useState({
-    title: "",
+    name: "",
     description: "",
     price: "",
     type: "",
     imageUrl: "",
-  })
+  });
 
-  const handleCreateCourse = (e) => {
-    e.preventDefault()
-    if (!newCourse.title || !newCourse.description || !newCourse.price || !newCourse.type || !newCourse.imageUrl) {
-      alert("Por favor, preencha todos os campos")
-      return
-    }
-    setCourses([...courses, { ...newCourse, id: Date.now(), modules: [] }])
-    setNewCourse({ title: "", description: "", price: "", type: "", imageUrl: "" })
-    setShowCreateModal(false)
-  }
+  useEffect(() => {
+    CourseService.getByInstructorId()
+      .then((response) => {
+        setCourses(response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar cursos", error);
+      });
+  }, []);
 
   const handleDeleteCourse = (course) => {
-    setSelectedCourse(course)
-    setShowDeleteModal(true)
-  }
+    setSelectedCourse(course);
+    setShowDeleteModal(true);
+  };
 
-  const confirmDelete = () => {
-    setCourses(courses.filter((course) => course.id !== selectedCourse.id))
-    setShowDeleteModal(false)
-    setSelectedCourse(null)
-  }
+  const confirmDelete = async () => {
+    if (!selectedCourse) return;
+
+    try {
+      await CourseService.deleteCourse(selectedCourse.id);
+      alert("Curso excluído com sucesso!");
+
+      const updatedCourses = await CourseService.getByInstructorId();
+      setCourses(updatedCourses.data);
+    } catch (error) {
+      console.error("Erro ao excluir curso:", error.response ? error.response.data : error);
+      alert("Erro ao excluir o curso. Tente novamente.");
+    }
+
+    setShowDeleteModal(false);
+    setSelectedCourse(null);
+  };
 
   const handleEditCourse = (course) => {
-    setEditingCourse({ ...course })
-    setShowEditModal(true)
-  }
+    setEditingCourse({
+      ...course,
+      topics: [...course.topics], // Garantindo que os tópicos sejam copiados corretamente
+    });
+    setShowEditModal(true);
+  };
 
-  const handleSaveEdit = () => {
-    setCourses(courses.map((course) => (course.id === editingCourse.id ? editingCourse : course)))
-    setShowEditModal(false)
-    setEditingCourse(null)
-  }
+  const handleSaveEdit = async () => {
+    try {
+      console.log("cushade");
+      await CourseService.updateCourse(editingCourse.id, editingCourse);
+      alert("Curso atualizado com sucesso!");
+      const updatedCourses = await CourseService.getByInstructorId();
+      setCourses(updatedCourses.data);
+    } catch (error) {
+      console.error("Erro ao atualizar curso:", error);
+      alert("Erro ao atualizar o curso. Tente novamente.");
+    }
 
-  const handleShowModules = (course) => {
-    setSelectedCourse(course)
-    setShowModules(true)
-  }
+    setShowEditModal(false);
+    setEditingCourse(null);
+  };
+
+  const handleCreateCourse = async (e) => {
+    e.preventDefault();
+
+    if (
+      !newCourse.title ||
+      !newCourse.description ||
+      !newCourse.price ||
+      !newCourse.type ||
+      !newCourse.imageUrl ||
+      !newCourse.topic1 ||
+      !newCourse.topic2 ||
+      !newCourse.topic3
+    ) {
+      alert("Por favor, preencha todos os campos");
+      return;
+    }
+
+    try {
+      const userResponse = await UserService.getUser();
+      const userData = userResponse.data;
+
+      if (!userData || !userData.id) {
+        alert("Erro: Não foi possível identificar o usuário.");
+        return;
+      }
+
+      const courseData = {
+        name: newCourse.title,
+        description: newCourse.description,
+        price: parseFloat(newCourse.price),
+        type: newCourse.type,
+        instructorId: userData.id,
+        topics: [newCourse.topic1, newCourse.topic2, newCourse.topic3],
+        imageUrl: newCourse.imageUrl,
+      };
+
+      await CourseService.createCourse(courseData);
+      alert("Curso criado com sucesso!");
+
+      const updatedCourses = await CourseService.getByInstructorId();
+      setCourses(updatedCourses.data);
+
+      setShowCreateModal(false);
+      setNewCourse({ title: "", description: "", price: "", type: "", topic1: "", topic2: "", topic3: "", imageUrl: "" });
+    } catch (error) {
+      console.error("Erro ao criar curso:", error.response ? error.response.data : error);
+      alert("Erro ao criar curso. Tente novamente.");
+    }
+  };
+
+  const handleShowModules = async (course) => {
+    try {
+      const response = await ModuleService.getModulesByCourse(course.id);
+      setSelectedCourse({ ...course, modules: response.data });
+      setShowModules(true);
+    } catch (error) {
+      console.error("Erro ao buscar módulos do curso:", error);
+    }
+  };
 
   return (
     <div className="cm-container-1">
@@ -75,6 +157,7 @@ function TeacherCourseManagementPage() {
         <table className="cm-courses-table">
           <thead>
             <tr>
+              <th>Id</th>
               <th>Título</th>
               <th>Descrição</th>
               <th>Preço</th>
@@ -85,13 +168,14 @@ function TeacherCourseManagementPage() {
           </thead>
           <tbody>
             {courses.map((course) => (
-              <tr key={course.id} onClick={() => handleShowModules(course)} className="cm-course-row">
-                <td>{course.title}</td>
+              <tr key={course.id} onClick={() => navigate(`/teachermodulemanagement/${course.id}`)} className="cm-course-row">
+                <td>{course.id}</td>
+                <td>{course.name}</td>
                 <td>{course.description}</td>
                 <td>R$ {course.price}</td>
                 <td>{course.type}</td>
                 <td>
-                  <img src={course.imageUrl || "/placeholder.svg"} alt={course.title} className="cm-course-thumbnail" />
+                  <img src={course.imageUrl || "/placeholder.svg"} alt={course.name} className="cm-course-thumbnail" />
                 </td>
                 <td onClick={(e) => e.stopPropagation()}>
                   <button className="cm-action-button cm-edit" onClick={() => handleEditCourse(course)}>
@@ -123,11 +207,12 @@ function TeacherCourseManagementPage() {
                     key={index}
                     className="cm-module-item"
                     onClick={() => {
-                      /* Navegação para página de edição */
+                      navigate(`/teachermodulemanagement/${ selectedCourse.id }/${ module.id }`);
                     }}
                   >
                     {module.name}
                   </li>
+
                 ))}
               </ul>
             ) : (
@@ -196,6 +281,31 @@ function TeacherCourseManagementPage() {
                   onChange={(e) => setNewCourse({ ...newCourse, imageUrl: e.target.value })}
                 />
               </div>
+              {/* Novos campos para os três tópicos */}
+              <div className="cm-form-group">
+                <label>Tópico 1</label>
+                <input
+                  type="text"
+                  value={newCourse.topic1}
+                  onChange={(e) => setNewCourse({ ...newCourse, topic1: e.target.value })}
+                />
+              </div>
+              <div className="cm-form-group">
+                <label>Tópico 2</label>
+                <input
+                  type="text"
+                  value={newCourse.topic2}
+                  onChange={(e) => setNewCourse({ ...newCourse, topic2: e.target.value })}
+                />
+              </div>
+              <div className="cm-form-group">
+                <label>Tópico 3</label>
+                <input
+                  type="text"
+                  value={newCourse.topic3}
+                  onChange={(e) => setNewCourse({ ...newCourse, topic3: e.target.value })}
+                />
+              </div>
               <button type="submit" className="cm-create-button">
                 Criar Curso
               </button>
@@ -208,7 +318,7 @@ function TeacherCourseManagementPage() {
         <div className="cm-modal-overlay">
           <div className="cm-modal cm-delete-modal">
             <h2>Confirmar exclusão</h2>
-            <p>Tem certeza que deseja excluir o curso "{selectedCourse.title}"? Esta ação não pode ser desfeita.</p>
+            <p>Tem certeza que deseja excluir o curso "{selectedCourse.name}"? Esta ação não pode ser desfeita.</p>
             <div className="cm-modal-actions">
               <button className="cm-cancel-button" onClick={() => setShowDeleteModal(false)}>
                 Cancelar
@@ -234,8 +344,8 @@ function TeacherCourseManagementPage() {
               <label>Nome do Curso</label>
               <input
                 type="text"
-                value={editingCourse.title}
-                onChange={(e) => setEditingCourse({ ...editingCourse, title: e.target.value })}
+                value={editingCourse.name}
+                onChange={(e) => setEditingCourse({ ...editingCourse, name: e.target.value })}
               />
             </div>
             <div className="cm-form-group">
@@ -267,26 +377,69 @@ function TeacherCourseManagementPage() {
               </select>
             </div>
             <div className="cm-form-group">
-              <label>URL da Imagem</label>
+              <label>Imagem</label>
               <input
                 type="url"
                 value={editingCourse.imageUrl}
                 onChange={(e) => setEditingCourse({ ...editingCourse, imageUrl: e.target.value })}
               />
             </div>
-            <div className="cm-modal-actions">
-              <button className="cm-cancel-button" onClick={() => setShowEditModal(false)}>
-                Cancelar
-              </button>
-              <button className="cm-save-button" onClick={handleSaveEdit}>
-                Salvar
-              </button>
+
+            {/* Campos para editar tópicos */}
+            <div className="cm-form-group">
+              <label>Tópico 1</label>
+              <input
+                type="text"
+                value={editingCourse.topics[0]}
+                onChange={(e) => setEditingCourse({
+                  ...editingCourse,
+                  topics: [
+                    e.target.value,
+                    editingCourse.topics[1],
+                    editingCourse.topics[2]
+                  ]
+                })}
+              />
             </div>
+            <div className="cm-form-group">
+              <label>Tópico 2</label>
+              <input
+                type="text"
+                value={editingCourse.topics[1]}
+                onChange={(e) => setEditingCourse({
+                  ...editingCourse,
+                  topics: [
+                    editingCourse.topics[0],
+                    e.target.value,
+                    editingCourse.topics[2]
+                  ]
+                })}
+              />
+            </div>
+            <div className="cm-form-group">
+              <label>Tópico 3</label>
+              <input
+                type="text"
+                value={editingCourse.topics[2]}
+                onChange={(e) => setEditingCourse({
+                  ...editingCourse,
+                  topics: [
+                    editingCourse.topics[0],
+                    editingCourse.topics[1],
+                    e.target.value
+                  ]
+                })}
+              />
+            </div>
+
+            <button className="cm-create-button" onClick={handleSaveEdit}>
+              Salvar Alterações
+            </button>
           </div>
         </div>
       )}
     </div>
-  )
+  );
 }
 
 export default TeacherCourseManagementPage;

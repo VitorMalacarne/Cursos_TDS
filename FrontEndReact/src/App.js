@@ -16,6 +16,7 @@ import ExamPage from "./Pages/ExamPage";
 import CourseDetails from "./Pages/CourseDetails";
 import CartPage from "./Pages/CartPage";
 import TeacherModuleManagementPage from './Pages/TeacherModuleManagementPage';
+import TeacherLessonManagementPage from './Pages/TeacherLessonManagementPage';
 import TeacherCourseManagementPage from './Pages/TeacherCourseManagementPage';
 import WishlistPage from "./Pages/WishlistPage";
 import CourseContentPage from "./Pages/CourseContentPage";
@@ -47,7 +48,8 @@ function App() {
             <Route path="/exampage" element={<ExamPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/teachercoursemanagement" element={<TeacherCourseManagementPage />} />
-            <Route path="/teachermodulemanagement" element={<TeacherModuleManagementPage />} />
+            <Route path="/teachermodulemanagement/:courseId" element={<TeacherModuleManagementPage />} />
+            <Route path="teacherlessonmanagement/:moduleId" element={<TeacherLessonManagementPage />} />
             <Route path="/wishlist" element={<WishlistPage />} />
             <Route path="/coursecontent/:id" element={<CourseContentPage />} />
           </Routes>

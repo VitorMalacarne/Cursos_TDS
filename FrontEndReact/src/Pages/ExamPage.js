@@ -4,29 +4,22 @@ import ExamService from "../Services/ExamService";
 
 function ExamPage({ exam }) {
   const [questions, setQuestions] = useState([]);
-  const [answers, setAnswers] = useState({});  // Alteração aqui: inicializando como objeto vazio
-  const [score, setScore] = useState(0); // Para armazenar a pontuação final
+  const [answers, setAnswers] = useState({});
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
-    // Limpar as questões e respostas sempre que o exam mudar
     setQuestions([]);
     setAnswers({});
-    setScore(exam.grade); // Resetar a pontuação ao trocar de exame
+    setScore(exam.grade || 0); // Garante que exam.grade seja um número válido
 
     if (!exam || !exam.questionIds || exam.questionIds.length === 0) return;
 
-    const questionIds = exam.questionIds;
-
-    if (questionIds.length === 0) return;
-
-    Promise.all(questionIds.map((id) => QuestionService.getQuestionById(id)))
+    Promise.all(exam.questionIds.map((id) => QuestionService.getQuestionById(id)))
       .then((responses) => {
         const fetchedQuestions = responses.map((response) => response.data);
         setQuestions(fetchedQuestions);
       })
-      .catch((error) => {
-        console.error("Erro ao buscar questões do exame", error);
-      });
+      .catch((error) => console.error("Erro ao buscar questões do exame", error));
   }, [exam]);
 
   const handleMultipleChoice = (questionId, optionId) => {
@@ -49,22 +42,26 @@ function ExamPage({ exam }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     let userScore = 0;
-  
-    console.log("Respostas no Submit: ", answers);
-  
+
+    console.log("Respostas no Submit:", answers);
+
     questions.forEach((question) => {
       const userAnswer = answers[question.id];
       console.log("Resposta do usuário:", userAnswer);
-  
-      if (userAnswer == question.correctAnswerIndex) {
+
+      // Verifica se a resposta está correta
+      if (userAnswer && userAnswer[0] === question.correctAnswerIndex) {
         userScore++;
       }
     });
-  
-    // Calcular a porcentagem de acerto
+
     const percentageScore = (userScore / questions.length) * 100;
-  
-    // Enviar a porcentagem para o serviço ExamService.updateExam
+
+    // Enviar pontuação para o backend
+    ExamService.updateExam({ id: exam.id, grade: percentageScore })
+      .then(() => console.log("Nota enviada com sucesso!"))
+      .catch((error) => console.error("Erro ao atualizar nota", error));
+
     setScore(percentageScore);
     console.log("Pontuação final em %:", percentageScore);
   };
@@ -89,27 +86,23 @@ function ExamPage({ exam }) {
                         <div key={optionIndex} className="option">
                           <input
                             type="checkbox"
-                            id={${question.id}-${optionIndex}}
+                            id={`${question.id}-${optionIndex}`}
                             checked={answers[question.id]?.includes(optionIndex) || false}
-                            onChange={() =>
-                              handleMultipleChoice(question.id, optionIndex)
-                            }
+                            onChange={() => handleMultipleChoice(question.id, optionIndex)}
                           />
-                          <label htmlFor={${question.id}-${optionIndex}}>{option}</label>
+                          <label htmlFor={`${question.id}-${optionIndex}`}>{option}</label>
                         </div>
                       ))
                     : question.options.map((option, optionIndex) => (
                         <div key={optionIndex} className="option">
                           <input
                             type="radio"
-                            name={question-${question.id}}
-                            id={${question.id}-${optionIndex}}
+                            name={`question-${question.id}`}
+                            id={`${question.id}-${optionIndex}`}
                             checked={answers[question.id]?.[0] === optionIndex}
-                            onChange={() =>
-                              handleSingleChoice(question.id, optionIndex)
-                            }
+                            onChange={() => handleSingleChoice(question.id, optionIndex)}
                           />
-                          <label htmlFor={${question.id}-${optionIndex}}>{option}</label>
+                          <label htmlFor={`${question.id}-${optionIndex}`}>{option}</label>
                         </div>
                       ))}
                 </div>
@@ -123,10 +116,9 @@ function ExamPage({ exam }) {
             </div>
           </form>
 
-          {/* Exibir a pontuação ao final do teste */}
           {score >= 0 && (
             <div className="score-display">
-              <h3>Sua pontuação: {score} / {questions.length}</h3>
+              <h3>Sua pontuação: {score.toFixed(2)}% </h3>
             </div>
           )}
         </div>

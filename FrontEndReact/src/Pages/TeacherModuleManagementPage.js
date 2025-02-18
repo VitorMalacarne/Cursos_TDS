@@ -1,283 +1,235 @@
-import { useState } from "react"
-import "../css/TeacherModuleManagementPage.css"
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import "../css/TeacherCourseManagementPage.css";
+import CourseService from "../Services/CourseService";
+import ModuleService from "../Services/ModuleService";
+import UserService from "../Services/UserService";
 
-const TeacherModuleManagementPage = () => {
-  const [module, setModule] = useState({
-    name: "Novo Módulo",
-    courseName: "Nome do Curso",
-    lessons: [],
-    exam: null,
+function TeacherModuleManagementPage() {
+  const [modules, setModules] = useState([])
+  const [showCreateModal, setShowCreateModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [selectedModule, setSelectedModule] = useState(null)
+  const [editingModule, setEditingModule] = useState(null)
+  const [showModules, setShowModules] = useState(false)
+  const navigate = useNavigate();
+  const { courseId } = useParams();
+  const [newModule, setNewModule] = useState({
+    name: "",
+    courseId: courseId,
+    lessonsIds: "",
+    examId: "",
   })
-  const [isEditingName, setIsEditingName] = useState(false)
-  const [tempModuleName, setTempModuleName] = useState(module.name)
-  const [showExamForm, setShowExamForm] = useState(false)
-  const [examQuestions, setExamQuestions] = useState([])
-  const [showLessonForm, setShowLessonForm] = useState(false)
-  const [lessons, setLessons] = useState([])
-  const [showConfirmation, setShowConfirmation] = useState(false)
 
-  const handleModuleNameChange = (e) => {
-    setTempModuleName(e.target.value)
-    setIsEditingName(true)
-  }
+  useEffect(() => {
+    const fetchModules = async () => {
+      try {
+        const moduleResponse = await ModuleService.getModulesByCourse(courseId);
+        setModules(moduleResponse.data);
+      } catch (error) {
+        console.error("Erro ao buscar modulo:", error);
+      }
+    };
 
-  const saveModuleName = () => {
-    setModule({ ...module, name: tempModuleName })
-    setIsEditingName(false)
-  }
+    fetchModules();
+  }, []);
 
-  const cancelModuleNameEdit = () => {
-    setTempModuleName(module.name)
-    setIsEditingName(false)
-  }
+  const handleCreateModule = async (e) => {
+    e.preventDefault();
 
-  const addQuestion = () => {
-    setExamQuestions([...examQuestions, { question: "", answers: ["", "", "", "", ""], correctAnswer: null }])
-  }
-
-  const removeQuestion = (index) => {
-    if (examQuestions.length > 1) {
-      const updatedQuestions = [...examQuestions]
-      updatedQuestions.splice(index, 1)
-      setExamQuestions(updatedQuestions)
+    if (
+      !newModule.name
+    ) {
+      alert("Por favor, preencha todos os campos");
+      return;
     }
-  }
 
-  const updateQuestion = (index, field, value) => {
-    const updatedQuestions = [...examQuestions]
-    if (field === "question") {
-      updatedQuestions[index].question = value
-    } else {
-      updatedQuestions[index].answers[field] = value
+    try {
+      const moduleData = {
+        name: newModule.name,
+        courseId: courseId,
+      };
+
+      await ModuleService.createModule(moduleData);
+      alert("Módulo criado com sucesso!");
+
+      const updatedCourses = await ModuleService.getModulesByCourse(courseId);
+      setModules(updatedCourses.data);
+
+      // Atualiza a lista de modulos no curso
+      // const course = await CourseService.getById(courseId);
+      // course.modules.add(moduleData);
+      // CourseService.updateCourse(courseId, course);
+
+      setShowCreateModal(false);
+      setNewModule({ name: "", courseId: courseId, lessonsIds: "", examId: "" });
+    } catch (error) {
+      console.error("Erro ao criar modulo:", error.response ? error.response.data : error);
+      alert("Erro ao criar modulo. Tente novamente.");
     }
-    setExamQuestions(updatedQuestions)
+  };
+
+  const handleDeleteModule = (module) => {
+    setSelectedModule(module)
+    setShowDeleteModal(true)
   }
 
-  const updateCorrectAnswer = (questionIndex, answerIndex) => {
-    const updatedQuestions = [...examQuestions]
-    updatedQuestions[questionIndex].correctAnswer = answerIndex
-    setExamQuestions(updatedQuestions)
-  }
+  const confirmDelete = async () => {
+    if (!selectedModule) return;
 
-  const isExamValid = () => {
-    return (
-      examQuestions.length > 0 &&
-      examQuestions.every(
-        (q) => q.question.trim() !== "" && q.answers.every((a) => a.trim() !== "") && q.correctAnswer !== null,
-      )
-    )
-  }
+    try {
+      await ModuleService.deleteModule(selectedModule.id);
+      alert("Módulo excluído com sucesso!");
 
-  const saveExam = () => {
-    if (isExamValid()) {
-      setModule({ ...module, exam: { questions: examQuestions } })
-      setShowExamForm(false)
-    } else {
-      alert(
-        "Por favor, adicione pelo menos uma pergunta, preencha todas as perguntas e respostas, e selecione uma resposta correta para cada pergunta.",
-      )
+      // Atualiza a lista de cursos no estado
+      const updatedModules = await ModuleService.getModulesByCourse(courseId);
+      setModules(updatedModules.data);
+    } catch (error) {
+      console.error("Erro ao excluir curso:", error.response ? error.response.data : error);
+      alert("Erro ao excluir o curso. Tente novamente.");
     }
+
+    setShowDeleteModal(false);
+    setSelectedModule(null);
+  };
+
+
+  const handleEditModule = (module) => {
+    setEditingModule({ ...module })
+    setShowEditModal(true)
   }
 
-  const editExam = () => {
-    setExamQuestions([...module.exam.questions])
-    setShowExamForm(true)
-  }
+  const handleSaveEdit = async () => {
+    if (!editingModule) return;
 
-  const cancelEditExam = () => {
-    setShowExamForm(false)
-    setExamQuestions([])
-  }
+    try {
+      await ModuleService.update(editingModule.id, editingModule);
+      alert("Curso atualizado com sucesso!");
 
-  const addLesson = () => {
-    setLessons([...lessons, { name: "", content: "" }])
-  }
-
-  const removeLesson = (index) => {
-    if (lessons.length > 1) {
-      const updatedLessons = [...lessons]
-      updatedLessons.splice(index, 1)
-      setLessons(updatedLessons)
+      // Atualiza a lista de cursos no estado
+      const updatedModules = await ModuleService.getModulesByCourse(courseId);
+      setModules(updatedModules.data);
+    } catch (error) {
+      console.error("Erro ao atualizar curso:", error.response ? error.response.data : error);
+      alert("Erro ao atualizar o curso. Tente novamente.");
     }
-  }
 
-  const updateLesson = (index, field, value) => {
-    const updatedLessons = [...lessons]
-    updatedLessons[index][field] = value
-    setLessons(updatedLessons)
-  }
-
-  const saveLessons = () => {
-    setModule({ ...module, lessons: lessons })
-    setShowLessonForm(false)
-  }
-
-  const cancelEditLessons = () => {
-    setShowLessonForm(false)
-    setLessons([...module.lessons])
-  }
+    setShowEditModal(false);
+    setEditingModule(null);
+  };
 
   return (
-    <div className="mm-module-creation-page">
-      <div className="mm-top-bar">
-        <button className="mm-back-button">{"<"}</button>
-        <h1>Criação de Módulo</h1>
-      </div>
-      <div className="mm-module-info">
-        <div className="mm-module-name-container">
-          <input type="text" value={tempModuleName} onChange={handleModuleNameChange} className="mm-module-name-input" />
-          {isEditingName && (
-            <div className="mm-module-name-actions">
-              <button onClick={saveModuleName} className="mm-icon-button mm-save">
-                ✓
-              </button>
-              <button onClick={cancelModuleNameEdit} className="mm-icon-button mm-cancel">
-                ✗
-              </button>
-            </div>
-          )}
-        </div>
-        <p className="mm-course-name">Curso: {module.courseName}</p>
+    <div className="cm-container-1">
+      <div className="cm-header">
+        <h1>Gerenciamento de Módulos</h1>
+        <button className="cm-create-button" onClick={() => setShowCreateModal(true)}>
+          Criar Novo Módulo
+        </button>
       </div>
 
-      <div className="mm-lessons-section">
-        <h2>Aulas</h2>
-        {showLessonForm ? (
-          <div className="mm-lesson-form">
-            {lessons.map((lesson, index) => (
-              <div key={index} className="mm-lesson">
-                <div className="mm-lesson-header">
-                  <input
-                    type="text"
-                    value={lesson.name}
-                    onChange={(e) => updateLesson(index, "name", e.target.value)}
-                    placeholder="Nome da Aula"
-                    className="mm-lesson-name-input"
-                  />
-                  {lessons.length > 1 && (
-                    <button onClick={() => removeLesson(index)} className="mm-remove-lesson-btn">
-                      ✕
-                    </button>
-                  )}
-                </div>
-                <textarea
-                  value={lesson.content}
-                  onChange={(e) => updateLesson(index, "content", e.target.value)}
-                  placeholder="Conteúdo da Aula"
-                  className="mm-lesson-content-input"
+      {modules.length === 0 ? (
+        <div className="cm-empty-state">
+          <h2>Você ainda não possui nenhum módulo.</h2>
+          <p>Clique no botão "Criar Novo Módulo" para começar.</p>
+        </div>
+      ) : (
+        <table className="cm-courses-table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Nome</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {modules.map((module) => (
+              <tr key={module.id} onClick={() => navigate(`/teacherlessonmanagement/${module.id}`)} className="cm-course-row">
+                <td>{module.id}</td>
+                <td>{module.name}</td>
+                <td onClick={(e) => e.stopPropagation()}>
+                  <button className="cm-action-button cm-edit" onClick={() => handleEditModule(module)}>
+                    ✎
+                  </button>
+                  <button className="cm-action-button cm-delete" onClick={() => handleDeleteModule(module)}>
+                    🗑
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+
+      {showCreateModal && (
+        <div className="cm-modal-overlay">
+          <div className="cm-modal">
+            <div className="cm-modal-header">
+              <h2>Criar Novo Módulo</h2>
+              <button className="cm-close-button" onClick={() => setShowCreateModal(false)}>
+                ×
+              </button>
+            </div>
+            <form onSubmit={handleCreateModule}>
+              <div className="cm-form-group">
+                <label>Nome do Módulo</label>
+                <input
+                  type="text"
+                  value={newModule.name}
+                  onChange={(e) => setNewModule({ ...newModule, name: e.target.value })}
                 />
               </div>
-            ))}
-            <button onClick={addLesson} className="mm-add-lesson-btn">
-              Adicionar Aula
-            </button>
-            <div className="mm-lesson-form-actions">
-              <button onClick={saveLessons} className="mm-save-lessons-btn">
-                Salvar Aulas
+              <button type="submit" className="cm-create-button">
+                Criar Módulo
               </button>
-              <button onClick={cancelEditLessons} className="mm-cancel-lessons-btn">
+            </form>
+          </div>
+        </div>
+      )}
+
+
+      {showDeleteModal && (
+        <div className="cm-modal-overlay">
+          <div className="cm-modal cm-delete-modal">
+            <h2>Confirmar exclusão</h2>
+            <p>Tem certeza que deseja excluir o módulo "{selectedModule.title}"? Esta ação não pode ser desfeita.</p>
+            <div className="cm-modal-actions">
+              <button className="cm-cancel-button" onClick={() => setShowDeleteModal(false)}>
                 Cancelar
               </button>
-            </div>
-          </div>
-        ) : (
-          <>
-            {module.lessons.length === 0 ? (
-              <p>Não há aulas neste módulo.</p>
-            ) : (
-              <ul>
-                {module.lessons.map((lesson, index) => (
-                  <li key={index}>{lesson.name}</li>
-                ))}
-              </ul>
-            )}
-            <button className="mm-add-lesson-btn" onClick={() => setShowLessonForm(true)}>
-              Adicionar Aula
-            </button>
-          </>
-        )}
-      </div>
-
-      <div className="mm-exam-section">
-        <h2>Exame/Prova</h2>
-        {module.exam && !showExamForm ? (
-          <div className="mm-exam-summary" onClick={editExam}>
-            <h3>Prova criada</h3>
-            <p>Total de perguntas: {module.exam.questions.length}</p>
-            <p className="mm-edit-exam-hint">Clique para editar a prova</p>
-          </div>
-        ) : showExamForm ? (
-          <div className="mm-exam-form">
-            <h3>Editar Prova</h3>
-            {examQuestions.map((q, qIndex) => (
-              <div key={qIndex} className="mm-question">
-                <div className="mm-question-header">
-                  <input
-                    type="text"
-                    value={q.question}
-                    onChange={(e) => updateQuestion(qIndex, "question", e.target.value)}
-                    placeholder="Pergunta"
-                    className="mm-question-input"
-                  />
-                  {examQuestions.length > 1 && (
-                    <button onClick={() => removeQuestion(qIndex)} className="mm-remove-question-btn">
-                      ✕
-                    </button>
-                  )}
-                </div>
-                {q.answers.map((a, aIndex) => (
-                  <div key={aIndex} className="mm-answer-container">
-                    <input
-                      type="radio"
-                      checked={q.correctAnswer === aIndex}
-                      onChange={() => updateCorrectAnswer(qIndex, aIndex)}
-                      className="mm-answer-radio"
-                      name={`question-${qIndex}`}
-                    />
-                    <input
-                      type="text"
-                      value={a}
-                      onChange={(e) => updateQuestion(qIndex, aIndex, e.target.value)}
-                      placeholder={`Alternativa ${aIndex + 1}`}
-                      className="mm-answer-input"
-                    />
-                  </div>
-                ))}
-              </div>
-            ))}
-            <button onClick={addQuestion} className="mm-add-question-btn">
-              Adicionar Pergunta
-            </button>
-            <div className="mm-exam-form-actions">
-              <button onClick={saveExam} className="mm-save-exam-btn" disabled={!isExamValid()}>
-                Salvar Prova
-              </button>
-              <button onClick={cancelEditExam} className="mm-cancel-exam-btn">
-                Voltar
+              <button className="cm-delete-button" onClick={confirmDelete}>
+                Excluir
               </button>
             </div>
           </div>
-        ) : (
-          <button className="mm-add-exam-btn" onClick={() => setShowExamForm(true)}>
-            Adicionar Prova
-          </button>
-        )}
-      </div>
+        </div>
+      )}
 
-      <button className="mm-save-changes-btn" onClick={() => setShowConfirmation(true)}>
-        Salvar Alterações
-      </button>
-
-      {showConfirmation && (
-        <div className="mm-confirmation-popup">
-          <p>Deseja realmente salvar as alterações?</p>
-          <div className="mm-confirmation-actions">
-            <button onClick={() => setShowConfirmation(false)} className="mm-confirm-btn">
-              Sim
-            </button>
-            <button onClick={() => setShowConfirmation(false)} className="mm-cancel-btn">
-              Não
-            </button>
+      {showEditModal && editingModule && (
+        <div className="cm-modal-overlay">
+          <div className="cm-modal">
+            <div className="cm-modal-header">
+              <h2>Editar Módulo</h2>
+              <button className="cm-close-button" onClick={() => setShowEditModal(false)}>
+                ×
+              </button>
+            </div>
+            <div className="cm-form-group">
+              <label>Nome do Módulo</label>
+              <input
+                type="text"
+                value={editingModule.name}
+                onChange={(e) => setEditingModule({ ...editingModule, name: e.target.value })}
+              />
+            </div>
+            <div className="cm-modal-actions">
+              <button className="cm-cancel-button" onClick={() => setShowEditModal(false)}>
+                Cancelar
+              </button>
+              <button className="cm-save-button" onClick={handleSaveEdit}>
+                Salvar
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -285,4 +237,4 @@ const TeacherModuleManagementPage = () => {
   )
 }
 
-export default TeacherModuleManagementPage
+export default TeacherModuleManagementPage;
