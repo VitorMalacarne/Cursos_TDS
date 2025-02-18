@@ -37,11 +37,11 @@ function DropdownMenu({ userName = "John Doe" }) {
     };
 
     const handleMyCart = () => {
-        console.log("Meu carrinho clicado");
+        navigate("/cart");
     };
 
     const handleWishlist = () => {
-        console.log("Lista de desejos clicado");
+        navigate("/wishlist");
     };
 
     const handleTeachOnLearnNest = () => {

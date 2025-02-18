@@ -1,0 +1,310 @@
+:root {
+    --primary-color: #030640;
+    --secondary-color: #8338ec;
+    --accent-color: #030759;
+    --background-color: #f8f9fa;
+    --text-color: #333;
+    --card-background: #ffffff;
+    --header-background: #ffffff;
+    --border-color: #e0e0e0;
+    --sidebar-width: 450px;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+}
+
+.cct-course-content {
+    min-height: 88%;
+    display: flex;
+    flex-direction: column;
+}
+
+.cct-course-content ul li {
+    margin: 0;
+}
+
+.cct-course-content p {
+    padding: 0;
+}
+
+.cct-course-header {
+    background-color: var(--header-background);
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cct-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.cct-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cct-logo {
+    width: 40px;
+    height: 40px;
+}
+
+.cct-logo-container h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.cct-main-nav {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.cct-nav-link {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.cct-nav-link.cct-active {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.cct-user-menu {
+    display: flex;
+    align-items: center;
+}
+
+.cct-user-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: var(--secondary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.cct-content-wrapper {
+    display: flex;
+    flex-grow: 1;
+}
+
+.cct-course-sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--card-background);
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto;
+    height: 88%;
+    /* Adjust based on header height */
+}
+
+.cct-course-progress {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.cct-course-progress h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.cct-progress-bar {
+    height: 8px;
+    background-color: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.cct-progress-fill {
+    height: 100%;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+.cct-module-list {
+    max-height: 500px;
+    /* Ajuste o tamanho conforme necessário */
+    overflow-y: auto;
+    /* Adiciona um scroll vertical quando necessário */
+
+    padding: 1rem;
+}
+
+.cct-module {
+    margin-bottom: 1rem;
+}
+
+.cct-module-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--background-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cct-module-header:hover {
+    background-color: #e9ecef;
+}
+
+.cct-module-header h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.cct-module-toggle {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.cct-lesson-list {
+    list-style-type: none;
+    margin-top: 0.5rem;
+}
+
+.cct-lesson {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cct-lesson:hover {
+    background-color: #e9ecef;
+}
+
+.cct-lesson.cct-selected {
+    background-color: #e9ecef;
+    font-weight: 500;
+}
+
+.cct-lesson-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%; /* Garante que ocupe todo o espaço disponível */
+}
+
+
+.cct-lesson-title {
+    font-size: 0.9rem;
+}
+
+.cct-lesson-duration {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.cct-completion-toggle {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cct-completion-toggle.cct-completed {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.cct-lesson-content {
+    flex-grow: 1;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.cct-video-player h2 {
+    margin-bottom: 1rem;
+}
+
+.cct-video-container {
+    margin-left: 25px;
+    aspect-ratio: 16 / 9;
+    max-width: 95%;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.cct-video-placeholder {
+    text-align: center;
+}
+
+.cct-no-lesson-selected {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    text-align: center;
+}
+
+.cct-btn-primary {
+    background-color: #030759;
+    color: white;
+    width: 100px;
+    height: 30px;
+  }
+
+@media (max-width: 768px) {
+    .cct-content-wrapper {
+        flex-direction: column;
+    }
+
+    .cct-course-sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .cct-lesson-content {
+        padding: 1rem;
+    }
+
+    .cct-header-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cct-main-nav {
+        margin: 1rem 0;
+    }
+
+    .cct-user-menu {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}

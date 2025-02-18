@@ -8,7 +8,7 @@ const add = (course) => {
         return Promise.reject("Token não encontrado");
     }
 
-    return axios.post(`${API_URL}/api/Cart/add`, {
+    return axios.post(`${API_URL}/api/Wishlist/add`, {
         courseId: course, // ou qualquer outro dado necessário
     }, {
         headers: {
@@ -17,14 +17,14 @@ const add = (course) => {
     });
 };
 
-const getCart = () => {
+const getWishlist = () => {
     const token = localStorage.getItem("authToken");
     
     if (!token) {
         return Promise.reject("Token não encontrado");
     }
 
-    return axios.get(`${API_URL}/api/Cart`, {
+    return axios.get(`${API_URL}/api/Wishlist`, {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -38,7 +38,7 @@ const remove = (course) => {
         return Promise.reject("Token não encontrado");
     }
 
-    return axios.delete(`${API_URL}/api/Cart/remove`, {
+    return axios.delete(`${API_URL}/api/Wishlist/remove`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -49,4 +49,4 @@ const remove = (course) => {
 }
 
 
-export default { add, getCart, remove };
+export default { add, getWishlist, remove };

@@ -12,7 +12,7 @@ function SignUpPage() {
         email: "",
         cpf: "",
         password: "",
-        role: "",
+        role: "Student",
     });
 
     const handleChange = (e) => {
@@ -116,16 +116,6 @@ function SignUpPage() {
                             type="password"
                             name="password"
                             value={formData.password}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>Função (Role):</label>
-                        <input
-                            type="text"
-                            name="role"
-                            value={formData.role}
                             onChange={handleChange}
                             required
                         />

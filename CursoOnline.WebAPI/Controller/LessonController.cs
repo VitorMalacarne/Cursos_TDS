@@ -19,7 +19,7 @@ namespace CursosOnline.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Course>> GetAllLessons()
+        public ActionResult<List<Lesson>> GetAllLessons()
         {
             var courses = _lessonService.GetAllLessons();
             return Ok(courses);

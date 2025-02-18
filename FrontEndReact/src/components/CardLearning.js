@@ -1,19 +1,26 @@
 import "../css/CardLearning.css"
+import { useNavigate } from "react-router-dom";
 
-function CardLearning({ title, instructor, progress, imageUrl }) {
+function CardLearning({ instructor, progress, course }) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    // Navega para a página de detalhes do curso, usando o id do curso
+    navigate(`/coursecontent/${course.id}`);
+};
 
   return (
-    <div className="learn-course-card">
+    <div className="learn-course-card" onClick={handleClick}>
       <div className="learn-course-image-container">
         <img 
-          src={imageUrl || "/placeholder.svg"} 
-          alt={`Imagem do curso ${title}`} 
+          src={course.imageUrl || "/placeholder.svg"} 
+          alt={`Imagem do curso ${course.name}`} 
           className="learn-course-image" 
         />
       </div>
 
       <div className="learn-course-content">
-        <h3 className="learn-course-title">{title}</h3>
+        <h3 className="learn-course-title">{course.name}</h3>
         <p className="learn-instructor-name">{instructor}</p>
 
         <div className="learn-progress-section">

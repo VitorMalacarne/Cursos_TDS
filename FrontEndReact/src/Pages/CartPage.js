@@ -3,23 +3,7 @@ import "../css/CartPage.css";
 import CartService from "../Services/CartService";
 import CourseService from "../Services/CourseService";
 import UserService from "../Services/UserService";
-
-const initialCartItems = [
-    {
-        id: 1,
-        title: "Masterclass de Programação Fullstack",
-        instructor: "João Silva",
-        price: 199.9,
-        image: "/placeholder.svg?height=80&width=120",
-    },
-    {
-        id: 2,
-        title: "Design de UX/UI: Do Conceito ao Protótipo",
-        instructor: "Maria Santos",
-        price: 149.9,
-        image: "/placeholder.svg?height=80&width=120",
-    },
-];
+import EnrollmentService from "../Services/EnrollmentService";
 
 function CartPage() {
     const [cart, setCart] = useState({});
@@ -58,7 +42,6 @@ function CartPage() {
     useEffect(() => {
         if (!courses || courses.length === 0) return;
 
-        // Para cada curso, fazemos a requisição do instrutor correspondente
         const instructorPromises = courses.map(course => {
             if (!course.instructorId) return Promise.resolve(null); // Se não houver instrutor, retorna null
 
@@ -70,7 +53,6 @@ function CartPage() {
                 });
         });
 
-        // Aguarda todas as requisições de instrutores e atualiza o estado
         Promise.all(instructorPromises)
             .then((instructors) => {
                 setInstructors(instructors.filter(instructor => instructor !== null)); // Filtra os instrutores nulos
@@ -92,12 +74,53 @@ function CartPage() {
         return total;
     };
 
-    //const subtotal = cartItems.reduce((sum, item) => sum + item.price, 0);
-    //const discount = 0;
-    //const total = subtotal - discount;
-
+    // Função para remover o item
     const removeItem = (id) => {
-        //setCartItems(cartItems.filter((item) => item.id !== id));
+        CartService.remove(id)
+            .then(() => {
+                // Atualiza a lista de cursos após a remoção
+                setCourses(courses.filter(course => course.id !== id));
+            })
+            .catch((error) => {
+                console.error("Erro ao remover item do carrinho", error);
+            });
+    };
+
+    const handleCheckout = () => {
+        // Cria um array de promessas de requisições POST para inscrição
+        const enrollmentPromises = courses.map(course => {
+            // Primeiro, removemos o curso do carrinho imediatamente
+            // Atualiza o estado de cursos para refletir a remoção no carrinho
+            setCourses(prevCourses => prevCourses.filter(c => c.id !== course.id));
+    
+            // Em seguida, faz a inscrição no curso
+            return EnrollmentService.post(course.id)
+                .then((response) => {
+                    console.log(`Inscrição realizada para o curso ${course.title}`, response.data);
+    
+                    // Agora, depois que a inscrição foi feita, podemos efetivamente remover o curso do backend
+                    return CartService.remove(course.id)
+                        .then(() => {
+                            console.log(`Curso ${course.title} removido do carrinho com sucesso.`);
+                        })
+                        .catch((error) => {
+                            console.error(`Erro ao remover curso ${course.title} do carrinho`, error);
+                        });
+                })
+                .catch((error) => {
+                    console.error(`Erro ao se inscrever no curso ${course.title}`, error);
+                });
+        });
+    
+        // Aguarda que todas as promessas sejam resolvidas
+        Promise.all(enrollmentPromises)
+            .then(() => {
+                console.log("Inscrição em todos os cursos realizada com sucesso.");
+                // Aqui você pode fazer algo, como redirecionar o usuário para uma página de confirmação
+            })
+            .catch((error) => {
+                console.error("Erro ao processar inscrições", error);
+            });
     };
 
     const applyCoupon = (e) => {
@@ -131,32 +154,11 @@ function CartPage() {
 
                     <aside className="ct-order-summary">
                         <h2>Resumo do Pedido</h2>
-                        {/* <div className="ct-summary-row">
-                            <span>Subtotal:</span>
-                            <span>R$ {subtotal.toFixed(2)}</span>
-                            </div>
-                            {discount > 0 && (
-                            <div className="ct-summary-row ct-discount">
-                                <span>Desconto:</span>
-                                <span>- R$ {discount.toFixed(2)}</span>
-                            </div>
-                        )} */}
                         <div className="ct-summary-row ct-total">
                             <span>Total: {formatToReal(calculateTotalPrice())}</span>
-                            {/* <span>R$ {total.toFixed(2)}</span> */}
                         </div>
 
-                        {/* <form onSubmit={applyCoupon} className="ct-coupon-form">
-                            <input
-                                type="text"
-                                placeholder="Código do cupom"
-                                value={couponCode}
-                                onChange={(e) => setCouponCode(e.target.value)}
-                            />
-                            <button type="submit">Aplicar</button>
-                        </form> */}
-
-                        <button className="ct-btn-primary ct-checkout-btn">Finalizar Compra</button>
+                        <button className="ct-btn-primary ct-checkout-btn" onClick={handleCheckout}>Finalizar Compra</button>
                     </aside>
                 </div>
             </main>

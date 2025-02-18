@@ -52,7 +52,7 @@ function Navbar2({ theme, setTheme }) {
             {jwtToken ? (
                 <ul>
                     <li onClick={() => navigate("/mylearning")}>Meu aprendizado</li>
-                    <li><div className="ico icon-heart"></div></li>
+                    <li><div className="ico icon-heart" onClick={() => navigate("/wishlist")}></div></li>
                     <li><div className="ico icon-shopping-cart" onClick={() => navigate("/cart")}></div></li>
                     {/* <li><div className="ico icon-bell"></div></li> */}
                 </ul>
