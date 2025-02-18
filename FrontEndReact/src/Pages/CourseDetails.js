@@ -6,6 +6,7 @@ import UserService from "../Services/UserService";
 import EnrollmentService from "../Services/EnrollmentService";
 import ModuleService from "../Services/ModuleService";
 import CartService from "../Services/CartService";
+import WishlistService from "../Services/WishlistService";
 
 function CourseDetails() {
   const [course, setCourse] = useState({});
@@ -82,6 +83,20 @@ function CourseDetails() {
     // Exemplo de um alerta mais estilizado com texto
     alert(`🎉 ${course.name} foi adicionado ao seu carrinho! 🚀`);
   };
+
+  const handleAddToWishlist = () => {
+    if (!authToken) {
+      // Armazenar a URL atual para redirecionar após o login
+      localStorage.setItem('redirectAfterLogin', location.pathname);
+      navigate("/login"); // Redireciona para a página de login
+      return;
+    }
+  
+    WishlistService.add(course.id);
+  
+    // Exemplo de um alerta mais estilizado com texto
+    alert(`🎉 ${course.name} foi adicionado ao seu carrinho! 🚀`);
+  };
   
 
   return (
@@ -131,6 +146,7 @@ function CourseDetails() {
               <div className="cd-card-content">
                 <div className="cd-price">{formatToReal(course.price)}</div>
                 <button className="cd-btn-primary" onClick={handleAddToCart}>Adicionar ao carrinho</button>
+                <button className="cd-btn-secondary" onClick={handleAddToWishlist}>Adicionar aos favoritos</button>
                 <div className="cd-course-includes">
                   <h3>Este curso inclui:</h3>
                   <ul>

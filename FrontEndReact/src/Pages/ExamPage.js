@@ -1,45 +1,31 @@
-"use client";
-
 import { useState, useEffect } from "react";
-import ExamService from "../Services/ExamService";
 import QuestionService from "../Services/QuestionService";
 
-function ExamPage() {
-  const [examTitle, setExamTitle] = useState("");
+function ExamPage({ exam }) {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Função para buscar as questões e o título do exame do banco de dados
-    const fetchExamData = async () => {
-      try {
-        setIsLoading(true);
-        const examId = "67b0f7cae33d02b52253ede2"; // Substitua pelo ID do exame real
-        const response = await ExamService.getExamById(examId);
-        setExamTitle(response.data.name);
-        console.log(response.data);
+    // Limpar as questões e respostas sempre que o exam mudar
+    setQuestions([]);
+    setAnswers({});
 
-        // Buscar as questões de acordo com o ID do exame
-        const questionsResponse = await QuestionService.getQuestionsByExamId(
-          examId
-        );
-        console.log(questionsResponse.data);
-        setQuestions(questionsResponse.data);
+    if (!exam || !exam.questionIds || exam.questionIds.length === 0) return;
+    
+    const questionIds = exam.questionIds;
 
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Erro ao buscar dados do exame:", error);
-        setError(
-          "Falha ao carregar o exame. Por favor, tente novamente mais tarde."
-        );
-        setIsLoading(false);
-      }
-    };
+    if (questionIds.length === 0) return;
 
-    fetchExamData();
-  }, []);
+    Promise.all(questionIds.map((id) => QuestionService.getQuestionById(id)))
+      .then((responses) => {
+        const fetchedQuestions = responses.map((response) => response.data);
+        setQuestions(fetchedQuestions);
+        console.log(fetchedQuestions);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar questões do exame", error);
+      });
+  }, [exam]); // Dependência no 'exam', o que vai disparar esse efeito quando o exame mudar
 
   const handleMultipleChoice = (questionId, optionId) => {
     setAnswers((prev) => {
@@ -64,18 +50,10 @@ function ExamPage() {
     // Aqui você pode adicionar a lógica para enviar as respostas para o backend
   };
 
-  if (isLoading) {
-    return <div className="loading">Carregando exame...</div>;
-  }
-
-  if (error) {
-    return <div className="error">{error}</div>;
-  }
-
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="quiz-container">
-        <h1 className="exam-title">{examTitle}</h1>
+        <h1 className="exam-title">{exam.name}</h1>
         <div className="quiz-content">
           <form onSubmit={handleSubmit}>
             {questions.map((question, index) => (

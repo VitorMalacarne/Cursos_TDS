@@ -17,10 +17,12 @@ import CourseDetails from "./Pages/CourseDetails";
 import CartPage from "./Pages/CartPage";
 import TeacherModuleManagementPage from './Pages/TeacherModuleManagementPage';
 import TeacherCourseManagementPage from './Pages/TeacherCourseManagementPage';
+import WishlistPage from "./Pages/WishlistPage";
+import CourseContentPage from "./Pages/CourseContentPage";
 
 function App() {
   const current_theme = localStorage.getItem("current_theme");
-  const [theme, setTheme] = useState(current_theme ? current_theme : "light");
+  const [theme, setTheme] = useState(current_theme ? current_theme : "dark");
 
   useEffect(() => {
     localStorage.setItem("current_theme", theme);
@@ -46,6 +48,8 @@ function App() {
             <Route path="/cart" element={<CartPage />} />
             <Route path="/teachercoursemanagement" element={<TeacherCourseManagementPage />} />
             <Route path="/teachermodulemanagement" element={<TeacherModuleManagementPage />} />
+            <Route path="/wishlist" element={<WishlistPage />} />
+            <Route path="/coursecontent/:id" element={<CourseContentPage />} />
           </Routes>
         </div>
       </div>

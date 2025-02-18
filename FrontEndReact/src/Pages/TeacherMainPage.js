@@ -44,13 +44,13 @@ function TeacherMainPage () {
           <div className="terms-scroll">
             <h2>1. Introdução</h2>
             <p>
-              Bem-vindo à plataforma de ensino da Udemy. Antes de começar a criar e publicar seus cursos, é importante que
+              Bem-vindo à plataforma de ensino da LearnNest. Antes de começar a criar e publicar seus cursos, é importante que
               você leia e concorde com nossos termos e condições para instrutores.
             </p>
   
             <h2>2. Elegibilidade</h2>
             <p>
-              Para se tornar um instrutor na Udemy, você deve ter pelo menos 18 anos de idade e possuir expertise no
+              Para se tornar um instrutor na LearnNest, você deve ter pelo menos 18 anos de idade e possuir expertise no
               assunto que deseja ensinar.
             </p>
   
@@ -60,23 +60,23 @@ function TeacherMainPage () {
               <br />
               3.2. O conteúdo não deve violar direitos autorais ou propriedade intelectual de terceiros.
               <br />
-              3.3. A Udemy se reserva o direito de remover qualquer conteúdo que viole nossas políticas.
+              3.3. A LearnNest se reserva o direito de remover qualquer conteúdo que viole nossas políticas.
             </p>
   
             <h2>4. Precificação e Pagamentos</h2>
             <p>
-              4.1. Você pode definir o preço do seu curso dentro das faixas estabelecidas pela Udemy.
+              4.1. Você pode definir o preço do seu curso dentro das faixas estabelecidas pela LearnNest.
               <br />
-              4.2. A Udemy retém uma porcentagem das vendas do curso conforme nosso acordo de receita compartilhada.
+              4.2. A LearnNest retém uma porcentagem das vendas do curso conforme nosso acordo de receita compartilhada.
               <br />
               4.3. Os pagamentos são processados mensalmente, sujeitos a um valor mínimo de saque.
             </p>
   
             <h2>5. Promoções e Marketing</h2>
             <p>
-              5.1. A Udemy pode incluir seu curso em promoções para aumentar as vendas.
+              5.1. A LearnNest pode incluir seu curso em promoções para aumentar as vendas.
               <br />
-              5.2. Você concorda em não oferecer seu curso Udemy por um preço menor em outras plataformas.
+              5.2. Você concorda em não oferecer seu curso LearnNest por um preço menor em outras plataformas.
             </p>
   
             <h2>6. Suporte aos Alunos</h2>
@@ -87,13 +87,13 @@ function TeacherMainPage () {
   
             <h2>7. Rescisão</h2>
             <p>
-              A Udemy se reserva o direito de encerrar sua conta de instrutor se você violar estes termos ou nossas
+              A LearnNest se reserva o direito de encerrar sua conta de instrutor se você violar estes termos ou nossas
               políticas da comunidade.
             </p>
   
             <h2>8. Alterações nos Termos</h2>
             <p>
-              A Udemy pode atualizar estes termos periodicamente. Continuando a usar a plataforma após as alterações, você
+              A LearnNest pode atualizar estes termos periodicamente. Continuando a usar a plataforma após as alterações, você
               concorda com os novos termos.
             </p>
           </div>

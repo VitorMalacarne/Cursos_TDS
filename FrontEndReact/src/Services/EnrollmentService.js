@@ -19,5 +19,20 @@ const getNumStudentsByCourse = (courseId) => {
     return axios.get(`${API_URL}/api/Enrollment/course/${courseId}/numStudents`);
 } 
 
+const post = (course) => {
+    const token = localStorage.getItem("authToken");
+    
+    if (!token) {
+        return Promise.reject("Token não encontrado");
+    }
 
-export default { getAllEnrollments, getNumStudentsByCourse };
+    return axios.post(`${API_URL}/api/Enrollment/enroll`, {
+        courseId: course, // ou qualquer outro dado necessário
+    }, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+};
+
+export default { getAllEnrollments, getNumStudentsByCourse, post};

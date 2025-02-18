@@ -5,4 +5,9 @@ const getAll = () => {
     return axios.get(`${API_URL}/api/Lesson`);
 }
 
-export default { getAll };
+const getLessonById = (id) => {
+    return axios.get(`${API_URL}/api/Lesson/${id}`);
+}
+ 
+
+export default { getAll, getLessonById };

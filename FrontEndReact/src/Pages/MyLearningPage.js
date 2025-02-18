@@ -60,29 +60,30 @@ function MyLearningPage() {
 
     return (
         <div className="flex justify-center items-center h-screen">
-            <h1 className="title-1">Meu aprendizado</h1>
-            <div className="mylearning-container">
-                {enrollments.length > 0 ? (
-                    enrollments.map((enrollment) => {
-                        // Encontrar o curso correspondente ao enrollment
-                        const course = courses.find((course) => course.id === enrollment.courseId);
-                        // Encontrar o instrutor correspondente ao course
-                        const instructor = instructors.find((instructor) => instructor.id === course?.instructorId);
+            <main className="wl-favorites-content">
+                <h1>Meu aprendizado</h1>
+                <div className="wl-favorites-grid">
+                    {enrollments.length > 0 ? (
+                        enrollments.map((enrollment) => {
+                            // Encontrar o curso correspondente ao enrollment
+                            const course = courses.find((course) => course.id === enrollment.courseId);
+                            // Encontrar o instrutor correspondente ao course
+                            const instructor = instructors.find((instructor) => instructor.id === course?.instructorId);
 
-                        return course && instructor ? (
-                            <CardLearning
-                                key={course.id} // Usar course.id para a chave
-                                title={course.name}
-                                instructor={instructor.name} // Usando o nome do instrutor
-                                progress={enrollment.progress} // Agora o progresso vem do enrollment
-                                imageUrl={course.imageUrl}
-                            />
-                        ) : null; // Caso o curso ou instrutor não sejam encontrados
-                    })
-                ) : (
-                    <p>Você ainda não está em nenhum curso!</p>
-                )}
-            </div>
+                            return course && instructor ? (
+                                <CardLearning
+                                    key={course.id} // Usar course.id para a chave
+                                    course={course}
+                                    instructor={instructor.name} // Usando o nome do instrutor
+                                    progress={enrollment.progress} // Agora o progresso vem do enrollment
+                                />
+                            ) : null; // Caso o curso ou instrutor não sejam encontrados
+                        })
+                    ) : (
+                        <p>Você ainda não está em nenhum curso!</p>
+                    )}
+                </div>
+            </main>
         </div>
     );
 }
