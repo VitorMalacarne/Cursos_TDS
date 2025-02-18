@@ -13,6 +13,7 @@ public class Lesson
     [BsonRepresentation(BsonType.ObjectId)]
     public string ModuleId { get; set; } // ID do módulo ao qual a lição pertence
     public TimeSpan Duration { get; set; } = TimeSpan.Zero; // Inicia com 0 por padrão
+    public bool? Watched { get; set; }
 
     public Lesson() { }
 
