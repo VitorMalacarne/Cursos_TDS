@@ -1,18 +1,22 @@
-import './css/App.css';
-import './css/Props.css';
-import './css/Icons.css';
+import "./css/App.css";
+import "./css/Props.css";
+import "./css/Icons.css";
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-import Navbar2 from './components/Navbar2';
-import HomePage from './Pages/HomePage';
-import SignUpPage from './Pages/SignUpPage';
-import LoginPage from './Pages/LoginPage';
-import NotFoundPage from './Pages/NotFoundPage';
-import MyLearningPage from './Pages/MyLearningPage';
-import CoursePage from './Pages/CoursePage';
-import TeacherMainPage from './Pages/TeacherMainPage';
+import Navbar2 from "./components/Navbar2";
+import HomePage from "./Pages/HomePage";
+import SignUpPage from "./Pages/SignUpPage";
+import LoginPage from "./Pages/LoginPage";
+import NotFoundPage from "./Pages/NotFoundPage";
+import MyLearningPage from "./Pages/MyLearningPage";
+import TeacherMainPage from "./Pages/TeacherMainPage";
+import ExamPage from "./Pages/ExamPage";
+import CourseDetails from "./Pages/CourseDetails";
+import CartPage from "./Pages/CartPage";
+import TeacherModuleManagementPage from './Pages/TeacherModuleManagementPage';
+import TeacherCourseManagementPage from './Pages/TeacherCourseManagementPage';
 
 function App() {
   const current_theme = localStorage.getItem("current_theme");
@@ -27,7 +31,7 @@ function App() {
       <div className={`container ${theme}`}>
         {/* Navbar sempre presente */}
         <Navbar2 theme={theme} setTheme={setTheme} />
-        
+
         {/* Área das páginas */}
         <div className="page-content">
           <Routes>
@@ -36,8 +40,12 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="*" element={<NotFoundPage />} />
             <Route path="/mylearning" element={<MyLearningPage />} />
-            <Route path="/coursepage" element={<CoursePage />} />
+            <Route path="/coursepage/:id" element={<CourseDetails />} />
             <Route path="/teachermain" element={<TeacherMainPage />} />
+            <Route path="/exampage" element={<ExamPage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/teachercoursemanagement" element={<TeacherCourseManagementPage />} />
+            <Route path="/teachermodulemanagement" element={<TeacherModuleManagementPage />} />
           </Routes>
         </div>
       </div>

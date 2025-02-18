@@ -23,3 +23,22 @@ CursosOnline/obj/
 CursosOnline.EFCore/cursosonline.db
 CursosOnline.EFCore/cursosonline.db-shm
 CursosOnline.EFCore/cursosonline.db-wal
+
+# Ignorar arquivos de build do .NET
+**/obj/
+**/bin/
+
+# Ignorar arquivos AssemblyInfo e caches
+**/obj/**/AssemblyInfo.*
+**/obj/**/AssemblyInfoInputs.cache
+**/obj/**/AssemblyReference.cache
+CursoOnline.WebAPI/obj/Debug/net8.0/CursosOnline.WebAPI.AssemblyInfo.cs
+CursoOnline.WebAPI/obj/Debug/net8.0/CursosOnline.WebAPI.csproj.AssemblyReference.cache
+CursosOnline/obj/Debug/net8.0/CursosOnline.Model.AssemblyInfo.cs
+CursosOnline/obj/Debug/net8.0/CursosOnline.Model.AssemblyInfoInputs.cache
+CursoOnline.WebAPI/obj/Debug/net8.0/CursosOnline.WebAPI.AssemblyInfoInputs.cache
+CursosOnline.MongoDB/obj/Debug/net8.0/CursosOnline.MongoDB.AssemblyInfo.cs
+CursosOnline.MongoDB/obj/Debug/net8.0/CursosOnline.MongoDB.AssemblyInfoInputs.cache
+CursoOnline.WebAPI/obj/Debug/net8.0/CursosOnline.WebAPI.AssemblyInfoInputs.cache
+CursoOnline.WebAPI/obj/Debug/net8.0/CursosOnline.WebAPI.csproj.AssemblyReference.cache
+CursoOnline.WebAPI/obj/Debug/net8.0/CursosOnline.WebAPI.AssemblyInfo.cs

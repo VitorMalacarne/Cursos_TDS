@@ -27,7 +27,10 @@ function LoginPage() {
                 localStorage.setItem("authToken", token);
 
                 // Redireciona para a página inicial ou dashboard
-                navigate("/");
+                const redirectTo = localStorage.getItem('redirectAfterLogin') || "/"; // Caso não exista, redireciona para a home
+                localStorage.removeItem('redirectAfterLogin'); // Limpar a URL armazenada após o redirecionamento
+
+                navigate(redirectTo);
             } else {
                 alert("Erro ao realizar login. Verifique suas credenciais.");
             }

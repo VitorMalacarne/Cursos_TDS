@@ -1,9 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import UserService from "../Services/UserService";
 
 function DropdownMenu({ userName = "John Doe" }) {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
+    const [isTeacher, setIsTeacher] = useState(false);
+
+    const jwtToken = localStorage.getItem("authToken");
+
+    useEffect(() => {
+            if (jwtToken) {
+                UserService.getUser()  // Certifique-se de que o método getUser() está implementado corretamente no seu UserService
+                    .then((response) => {
+                        const user = response.data; // O objeto de resposta geralmente está em `data`
+                        if(user.role == "Teacher"){setIsTeacher(true)} // Atualiza o estado com o nome do usuário
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao buscar dados do usuário", error);
+                    });
+            }
+        }, [jwtToken]);
 
     // Função para extrair as iniciais
     const getInitials = (name) => {
@@ -28,7 +45,11 @@ function DropdownMenu({ userName = "John Doe" }) {
     };
 
     const handleTeachOnLearnNest = () => {
-        navigate("/teachermain");
+        if(isTeacher){
+            navigate("/teachercoursemanagement");
+        } else{
+            navigate("/teachermain");
+        }
     };
 
     const handleNotifications = () => {
