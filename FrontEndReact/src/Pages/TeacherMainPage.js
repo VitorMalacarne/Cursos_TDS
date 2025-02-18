@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../css/TeacherMainPage.css"
+import "../css/TeacherMainPage.css";
 import UserService from "../Services/UserService";
 
 function TeacherMainPage () {
@@ -36,10 +36,6 @@ function TeacherMainPage () {
             console.error("Erro ao atualizar o usuário:", error);
           });
       };
-
-    if(isTeacher){
-        return (<>Instrutor</>);
-    }
   
     return (
       <div className="terms-container">

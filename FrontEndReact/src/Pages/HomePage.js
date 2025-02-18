@@ -36,7 +36,7 @@ function HomePage() {
                 console.error("Erro ao buscar cursos", error);
             });
 
-            console.log("cursin: " + courses.length);
+        console.log("cursin: " + courses.length);
 
         LessonService.getAll() // Chame o método getAll() do CourseService
             .then((response) => {
@@ -47,21 +47,26 @@ function HomePage() {
                 console.error("Erro ao buscar cursos", error);
             });
 
-            console.log(lessons.length);
+        console.log(lessons.length);
     }, [jwtToken]);
 
     return (
         <div className="flex justify-center items-center h-screen">
-            <h1 className="title-1">{"Bem-vindo(a) de volta, " + userName}</h1>
-            <h2 className="title-2">Continue a aprender</h2>
-            <Carousel>
-                {lessons.length > 0 ? (
-                    lessons.map((lesson) => (
-                        <LessonCard key={lesson.id} lesson={lesson} />
-                    ))
-                ) : (
-                    <p>Carregando cursos...</p>
-                )}</Carousel>
+            {jwtToken && (
+                <>
+                    <h1 className="title-1">{"Bem-vindo(a) de volta, " + userName}</h1>
+                    <h2 className="title-2">Continue a aprender</h2>
+                    <Carousel>
+                        {lessons.length > 0 ? (
+                            lessons.map((lesson) => (
+                                <LessonCard key={lesson.id} lesson={lesson} />
+                            ))
+                        ) : (
+                            <p>Carregando cursos...</p>
+                        )}
+                    </Carousel>
+                </>
+            )}
             <h2 className="title-2">Sugestões para você</h2>
             <Carousel>{courses.length > 0 ? (
                 courses.map((course) => (

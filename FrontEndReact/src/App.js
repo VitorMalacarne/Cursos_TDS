@@ -11,9 +11,12 @@ import SignUpPage from "./Pages/SignUpPage";
 import LoginPage from "./Pages/LoginPage";
 import NotFoundPage from "./Pages/NotFoundPage";
 import MyLearningPage from "./Pages/MyLearningPage";
-import CoursePage from "./Pages/CoursePage";
 import TeacherMainPage from "./Pages/TeacherMainPage";
 import ExamPage from "./Pages/ExamPage";
+import CourseDetails from "./Pages/CourseDetails";
+import CartPage from "./Pages/CartPage";
+import TeacherModuleManagementPage from './Pages/TeacherModuleManagementPage';
+import TeacherCourseManagementPage from './Pages/TeacherCourseManagementPage';
 
 function App() {
   const current_theme = localStorage.getItem("current_theme");
@@ -37,9 +40,12 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="*" element={<NotFoundPage />} />
             <Route path="/mylearning" element={<MyLearningPage />} />
-            <Route path="/coursepage" element={<CoursePage />} />
+            <Route path="/coursepage/:id" element={<CourseDetails />} />
             <Route path="/teachermain" element={<TeacherMainPage />} />
             <Route path="/exampage" element={<ExamPage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/teachercoursemanagement" element={<TeacherCourseManagementPage />} />
+            <Route path="/teachermodulemanagement" element={<TeacherModuleManagementPage />} />
           </Routes>
         </div>
       </div>

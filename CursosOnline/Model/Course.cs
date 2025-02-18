@@ -23,6 +23,7 @@ public class Course
     public string ImageUrl { get; set; } = "https://i.pinimg.com/736x/d1/43/79/d143798f0a2ccd1eba3101c4ff705567.jpg";
 
     public List<Module>? Modules { get; set; } // Lista de módulos do curso
+    public List<string>? Topics { get; set; } // Lista de tópicos do curso
     public List<Enrollment>? Enrollments { get; set; } // Lista de matrículas
 
     // Construtor com parâmetros essenciais
@@ -36,7 +37,7 @@ public class Course
     public Course() { }
 
     // Construtor completo
-    public Course(string id, string name, string description, decimal price, string type, string instructorId)
+    public Course(string id, string name, string description, decimal price, string type, string instructorId, List<string>? topics)
     {
         Id = id;
         Name = name;
@@ -44,6 +45,7 @@ public class Course
         Price = price;
         Type = type;
         InstructorId = instructorId;
+        Topics = topics;
     }
 
     // ToString para exibição

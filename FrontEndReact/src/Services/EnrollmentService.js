@@ -15,5 +15,9 @@ const getAllEnrollments = () => {
     });
 }
 
+const getNumStudentsByCourse = (courseId) => {
+    return axios.get(`${API_URL}/api/Enrollment/course/${courseId}/numStudents`);
+} 
 
-export default { getAllEnrollments };
+
+export default { getAllEnrollments, getNumStudentsByCourse };
