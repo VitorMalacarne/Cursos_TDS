@@ -14,6 +14,7 @@ import MyLearningPage from "./Pages/MyLearningPage";
 import TeacherMainPage from "./Pages/TeacherMainPage";
 import ExamPage from "./Pages/ExamPage";
 import CourseDetails from "./Pages/CourseDetails";
+import CartPage from "./Pages/CartPage";
 
 function App() {
   const current_theme = localStorage.getItem("current_theme");
@@ -40,6 +41,7 @@ function App() {
             <Route path="/coursepage/:id" element={<CourseDetails />} />
             <Route path="/teachermain" element={<TeacherMainPage />} />
             <Route path="/exampage" element={<ExamPage />} />
+            <Route path="/cart" element={<CartPage />} />
           </Routes>
         </div>
       </div>

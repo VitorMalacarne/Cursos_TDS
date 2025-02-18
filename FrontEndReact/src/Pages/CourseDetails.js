@@ -1,59 +1,11 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import "../css/CourseDetails.css"
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom"; // Adicionar useLocation
+import "../css/CourseDetails.css";
 import CourseService from "../Services/CourseService";
 import UserService from "../Services/UserService";
 import EnrollmentService from "../Services/EnrollmentService";
 import ModuleService from "../Services/ModuleService";
-
-const courseData = {
-  title: "Masterclass de Programação Fullstack",
-  instructor: "João Silva",
-  rating: 4.8,
-  students: 2345,
-  lastUpdated: "Maio 2023",
-  description:
-    "Aprenda a desenvolver aplicações web completas, do backend ao frontend, utilizando as tecnologias mais modernas do mercado.",
-  whatYouWillLearn: [
-    "Desenvolver APIs RESTful com Node.js e Express",
-    "Criar interfaces responsivas com React e Styled Components",
-    "Trabalhar com bancos de dados SQL e NoSQL",
-    "Implementar autenticação e autorização em aplicações web",
-    "Utilizar ferramentas de controle de versão e deploy contínuo",
-  ],
-  courseContent: [
-    {
-      title: "Introdução ao Desenvolvimento Fullstack",
-      lectures: 5,
-      duration: "1h 30min",
-    },
-    {
-      title: "Backend com Node.js e Express",
-      lectures: 10,
-      duration: "4h 15min",
-    },
-    {
-      title: "Frontend com React e Styled Components",
-      lectures: 8,
-      duration: "3h 45min",
-    },
-    {
-      title: "Integração de Backend e Frontend",
-      lectures: 6,
-      duration: "2h 30min",
-    },
-    {
-      title: "Autenticação e Autorização",
-      lectures: 4,
-      duration: "1h 45min",
-    },
-    {
-      title: "Deploy e Considerações Finais",
-      lectures: 3,
-      duration: "1h 15min",
-    },
-  ],
-}
+import CartService from "../Services/CartService";
 
 function CourseDetails() {
   const [course, setCourse] = useState({});
@@ -61,9 +13,12 @@ function CourseDetails() {
   const [numStudents, setNumStudentes] = useState(0);
   const [modules, setModules] = useState([]);
   const { id } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation(); // Captura a URL da página atual
+  const authToken = localStorage.getItem('authToken');
 
   useEffect(() => {
-    if (!id) return; // Evita chamar o serviço se o id não estiver definido
+    if (!id) return;
 
     CourseService.getById(id)
       .then((response) => {
@@ -76,7 +31,7 @@ function CourseDetails() {
   }, [id]);
 
   useEffect(() => {
-    if (!course?.instructorId) return; // Só busca o instrutor se o course já estiver carregado
+    if (!course?.instructorId) return;
 
     UserService.getById(course.instructorId)
       .then((response) => {
@@ -99,20 +54,35 @@ function CourseDetails() {
         setModules(response.data);
       })
       .catch((error) => {
-        console.error("Erro ao buscar número de alunos", error);
+        console.error("Erro ao buscar módulos", error);
       });
-  }, [course]); // Roda sempre que o course for atualizado
+  }, [course]);
 
   const formatToReal = (value) => {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL',
     }).format(value);
-  }
+  };
 
   const getTotalLessons = () => {
     return modules.reduce((total, module) => total + (module.lessonsIds ? module.lessonsIds.length : 0), 0);
-  }
+  };
+
+  const handleAddToCart = () => {
+    if (!authToken) {
+      // Armazenar a URL atual para redirecionar após o login
+      localStorage.setItem('redirectAfterLogin', location.pathname);
+      navigate("/login"); // Redireciona para a página de login
+      return;
+    }
+  
+    CartService.add(course.id);
+  
+    // Exemplo de um alerta mais estilizado com texto
+    alert(`🎉 ${course.name} foi adicionado ao seu carrinho! 🚀`);
+  };
+  
 
   return (
     <div className="cd-course-details">
@@ -132,7 +102,7 @@ function CourseDetails() {
             <div className="cd-what-you-will-learn">
               <h2>O que você aprenderá</h2>
               <ul>
-                {courseData.whatYouWillLearn.map((item, index) => (
+                {course.topics && course.topics.map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
               </ul>
@@ -141,12 +111,12 @@ function CourseDetails() {
             <div className="cd-course-content-section">
               <h2>Conteúdo do curso</h2>
               <ul className="cd-content-list">
-                {courseData.courseContent.map((section, index) => (
+                {modules.map((module, index) => (
                   <li key={index} className="cd-content-item">
                     <div className="cd-content-header">
-                      <h3>{section.title}</h3>
+                      <h3>{module.name}</h3>
                       <span className="cd-content-meta">
-                        {section.lectures} aulas • {section.duration}
+                        {module.lessonsIds?.length} aulas
                       </span>
                     </div>
                   </li>
@@ -160,7 +130,7 @@ function CourseDetails() {
               <img src={course.imageUrl} alt={course.name} className="cd-course-image" />
               <div className="cd-card-content">
                 <div className="cd-price">{formatToReal(course.price)}</div>
-                <button className="cd-btn-primary">Adicionar ao carrinho</button>
+                <button className="cd-btn-primary" onClick={handleAddToCart}>Adicionar ao carrinho</button>
                 <div className="cd-course-includes">
                   <h3>Este curso inclui:</h3>
                   <ul>
@@ -177,7 +147,7 @@ function CourseDetails() {
         </div>
       </main>
     </div>
-  )
+  );
 }
 
 export default CourseDetails;

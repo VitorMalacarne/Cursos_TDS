@@ -1,0 +1,290 @@
+:root {
+    --primary-color: #030640;
+    --secondary-color: #8338ec;
+    --accent-color: #030759;
+    --background-color: #f8f9fa;
+    --text-color: #333;
+    --card-background: #ffffff;
+    --header-background: #ffffff;
+    --border-color: #e0e0e0;
+  }
+  
+  body {
+    font-family: "Poppins", sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+  }
+  
+  .ct-shopping-cart {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ct-shopping-cart p {
+    padding: 0px;
+  }
+  
+  .ct-cart-header {
+    background-color: var(--header-background);
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .ct-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .ct-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .ct-logo {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .ct-logo-container h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+  }
+  
+  .ct-main-nav {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .ct-nav-link {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+  }
+  
+  .ct-user-menu {
+    display: flex;
+    align-items: center;
+  }
+  
+  .ct-user-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: var(--secondary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  
+  .ct-cart-content {
+    flex-grow: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 2rem;
+  }
+  
+  .ct-cart-content h1 {
+    margin-bottom: 2rem;
+  }
+  
+  .ct-cart-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+  }
+  
+  .ct-cart-items {
+    background-color: var(--card-background);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+  }
+  
+  .ct-cart-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .ct-cart-item:last-child {
+    border-bottom: none;
+  }
+  
+  .ct-item-image {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 1rem;
+  }
+  
+  .ct-item-details {
+    flex-grow: 1;
+  }
+  
+  .ct-item-details h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+  }
+  
+  .ct-item-details p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+  }
+  
+  .ct-item-price {
+    font-weight: bold;
+    margin: 0 1rem;
+  }
+  
+  .ct-remove-item {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s ease;
+  }
+  
+  .ct-remove-item:hover {
+    color: var(--accent-color);
+  }
+  
+  .ct-order-summary {
+    background-color: var(--card-background);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    height: 200px;
+  }
+  
+  .ct-order-summary h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .ct-summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  
+  .ct-summary-row.total {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+  }
+  
+  .ct-summary-row.discount {
+    color: var(--accent-color);
+  }
+  
+  .ct-coupon-form {
+    display: flex;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .ct-coupon-form input {
+    flex-grow: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px 0 0 4px;
+  }
+  
+  .ct-coupon-form button {
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .ct-coupon-form button:hover {
+    background-color: #2a75e6;
+  }
+  
+  .ct-checkout-btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .ct-checkout-btn:hover {
+    background-color: #030526;
+  }
+  
+  .ct-continue-shopping {
+    display: block;
+    text-align: center;
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+  
+  @media (max-width: 768px) {
+    .ct-cart-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .ct-header-content {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .ct-main-nav {
+      margin: 1rem 0;
+    }
+  
+    .ct-user-menu {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  
+    .ct-cart-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .ct-item-image {
+      width: 100%;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+  
+    .ct-item-price {
+      margin: 0.5rem 0;
+    }
+  
+    .ct-remove-item {
+      align-self: flex-end;
+    }
+  }
+  

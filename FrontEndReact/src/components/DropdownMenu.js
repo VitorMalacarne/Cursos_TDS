@@ -20,7 +20,7 @@ function DropdownMenu({ userName = "John Doe" }) {
     };
 
     const handleMyCart = () => {
-        console.log("Meu carrinho clicado");
+        navigate("/cart");
     };
 
     const handleWishlist = () => {
