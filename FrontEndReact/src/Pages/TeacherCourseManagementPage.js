@@ -1,9 +1,6 @@
-"use client"
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../components/styles.css";
-
+import "../css/TeacherCourseManagementPage.css";
 
 function TeacherCourseManagementPage() {
   const [courses, setCourses] = useState([])
@@ -61,21 +58,21 @@ function TeacherCourseManagementPage() {
   }
 
   return (
-    <div className="container-1">
-      <div className="header">
+    <div className="cm-container-1">
+      <div className="cm-header">
         <h1>Gerenciamento de Cursos</h1>
-        <button className="create-button" onClick={() => setShowCreateModal(true)}>
+        <button className="cm-create-button" onClick={() => setShowCreateModal(true)}>
           Criar Novo Curso
         </button>
       </div>
 
       {courses.length === 0 ? (
-        <div className="empty-state">
+        <div className="cm-empty-state">
           <h2>Você ainda não possui nenhum curso.</h2>
           <p>Clique no botão "Criar Novo Curso" para começar.</p>
         </div>
       ) : (
-        <table className="courses-table">
+        <table className="cm-courses-table">
           <thead>
             <tr>
               <th>Título</th>
@@ -88,19 +85,19 @@ function TeacherCourseManagementPage() {
           </thead>
           <tbody>
             {courses.map((course) => (
-              <tr key={course.id} onClick={() => handleShowModules(course)} className="course-row">
+              <tr key={course.id} onClick={() => handleShowModules(course)} className="cm-course-row">
                 <td>{course.title}</td>
                 <td>{course.description}</td>
                 <td>R$ {course.price}</td>
                 <td>{course.type}</td>
                 <td>
-                  <img src={course.imageUrl || "/placeholder.svg"} alt={course.title} className="course-thumbnail" />
+                  <img src={course.imageUrl || "/placeholder.svg"} alt={course.title} className="cm-course-thumbnail" />
                 </td>
                 <td onClick={(e) => e.stopPropagation()}>
-                  <button className="action-button edit" onClick={() => handleEditCourse(course)}>
+                  <button className="cm-action-button cm-edit" onClick={() => handleEditCourse(course)}>
                     ✎
                   </button>
-                  <button className="action-button delete" onClick={() => handleDeleteCourse(course)}>
+                  <button className="cm-action-button cm-delete" onClick={() => handleDeleteCourse(course)}>
                     🗑
                   </button>
                 </td>
@@ -111,20 +108,20 @@ function TeacherCourseManagementPage() {
       )}
 
       {showModules && selectedCourse && (
-        <div className="modules-section">
-          <div className="modules-header">
+        <div className="cm-modules-section">
+          <div className="cm-modules-header">
             <h2>Módulos do Curso: {selectedCourse.title}</h2>
-            <button className="close-button" onClick={() => setShowModules(false)}>
+            <button className="cm-close-button" onClick={() => setShowModules(false)}>
               Cancelar
             </button>
           </div>
-          <div className="modules-content">
+          <div className="cm-modules-content">
             {selectedCourse.modules && selectedCourse.modules.length > 0 ? (
-              <ul className="modules-list">
+              <ul className="cm-modules-list">
                 {selectedCourse.modules.map((module, index) => (
                   <li
                     key={index}
-                    className="module-item"
+                    className="cm-module-item"
                     onClick={() => {
                       /* Navegação para página de edição */
                     }}
@@ -134,10 +131,10 @@ function TeacherCourseManagementPage() {
                 ))}
               </ul>
             ) : (
-              <p className="no-modules">Nenhum módulo cadastrado</p>
+              <p className="cm-no-modules">Nenhum módulo cadastrado</p>
             )}
             <button
-              className="add-module-button"
+              className="cm-add-module-button"
               onClick={() => {
                 navigate("/teachermodulemanagement");
               }}
@@ -149,16 +146,16 @@ function TeacherCourseManagementPage() {
       )}
 
       {showCreateModal && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <div className="modal-header">
+        <div className="cm-modal-overlay">
+          <div className="cm-modal">
+            <div className="cm-modal-header">
               <h2>Criar Novo Curso</h2>
-              <button className="close-button" onClick={() => setShowCreateModal(false)}>
+              <button className="cm-close-button" onClick={() => setShowCreateModal(false)}>
                 ×
               </button>
             </div>
             <form onSubmit={handleCreateCourse}>
-              <div className="form-group">
+              <div className="cm-form-group">
                 <label>Nome do Curso</label>
                 <input
                   type="text"
@@ -166,14 +163,14 @@ function TeacherCourseManagementPage() {
                   onChange={(e) => setNewCourse({ ...newCourse, title: e.target.value })}
                 />
               </div>
-              <div className="form-group">
+              <div className="cm-form-group">
                 <label>Descrição</label>
                 <textarea
                   value={newCourse.description}
                   onChange={(e) => setNewCourse({ ...newCourse, description: e.target.value })}
                 />
               </div>
-              <div className="form-group">
+              <div className="cm-form-group">
                 <label>Preço</label>
                 <input
                   type="number"
@@ -182,7 +179,7 @@ function TeacherCourseManagementPage() {
                   onChange={(e) => setNewCourse({ ...newCourse, price: e.target.value })}
                 />
               </div>
-              <div className="form-group">
+              <div className="cm-form-group">
                 <label>Tipo</label>
                 <select value={newCourse.type} onChange={(e) => setNewCourse({ ...newCourse, type: e.target.value })}>
                   <option value="">Selecione o tipo do curso</option>
@@ -191,7 +188,7 @@ function TeacherCourseManagementPage() {
                   <option value="misto">Misto</option>
                 </select>
               </div>
-              <div className="form-group">
+              <div className="cm-form-group">
                 <label>URL da Imagem</label>
                 <input
                   type="url"
@@ -199,7 +196,7 @@ function TeacherCourseManagementPage() {
                   onChange={(e) => setNewCourse({ ...newCourse, imageUrl: e.target.value })}
                 />
               </div>
-              <button type="submit" className="create-button">
+              <button type="submit" className="cm-create-button">
                 Criar Curso
               </button>
             </form>
@@ -208,15 +205,15 @@ function TeacherCourseManagementPage() {
       )}
 
       {showDeleteModal && (
-        <div className="modal-overlay">
-          <div className="modal delete-modal">
+        <div className="cm-modal-overlay">
+          <div className="cm-modal cm-delete-modal">
             <h2>Confirmar exclusão</h2>
             <p>Tem certeza que deseja excluir o curso "{selectedCourse.title}"? Esta ação não pode ser desfeita.</p>
-            <div className="modal-actions">
-              <button className="cancel-button" onClick={() => setShowDeleteModal(false)}>
+            <div className="cm-modal-actions">
+              <button className="cm-cancel-button" onClick={() => setShowDeleteModal(false)}>
                 Cancelar
               </button>
-              <button className="delete-button" onClick={confirmDelete}>
+              <button className="cm-delete-button" onClick={confirmDelete}>
                 Excluir
               </button>
             </div>
@@ -225,15 +222,15 @@ function TeacherCourseManagementPage() {
       )}
 
       {showEditModal && editingCourse && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <div className="modal-header">
+        <div className="cm-modal-overlay">
+          <div className="cm-modal">
+            <div className="cm-modal-header">
               <h2>Editar Curso</h2>
-              <button className="close-button" onClick={() => setShowEditModal(false)}>
+              <button className="cm-close-button" onClick={() => setShowEditModal(false)}>
                 ×
               </button>
             </div>
-            <div className="form-group">
+            <div className="cm-form-group">
               <label>Nome do Curso</label>
               <input
                 type="text"
@@ -241,14 +238,14 @@ function TeacherCourseManagementPage() {
                 onChange={(e) => setEditingCourse({ ...editingCourse, title: e.target.value })}
               />
             </div>
-            <div className="form-group">
+            <div className="cm-form-group">
               <label>Descrição</label>
               <textarea
                 value={editingCourse.description}
                 onChange={(e) => setEditingCourse({ ...editingCourse, description: e.target.value })}
               />
             </div>
-            <div className="form-group">
+            <div className="cm-form-group">
               <label>Preço</label>
               <input
                 type="number"
@@ -257,7 +254,7 @@ function TeacherCourseManagementPage() {
                 onChange={(e) => setEditingCourse({ ...editingCourse, price: e.target.value })}
               />
             </div>
-            <div className="form-group">
+            <div className="cm-form-group">
               <label>Tipo</label>
               <select
                 value={editingCourse.type}
@@ -269,7 +266,7 @@ function TeacherCourseManagementPage() {
                 <option value="misto">Misto</option>
               </select>
             </div>
-            <div className="form-group">
+            <div className="cm-form-group">
               <label>URL da Imagem</label>
               <input
                 type="url"
@@ -277,11 +274,11 @@ function TeacherCourseManagementPage() {
                 onChange={(e) => setEditingCourse({ ...editingCourse, imageUrl: e.target.value })}
               />
             </div>
-            <div className="modal-actions">
-              <button className="cancel-button" onClick={() => setShowEditModal(false)}>
+            <div className="cm-modal-actions">
+              <button className="cm-cancel-button" onClick={() => setShowEditModal(false)}>
                 Cancelar
               </button>
-              <button className="save-button" onClick={handleSaveEdit}>
+              <button className="cm-save-button" onClick={handleSaveEdit}>
                 Salvar
               </button>
             </div>
@@ -292,5 +289,4 @@ function TeacherCourseManagementPage() {
   )
 }
 
-export default TeacherCourseManagementPage
-
+export default TeacherCourseManagementPage;

@@ -1,17 +1,17 @@
-.container-1 {
+.cm-container-1 {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
-.header {
+.cm-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
 }
 
-.create-button {
+.cm-create-button {
   background-color: #1a1a1a;
   color: white;
   border: none;
@@ -21,52 +21,52 @@
   font-size: 16px;
 }
 
-.create-button:hover {
+.cm-create-button:hover {
   background-color: #333;
 }
 
-.empty-state {
+.cm-empty-state {
   text-align: center;
   padding: 60px 20px;
   background-color: #f8f8f8;
   border-radius: 8px;
 }
 
-.empty-state h2 {
+.cm-empty-state h2 {
   color: #333;
   margin-bottom: 10px;
 }
 
-.empty-state p {
+.cm-empty-state p {
   color: #666;
 }
 
-.courses-table {
+.cm-courses-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
 }
 
-.courses-table th,
-.courses-table td {
+.cm-courses-table th,
+.cm-courses-table td {
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid #eee;
 }
 
-.courses-table th {
+.cm-courses-table th {
   background-color: #f8f8f8;
   font-weight: 600;
 }
 
-.course-thumbnail {
+.cm-course-thumbnail {
   width: 60px;
   height: 40px;
   object-fit: cover;
   border-radius: 4px;
 }
 
-.action-button {
+.cm-action-button {
   background: none;
   border: none;
   cursor: pointer;
@@ -75,15 +75,15 @@
   margin: 0 5px;
 }
 
-.action-button.edit:hover {
+.cm-action-button.edit:hover {
   color: #2196f3;
 }
 
-.action-button.delete:hover {
+.cm-action-button.delete:hover {
   color: #f44336;
 }
 
-.modal-overlay {
+.cm-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -96,7 +96,7 @@
   z-index: 1000;
 }
 
-.modal {
+.cm-modal {
   background: white;
   padding: 20px;
   border-radius: 8px;
@@ -106,14 +106,14 @@
   overflow-y: auto;
 }
 
-.modal-header {
+.cm-modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.close-button {
+.cm-close-button {
   background: none;
   border: none;
   cursor: pointer;
@@ -122,23 +122,23 @@
   color: #666;
 }
 
-.close-button:hover {
+.cm-close-button:hover {
   color: #333;
 }
 
-.form-group {
+.cm-form-group {
   margin-bottom: 15px;
 }
 
-.form-group label {
+.cm-form-group label {
   display: block;
   margin-bottom: 5px;
   font-weight: 500;
 }
 
-.form-group input,
-.form-group textarea,
-.form-group select {
+.cm-form-group input,
+.cm-form-group textarea,
+.cm-form-group select {
   width: 100%;
   padding: 8px;
   border: 1px solid #ddd;
@@ -146,24 +146,24 @@
   font-size: 16px;
 }
 
-.form-group textarea {
+.cm-form-group textarea {
   height: 100px;
   resize: vertical;
 }
 
-.delete-modal {
+.cm-delete-modal {
   max-width: 400px;
   text-align: center;
 }
 
-.modal-actions {
+.cm-modal-actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
   margin-top: 20px;
 }
 
-.cancel-button {
+.cm-cancel-button {
   background-color: #f8f8f8;
   border: 1px solid #ddd;
   padding: 8px 20px;
@@ -171,7 +171,7 @@
   cursor: pointer;
 }
 
-.delete-button {
+.cm-delete-button {
   background-color: #f44336;
   color: white;
   border: none;
@@ -180,43 +180,43 @@
   cursor: pointer;
 }
 
-.details-modal {
+.cm-details-modal {
   max-width: 600px;
 }
 
-.course-details {
+.cm-course-details {
   display: grid;
   gap: 15px;
 }
 
-.detail-row {
+.cm-detail-row {
   display: grid;
   grid-template-columns: 120px 1fr;
   gap: 10px;
   align-items: start;
 }
 
-.detail-label {
+.cm-detail-label {
   font-weight: 500;
   color: #666;
 }
 
-.detail-image {
+.cm-detail-image {
   max-width: 100%;
   height: auto;
   border-radius: 4px;
 }
 
-.course-row {
+.cm-course-row {
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
-.course-row:hover {
+.cm-course-row:hover {
   background-color: #f5f5f5;
 }
 
-.modules-section {
+.cm-modules-section {
   margin-top: 30px;
   padding: 20px;
   background-color: #f8f8f8;
@@ -224,24 +224,24 @@
   border: 1px solid #eee;
 }
 
-.modules-header {
+.cm-modules-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.modules-content {
+.cm-modules-content {
   padding: 20px 0;
 }
 
-.modules-list {
+.cm-modules-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.module-item {
+.cm-module-item {
   padding: 12px 16px;
   background-color: white;
   border: 1px solid #eee;
@@ -251,18 +251,18 @@
   transition: all 0.2s;
 }
 
-.module-item:hover {
+.cm-module-item:hover {
   background-color: #f0f0f0;
   transform: translateX(5px);
 }
 
-.no-modules {
+.cm-no-modules {
   text-align: center;
   color: #666;
   padding: 20px;
 }
 
-.add-module-button {
+.cm-add-module-button {
   display: block;
   width: 100%;
   padding: 12px;
@@ -275,11 +275,11 @@
   font-size: 16px;
 }
 
-.add-module-button:hover {
+.cm-add-module-button:hover {
   background-color: #333;
 }
 
-.save-button {
+.cm-save-button {
   background-color: #4caf50;
   color: white;
   border: none;
@@ -288,7 +288,6 @@
   cursor: pointer;
 }
 
-.save-button:hover {
+.cm-save-button:hover {
   background-color: #45a049;
 }
-

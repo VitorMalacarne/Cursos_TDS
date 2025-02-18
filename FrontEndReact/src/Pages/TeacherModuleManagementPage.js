@@ -1,7 +1,5 @@
-"use client"
-
 import { useState } from "react"
-import "../components/TeacherModuleManagementStyle.css"
+import "../css/TeacherModuleManagementPage.css"
 
 const TeacherModuleManagementPage = () => {
   const [module, setModule] = useState({
@@ -120,44 +118,44 @@ const TeacherModuleManagementPage = () => {
   }
 
   return (
-    <div className="module-creation-page">
-      <div className="top-bar">
-        <button className="back-button">{"<"}</button>
+    <div className="mm-module-creation-page">
+      <div className="mm-top-bar">
+        <button className="mm-back-button">{"<"}</button>
         <h1>Criação de Módulo</h1>
       </div>
-      <div className="module-info">
-        <div className="module-name-container">
-          <input type="text" value={tempModuleName} onChange={handleModuleNameChange} className="module-name-input" />
+      <div className="mm-module-info">
+        <div className="mm-module-name-container">
+          <input type="text" value={tempModuleName} onChange={handleModuleNameChange} className="mm-module-name-input" />
           {isEditingName && (
-            <div className="module-name-actions">
-              <button onClick={saveModuleName} className="icon-button save">
+            <div className="mm-module-name-actions">
+              <button onClick={saveModuleName} className="mm-icon-button mm-save">
                 ✓
               </button>
-              <button onClick={cancelModuleNameEdit} className="icon-button cancel">
+              <button onClick={cancelModuleNameEdit} className="mm-icon-button mm-cancel">
                 ✗
               </button>
             </div>
           )}
         </div>
-        <p className="course-name">Curso: {module.courseName}</p>
+        <p className="mm-course-name">Curso: {module.courseName}</p>
       </div>
 
-      <div className="lessons-section">
+      <div className="mm-lessons-section">
         <h2>Aulas</h2>
         {showLessonForm ? (
-          <div className="lesson-form">
+          <div className="mm-lesson-form">
             {lessons.map((lesson, index) => (
-              <div key={index} className="lesson">
-                <div className="lesson-header">
+              <div key={index} className="mm-lesson">
+                <div className="mm-lesson-header">
                   <input
                     type="text"
                     value={lesson.name}
                     onChange={(e) => updateLesson(index, "name", e.target.value)}
                     placeholder="Nome da Aula"
-                    className="lesson-name-input"
+                    className="mm-lesson-name-input"
                   />
                   {lessons.length > 1 && (
-                    <button onClick={() => removeLesson(index)} className="remove-lesson-btn">
+                    <button onClick={() => removeLesson(index)} className="mm-remove-lesson-btn">
                       ✕
                     </button>
                   )}
@@ -166,18 +164,18 @@ const TeacherModuleManagementPage = () => {
                   value={lesson.content}
                   onChange={(e) => updateLesson(index, "content", e.target.value)}
                   placeholder="Conteúdo da Aula"
-                  className="lesson-content-input"
+                  className="mm-lesson-content-input"
                 />
               </div>
             ))}
-            <button onClick={addLesson} className="add-lesson-btn">
+            <button onClick={addLesson} className="mm-add-lesson-btn">
               Adicionar Aula
             </button>
-            <div className="lesson-form-actions">
-              <button onClick={saveLessons} className="save-lessons-btn">
+            <div className="mm-lesson-form-actions">
+              <button onClick={saveLessons} className="mm-save-lessons-btn">
                 Salvar Aulas
               </button>
-              <button onClick={cancelEditLessons} className="cancel-lessons-btn">
+              <button onClick={cancelEditLessons} className="mm-cancel-lessons-btn">
                 Cancelar
               </button>
             </div>
@@ -193,47 +191,47 @@ const TeacherModuleManagementPage = () => {
                 ))}
               </ul>
             )}
-            <button className="add-lesson-btn" onClick={() => setShowLessonForm(true)}>
+            <button className="mm-add-lesson-btn" onClick={() => setShowLessonForm(true)}>
               Adicionar Aula
             </button>
           </>
         )}
       </div>
 
-      <div className="exam-section">
+      <div className="mm-exam-section">
         <h2>Exame/Prova</h2>
         {module.exam && !showExamForm ? (
-          <div className="exam-summary" onClick={editExam}>
+          <div className="mm-exam-summary" onClick={editExam}>
             <h3>Prova criada</h3>
             <p>Total de perguntas: {module.exam.questions.length}</p>
-            <p className="edit-exam-hint">Clique para editar a prova</p>
+            <p className="mm-edit-exam-hint">Clique para editar a prova</p>
           </div>
         ) : showExamForm ? (
-          <div className="exam-form">
+          <div className="mm-exam-form">
             <h3>Editar Prova</h3>
             {examQuestions.map((q, qIndex) => (
-              <div key={qIndex} className="question">
-                <div className="question-header">
+              <div key={qIndex} className="mm-question">
+                <div className="mm-question-header">
                   <input
                     type="text"
                     value={q.question}
                     onChange={(e) => updateQuestion(qIndex, "question", e.target.value)}
                     placeholder="Pergunta"
-                    className="question-input"
+                    className="mm-question-input"
                   />
                   {examQuestions.length > 1 && (
-                    <button onClick={() => removeQuestion(qIndex)} className="remove-question-btn">
+                    <button onClick={() => removeQuestion(qIndex)} className="mm-remove-question-btn">
                       ✕
                     </button>
                   )}
                 </div>
                 {q.answers.map((a, aIndex) => (
-                  <div key={aIndex} className="answer-container">
+                  <div key={aIndex} className="mm-answer-container">
                     <input
                       type="radio"
                       checked={q.correctAnswer === aIndex}
                       onChange={() => updateCorrectAnswer(qIndex, aIndex)}
-                      className="answer-radio"
+                      className="mm-answer-radio"
                       name={`question-${qIndex}`}
                     />
                     <input
@@ -241,43 +239,43 @@ const TeacherModuleManagementPage = () => {
                       value={a}
                       onChange={(e) => updateQuestion(qIndex, aIndex, e.target.value)}
                       placeholder={`Alternativa ${aIndex + 1}`}
-                      className="answer-input"
+                      className="mm-answer-input"
                     />
                   </div>
                 ))}
               </div>
             ))}
-            <button onClick={addQuestion} className="add-question-btn">
+            <button onClick={addQuestion} className="mm-add-question-btn">
               Adicionar Pergunta
             </button>
-            <div className="exam-form-actions">
-              <button onClick={saveExam} className="save-exam-btn" disabled={!isExamValid()}>
+            <div className="mm-exam-form-actions">
+              <button onClick={saveExam} className="mm-save-exam-btn" disabled={!isExamValid()}>
                 Salvar Prova
               </button>
-              <button onClick={cancelEditExam} className="cancel-exam-btn">
+              <button onClick={cancelEditExam} className="mm-cancel-exam-btn">
                 Voltar
               </button>
             </div>
           </div>
         ) : (
-          <button className="add-exam-btn" onClick={() => setShowExamForm(true)}>
+          <button className="mm-add-exam-btn" onClick={() => setShowExamForm(true)}>
             Adicionar Prova
           </button>
         )}
       </div>
 
-      <button className="save-changes-btn" onClick={() => setShowConfirmation(true)}>
+      <button className="mm-save-changes-btn" onClick={() => setShowConfirmation(true)}>
         Salvar Alterações
       </button>
 
       {showConfirmation && (
-        <div className="confirmation-popup">
+        <div className="mm-confirmation-popup">
           <p>Deseja realmente salvar as alterações?</p>
-          <div className="confirmation-actions">
-            <button onClick={() => setShowConfirmation(false)} className="confirm-btn">
+          <div className="mm-confirmation-actions">
+            <button onClick={() => setShowConfirmation(false)} className="mm-confirm-btn">
               Sim
             </button>
-            <button onClick={() => setShowConfirmation(false)} className="cancel-btn">
+            <button onClick={() => setShowConfirmation(false)} className="mm-cancel-btn">
               Não
             </button>
           </div>
@@ -288,4 +286,3 @@ const TeacherModuleManagementPage = () => {
 }
 
 export default TeacherModuleManagementPage
-
